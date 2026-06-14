@@ -1,0 +1,22 @@
+{
+  "name": "R-Abhi Tech Sponsor Portal",
+  "short_name": "Sponsor Portal",
+  "description": "Sponsor and client management portal for R-Abhi Tech Solution.",
+  "start_url": "/", 
+  "scope": "/static/",
+  "display": "standalone",
+  "background_color": "#06172a",
+  "theme_color": "#0b253d",
+  "icons": [
+    {
+      "src": "/static/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

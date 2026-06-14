@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b253d" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="/static/manifest.json" />
+  <link rel="apple-touch-icon" href="/static/logo.png" />
+  <title>Admin Dashboard - R-Abhi Tech Solution</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-brand">
+      <img src="/static/logo.png" alt="R-Abhi Tech Solution" class="site-logo" />
+      <div class="brand-details">
+        <p class="brand-name">R-ABHI TECH SOLUTION</p>
+        <p class="brand-tagline">Admin dashboard for Sponsor Management.</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <a href="/" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Home</a>
+      <button id="open-admin-login" class="secondary" data-icon="🔐">Admin Login</button>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <section class="nav-section admin-nav-section">
+      <div class="admin-badge-row">
+        <span class="admin-badge">Admin mode</span>
+        <span class="admin-badge-label">Secure portal access</span>
+      </div>
+      <nav class="admin-nav">
+        <div class="admin-nav-header">
+          <p class="admin-nav-title">Admin quick links</p>
+          <span class="admin-nav-note">Central control panel</span>
+        </div>
+        <a href="#admin-summary"><span class="nav-icon">🏁</span><span>Overview</span></a>
+        <a href="#admin-sponsors"><span class="nav-icon">🧾</span><span>Sponsors</span></a>
+        <a href="#admin-clients"><span class="nav-icon">📂</span><span>Clients</span></a>
+        <a href="#admin-insights"><span class="nav-icon">📊</span><span>Insights</span></a>
+        <a href="#contact"><span class="nav-icon">💬</span><span>Support</span></a>
+      </nav>
+    </section>
+
+    <header class="site-header">
+      <div class="hero-copy">
+        <span class="eyebrow">Admin Control</span>
+        <h1>Admin Dashboard</h1>
+        <p class="hero-note">Secure admin tools for reviewing portal data and managing sponsor/client workflows.</p>
+        <div class="hero-actions">
+          <button id="admin-sponsors" class="primary" data-icon="🧾">Manage Sponsors</button>
+          <button id="admin-clients" class="secondary" data-icon="📁">Manage Clients</button>
+          <button id="admin-insights" class="secondary" data-icon="📊">View Insights</button>
+        </div>
+      </div>
+    </header>
+
+    <section id="admin-summary" class="live-analytics">
+      <div class="page-shell">
+        <div class="hero-dashboard">
+          <div class="hero-dashboard-head">
+            <span class="eyebrow">Admin summary</span>
+            <h2>Portal overview for administrators</h2>
+            <p>Review sponsor and client totals at a glance and launch the management tools.</p>
+          </div>
+          <div class="hero-dashboard-grid">
+            <article class="hero-dashboard-card accent-1">
+              <span>Total Sponsors</span>
+              <strong id="admin-total-sponsors">0</strong>
+            </article>
+            <article class="hero-dashboard-card accent-2">
+              <span>Total Clients</span>
+              <strong id="admin-total-clients">0</strong>
+            </article>
+            <article class="hero-dashboard-card accent-3">
+              <span>Active Clients</span>
+              <strong id="admin-active-clients">0</strong>
+            </article>
+            <article class="hero-dashboard-card accent-4">
+              <span>Prospect Sponsors</span>
+              <strong id="admin-prospect-sponsors">0</strong>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="contact">
+      <div class="section-head">
+        <span class="eyebrow">Support</span>
+        <h2>Need help with admin configuration?</h2>
+        <p>Use the login button to sign in as admin and then manage sponsors, clients, and analytics from the portal.</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop hidden" id="login-modal">
+    <div class="modal-card">
+      <button id="close-login" class="modal-close" data-icon="✖️"></button>
+      <h2 id="login-title">Account Login</h2>
+      <p id="login-description">Sign in as an admin to access the portal controls.</p>
+      <form id="login-form" class="record-form">
+        <label class="hidden-role">Login role
+          <select id="login-role">
+            <option value="sponsor">Sponsor</option>
+            <option value="client">Client</option>
+            <option value="admin">Admin</option>
+          </select>
+        </label>
+        <label>Email<input type="email" id="login-email" required /></label>
+        <label>Password<input type="password" id="login-password" required /></label>
+        <div class="button-row">
+          <button type="submit" data-icon="🔑">Login</button>
+          <button type="button" id="close-login-secondary" class="secondary" data-icon="❌">Cancel</button>
+        </div>
+      </form>
+      <div id="login-status" class="status-message"></div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
