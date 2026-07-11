@@ -1,37 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b253d" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <link rel="manifest" href="/static/manifest.json" />
-  <link rel="apple-touch-icon" href="/static/logo.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="logo.png" />
   <title>Admin Dashboard - R-Abhi Tech Solution</title>
-  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <header class="topbar">
+    <header class="topbar">
     <div class="topbar-brand">
-      <img src="/static/logo.png" alt="R-Abhi Tech Solution" class="site-logo" />
+      <img src="logo.png" alt="R-Abhi Tech Solution" class="site-logo" />
       <div class="brand-details">
         <p class="brand-name">R-ABHI TECH SOLUTION</p>
         <p class="brand-tagline">Admin dashboard for Sponsor Management.</p>
       </div>
     </div>
     <div class="header-actions">
-      <a href="/" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Front Page</a>
-      <a href="/about" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">About</a>
-      <a href="/media" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Media</a>
-      <a href="/work" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Work</a>
-      <a href="/registration" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Registration</a>
-      <a href="/contact" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Contact</a>
-      <button id="open-admin-login" class="secondary" data-icon="🔐">Admin Login</button>
+      <button id="open-sponsor-login" class="secondary" data-icon="🔐">Sponsor Login</button>
+      <button id="open-client-login" class="secondary" data-icon="👥">Client Login</button>
+      <button id="open-admin-login" class="secondary" data-icon="🛠️">Admin Login</button>
+      <a id="open-admin-btn" href="/admin" class="primary" data-icon="🛠️" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Admin Dashboard</a>
     </div>
   </header>
 
   <div class="page-shell">
+        <section class="nav-section">
+      <nav class="site-nav">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/media">Media</a>
+        <a href="/registration">Registration</a>
+        <a href="/work">Work</a>
+        <a href="/contact">Contact</a>
+        <a href="/admin" class="active">Admin</a>
+      </nav>
+    </section>
+
     <section class="nav-section admin-nav-section">
       <div class="admin-badge-row">
         <span class="admin-badge">Admin mode</span>
@@ -39,14 +50,24 @@
       </div>
       <nav class="admin-nav">
         <div class="admin-nav-header">
-          <p class="admin-nav-title">Admin quick links</p>
+          <p class="admin-nav-title">Admin Dashboard</p>
           <span class="admin-nav-note">Central control panel</span>
         </div>
         <a href="#admin-summary"><span class="nav-icon">🏁</span><span>Overview</span></a>
         <a href="#management"><span class="nav-icon">🧾</span><span>Sponsors</span></a>
         <a href="#clients"><span class="nav-icon">📂</span><span>Clients</span></a>
         <a href="#insights-window"><span class="nav-icon">📊</span><span>Insights</span></a>
-        <a href="#contact"><span class="nav-icon">💬</span><span>Support</span></a>
+
+        <div class="admin-nav-header" style="margin-top: 1.5rem;">
+          <p class="admin-nav-title">Portal Pages</p>
+          <span class="admin-nav-note">Quick Navigation</span>
+        </div>
+        <a href="/"><span class="nav-icon">🏠</span><span>Home Page</span></a>
+        <a href="/about"><span class="nav-icon">ℹ️</span><span>About Us</span></a>
+        <a href="/media"><span class="nav-icon">🖼️</span><span>Media Hub</span></a>
+        <a href="/registration"><span class="nav-icon">📝</span><span>Registration</span></a>
+        <a href="/work"><span class="nav-icon">📣</span><span>Marketing Work</span></a>
+        <a href="/contact"><span class="nav-icon">💬</span><span>Contact</span></a>
       </nav>
     </section>
 
@@ -90,6 +111,40 @@
             </article>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section-block quick-links-section">
+      <div class="section-head">
+        <span class="eyebrow">Portal Pages</span>
+        <h2>Quick Access Directory</h2>
+        <p>Jump to any section of the live portal from your admin dashboard.</p>
+      </div>
+      <div class="feature-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+        <a href="/" class="feature-card" style="text-decoration:none; text-align:center; display:block;">
+          <h3 style="margin-top:0.5rem">Home Page</h3>
+          <p>Main portal landing.</p>
+        </a>
+        <a href="/about" class="feature-card" style="text-decoration:none; text-align:center; display:block;">
+          <h3 style="margin-top:0.5rem">About Us</h3>
+          <p>Mission and team.</p>
+        </a>
+        <a href="/media" class="feature-card" style="text-decoration:none; text-align:center; display:block;">
+          <h3 style="margin-top:0.5rem">Media Hub</h3>
+          <p>Photos and creators.</p>
+        </a>
+        <a href="/registration" class="feature-card" style="text-decoration:none; text-align:center; display:block;">
+          <h3 style="margin-top:0.5rem">Registration</h3>
+          <p>Sponsor/Client signup.</p>
+        </a>
+        <a href="/work" class="feature-card" style="text-decoration:none; text-align:center; display:block;">
+          <h3 style="margin-top:0.5rem">Marketing</h3>
+          <p>Campaign work.</p>
+        </a>
+        <a href="/contact" class="feature-card" style="text-decoration:none; text-align:center; display:block;">
+          <h3 style="margin-top:0.5rem">Contact</h3>
+          <p>Get in touch.</p>
+        </a>
       </div>
     </section>
 
@@ -151,7 +206,13 @@
               </div>
               <table>
                 <thead>
-                  <tr><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
                 </thead>
                 <tbody id="sponsor-list"></tbody>
               </table>
@@ -218,7 +279,14 @@
               </div>
               <table>
                 <thead>
-                  <tr><th>Name</th><th>Email</th><th>Company</th><th>Assigned Sponsor</th><th>Status</th><th>Actions</th></tr>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Assigned Sponsor</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
                 </thead>
                 <tbody id="client-list"></tbody>
               </table>
@@ -263,7 +331,8 @@
       <div class="section-head">
         <span class="eyebrow">Support</span>
         <h2>Need help with admin configuration?</h2>
-        <p>Use the login button to sign in as admin and then manage sponsors, clients, and analytics from the portal.</p>
+        <p>Use the login button to sign in as admin and then manage sponsors, clients, and analytics from the portal.
+        </p>
       </div>
     </section>
   </div>
@@ -294,4 +363,5 @@
 
   <script src="/static/app.js"></script>
 </body>
+
 </html>

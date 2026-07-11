@@ -3,49 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Work Page | R-Abhi Tech Solution</title>
+  <meta name="theme-color" content="#2b7fe0" />
+  <title>Work | R-Abhi Tech Solution</title>
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
-  <header class="topbar">
+    <header class="topbar">
     <div class="topbar-brand">
-      <img src="/static/logo.png" alt="R-Abhi Tech Solution" class="site-logo" />
+      <img src="logo.png" alt="R-Abhi Tech Solution" class="site-logo" />
       <div class="brand-details">
         <p class="brand-name">R-ABHI TECH SOLUTION</p>
         <p class="brand-tagline">Dedicated work and delivery experience.</p>
       </div>
     </div>
     <div class="header-actions">
-      <a href="/" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Home</a>
-      <a href="/about" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">About</a>
-      <a href="/media" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Media</a>
-      <a href="/registration" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Registration</a>
-      <a href="/contact" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Contact</a>
-      <a href="/admin" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Admin</a>
+      <button id="open-sponsor-login" class="secondary" data-icon="🔐">Sponsor Login</button>
+      <button id="open-client-login" class="secondary" data-icon="👥">Client Login</button>
+      <button id="open-admin-login" class="secondary" data-icon="🛠️">Admin Login</button>
+      <a id="open-admin-btn" href="/admin" class="primary" data-icon="🛠️" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Admin Dashboard</a>
     </div>
   </header>
   <div class="page-shell">
-    <section class="section-block">
-      <div class="section-head">
-        <span class="eyebrow">Work</span>
-        <h2>Move your sponsor and client work into a dedicated experience.</h2>
-        <p>This page is designed as the next-step workspace for campaign planning, client coordination, and social media delivery.</p>
-      </div>
+        <section class="nav-section">
+      <nav class="site-nav">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/media">Media</a>
+        <a href="/registration">Registration</a>
+        <a href="/work" class="active">Work</a>
+        <a href="/contact">Contact</a>
+        <a href="/admin">Admin</a>
+      </nav>
+    </section>
+
+    <div class="hero-image-banner" style="background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; border-radius: 16px; padding: 4rem 2rem; margin-bottom: 2rem; text-align: center;">
+      <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: #fff;">Social Media Marketing Work</h1>
+      <p style="font-size: 1.2rem; color: #e2e8f0; max-width: 600px; margin: 0 auto;">Track posts, sponsor activations, and creator workflows from the dedicated work page with a smoother, focused layout.</p>
+    </div>
+
+    <section class="social-marketing" id="marketing">
       <div class="marketing-grid">
-        <article class="marketing-card">
-          <h3>Project flow</h3>
-          <p>Track sponsor deliverables, campaign tasks, and approvals from one place.</p>
+        <article class="marketing-card" style="padding-top: 180px; position: relative; overflow: hidden; background-color: var(--card-bg);">
+          <div style="position: absolute; top: 0; left: 0; right: 0; height: 160px; background-image: url('https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
+          <h3>Campaign Planning</h3>
+          <p>Map posts, ads, and sponsor activations with a clean workflow designed for growth.</p>
         </article>
-        <article class="marketing-card">
-          <h3>Client updates</h3>
-          <p>Keep each client informed with progress summaries, next steps, and shared milestones.</p>
+        <article class="marketing-card" style="padding-top: 180px; position: relative; overflow: hidden; background-color: var(--card-bg);">
+          <div style="position: absolute; top: 0; left: 0; right: 0; height: 160px; background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
+          <h3>Creator & Influencer Hub</h3>
+          <p>Connect sponsors, clients, and creators through clear collaboration tools and performance tracking.</p>
         </article>
-        <article class="marketing-card">
-          <h3>Media execution</h3>
-          <p>Combine campaigns, content uploads, and reporting into a single workflow.</p>
+        <article class="marketing-card" style="padding-top: 180px; position: relative; overflow: hidden; background-color: var(--card-bg);">
+          <div style="position: absolute; top: 0; left: 0; right: 0; height: 160px; background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
+          <h3>Analytics & Reach</h3>
+          <p>Measure engagement, impressions, and campaign outcomes for every marketing activity.</p>
         </article>
+      </div>
+      <div class="hero-actions" style="margin-top:2rem; justify-content: center;">
+        <a href="/" class="primary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Back to Dashboard</a>
+        <a href="/media" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Open Media Page</a>
       </div>
     </section>
+
+    <footer class="site-footer" style="margin-top: 4rem;">
+      <p>Built for Sponsor Portfolio Management. Powered by FastAPI and lightweight UI.</p>
+    </footer>
   </div>
+  <script src="/static/app.js"></script>
 </body>
 </html>

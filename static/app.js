@@ -190,16 +190,21 @@ function searchSection(term) {
     { label: "overview", selector: "#overview" },
     { label: "sponsors", selector: "#management" },
     { label: "clients", selector: "#clients" },
-    { label: "marketing", selector: "#marketing" },
-    { label: "register", selector: "#register" },
-    { label: "about", selector: "#about" },
-    { label: "media", selector: "#media" },
-    { label: "team", selector: "#team" },
-    { label: "contact", selector: "#contact" },
+    { label: "marketing", url: "/work" },
+    { label: "register", url: "/registration" },
+    { label: "about", url: "/about" },
+    { label: "media", url: "/media" },
+    { label: "team", url: "/about#team" },
+    { label: "contact", url: "/contact" },
   ];
   const match = sections.find((section) => section.label.includes(normalized));
   if (match) {
-    document.querySelector(match.selector)?.scrollIntoView({ behavior: "smooth" });
+    if (match.url) {
+      window.location.href = match.url;
+    } else if (match.selector) {
+      const el = document.querySelector(match.selector);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
   }
 }
 
@@ -733,9 +738,7 @@ viewInsightsBtn?.addEventListener("click", () => {
   showWindow("insights");
   document.querySelector(".management-window")?.scrollIntoView({ behavior: "smooth" });
 });
-openRegisterBtn?.addEventListener("click", () => {
-  document.getElementById("register")?.scrollIntoView({ behavior: "smooth" });
-});
+// Registration logic is now handled via href="/registration"
 ctaSponsorsBtn?.addEventListener("click", () => {
   showWindow("sponsor");
   document.querySelector(".management-window")?.scrollIntoView({ behavior: "smooth" });
@@ -758,7 +761,7 @@ closeLoginSecondary?.addEventListener("click", closeLogin);
 loginModal?.addEventListener("click", (event) => {
   if (event.target === loginModal) closeLogin();
 });
-contactUsBtn?.addEventListener("click", () => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }));
+// Contact logic is now handled via href="/contact"
 contactForm?.addEventListener("submit", submitContact);
 chatSend?.addEventListener("click", askAssistant);
 chatInput?.addEventListener("keydown", (event) => {
