@@ -38,16 +38,13 @@
     </nav>
     <section class="nav-section">
       <nav class="site-nav">
-        <a href="#overview">Overview</a>
-        <a href="#management">Sponsors</a>
-        <a href="#clients">Clients</a>
-        <a href="#marketing">Marketing</a>
-        <a href="#register">Register</a>
-        <a href="#about">About</a>
-        <a href="#media">Media</a>
-        <a href="#team">Team</a>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/media">Media</a>
+        <a href="/registration">Registration</a>
+        <a href="/work">Work</a>
+        <a href="/contact">Contact</a>
         <a href="/admin">Admin</a>
-        <a href="#contact">Contact</a>
       </nav>
     </section>
     <section class="search-section">
@@ -72,9 +69,10 @@
         <button id="manage-clients-btn" class="secondary" data-icon="🧑‍💼">Go to Clients</button>
         <button id="manage-marketing-btn" class="secondary" data-icon="📣">Marketing Work</button>
         <button id="view-insights-btn" class="secondary" data-icon="📊">View Insights</button>
+        <a href="/work" class="secondary" data-icon="🧩" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">View Work Page</a>
         <a href="/admin" class="secondary" data-icon="🛠️" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Admin Dashboard</a>
-        <button id="open-register-btn" class="secondary" data-icon="📝">Register Now</button>
-        <button id="contact-us-btn" class="secondary" data-icon="✉️">Contact Us</button>
+        <a href="/registration" class="secondary" data-icon="📝" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Register Now</a>
+        <a href="/contact" class="secondary" data-icon="✉️" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Contact Us</a>
         <button id="install-app-btn" class="secondary" data-icon="⬇️" hidden>Install App</button>
         </div>
         <div class="hero-social">
@@ -240,8 +238,8 @@
     <section class="social-marketing" id="marketing">
       <div class="marketing-head">
         <span class="eyebrow">Social Media Marketing</span>
-        <h2>Build campaign flow with sponsored content, audience growth, and creator collaboration.</h2>
-        <p>Track posts, schedule promotions, and manage influencer outreach from a marketing-ready portal.</p>
+        <h2>Explore the full work experience on a dedicated page.</h2>
+        <p>Track posts, sponsor activations, and creator workflows from the dedicated work page with a smoother, focused layout.</p>
       </div>
       <div class="marketing-grid">
         <article class="marketing-card">
@@ -256,6 +254,10 @@
           <h3>Analytics & Reach</h3>
           <p>Measure engagement, impressions, and campaign outcomes for every marketing activity.</p>
         </article>
+      </div>
+      <div class="hero-actions" style="margin-top:1rem">
+        <a href="/work" class="primary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Open Work Page</a>
+        <a href="/media" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Open Media Page</a>
       </div>
     </section>
 
@@ -382,7 +384,7 @@
               </form>
 
               <div class="status-panel">
-                <div id="sponsor-status" class="status-message"></div>
+                <div id="sponsor-status-message" class="status-message"></div>
               </div>
               <table>
                 <thead>
@@ -792,10 +794,10 @@ Growth Scaling</pre>
           <div class="upload-box">
             <label class="file-upload-label">
               <span>Upload files</span>
-              <input id="attachment-upload" type="file" multiple accept="image/*,video/*,application/pdf,application/zip,application/x-rar-compressed,application/vnd.rar,application/octet-stream" />
+              <input class="attachment-upload" type="file" multiple accept="image/*,video/*,application/pdf,application/zip,application/x-rar-compressed,application/vnd.rar,application/octet-stream" />
             </label>
             <div class="upload-note">Supports images, PDFs, videos, ZIP/RAR archives, and other campaign assets.</div>
-            <div id="attachment-file-list" class="file-list">No files selected.</div>
+            <div class="attachment-file-list file-list">No files selected.</div>
           </div>
         </article>
         <article class="media-card">
@@ -816,10 +818,10 @@ Growth Scaling</pre>
           <div class="upload-box">
             <label class="file-upload-label">
               <span>Upload files</span>
-              <input id="attachment-upload" type="file" multiple accept="image/*,video/*,application/pdf,application/zip,application/x-rar-compressed,application/vnd.rar,application/octet-stream" />
+              <input class="attachment-upload" type="file" multiple accept="image/*,video/*,application/pdf,application/zip,application/x-rar-compressed,application/vnd.rar,application/octet-stream" />
             </label>
             <div class="upload-note">Supports images, PDFs, videos, ZIP/RAR archives, and other campaign assets.</div>
-            <div id="attachment-file-list" class="file-list">No files selected.</div>
+            <div class="attachment-file-list file-list">No files selected.</div>
           </div>
         </article>
         <article class="media-card">
@@ -843,10 +845,10 @@ Growth Scaling</pre>
           <div class="upload-box">
             <label class="file-upload-label">
               <span>Upload files</span>
-              <input id="attachment-upload" type="file" multiple accept="image/*,video/*,application/pdf,application/zip,application/x-rar-compressed,application/vnd.rar,application/octet-stream" />
+              <input class="attachment-upload" type="file" multiple accept="image/*,video/*,application/pdf,application/zip,application/x-rar-compressed,application/vnd.rar,application/octet-stream" />
             </label>
             <div class="upload-note">Supports images, PDFs, videos, ZIP/RAR archives, and other campaign assets.</div>
-            <div id="attachment-file-list" class="file-list">No files selected.</div>
+            <div class="attachment-file-list file-list">No files selected.</div>
           </div>
         </article>
         <article class="media-card">
@@ -870,10 +872,10 @@ Growth Scaling</pre>
           <div class="upload-box">
             <label class="file-upload-label">
               <span>Upload files</span>
-              <input id="attachment-upload" type="file" multiple accept="image/*,video/*,application/pdf,application/zip,application/x-rar-compressed,application/vnd.rar,application/octet-stream" />
+              <input class="attachment-upload" type="file" multiple accept="image/*,video/*,application/pdf,application/zip,application/x-rar-compressed,application/vnd.rar,application/octet-stream" />
             </label>
             <div class="upload-note">Supports images, PDFs, videos, ZIP/RAR archives, and other campaign assets.</div>
-            <div id="attachment-file-list" class="file-list">No files selected.</div>
+            <div class="attachment-file-list file-list">No files selected.</div>
           </div>
         </article>
         <article class="media-card">
@@ -896,10 +898,10 @@ Growth Scaling</pre>
           <div class="upload-box">
             <label class="file-upload-label">
               <span>Upload files</span>
-              <input id="attachment-upload" type="file" multiple accept="image/*,video/*,application/pdf,application/zip,application/x-rar-compressed,application/vnd.rar,application/octet-stream" />
+              <input class="attachment-upload" type="file" multiple accept="image/*,video/*,application/pdf,application/zip,application/x-rar-compressed,application/vnd.rar,application/octet-stream" />
             </label>
             <div class="upload-note">Supports images, PDFs, videos, ZIP/RAR archives, and other campaign assets.</div>
-            <div id="attachment-file-list" class="file-list">No files selected.</div>
+            <div class="attachment-file-list file-list">No files selected.</div>
           </div>
         </article>
       </div>

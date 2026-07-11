@@ -2,7 +2,7 @@ import os
 import json
 import io
 from typing import Optional
-from fastapi import FastAPI, Request, HTTPException, Body
+from fastapi import FastAPI, APIRouter, Request, HTTPException, Body
 from fastapi.responses import RedirectResponse, StreamingResponse, JSONResponse
 from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
@@ -42,7 +42,7 @@ Base.metadata.create_all(bind=engine)
 
 TOKEN_STORE = os.environ.get("GOOGLE_TOKEN_FILE", None)  # optional legacy file
 
-app = FastAPI()
+router = APIRouter()
 
 
 def save_tokens_db(creds: Credentials):
@@ -94,7 +94,7 @@ def load_credentials_db() -> Optional[Credentials]:
     return creds
 
 
-@app.get("/google/login")
+@router.get("/login")
 def google_login(request: Request):
     # Build OAuth flow and redirect to Google consent
     flow = Flow.from_client_secrets_file(
@@ -106,7 +106,7 @@ def google_login(request: Request):
     return RedirectResponse(auth_url)
 
 
-@app.get("/google/oauth2callback")
+@router.get("/oauth2callback")
 async def google_oauth2callback(request: Request):
     state = request.query_params.get("state")
     flow = Flow.from_client_secrets_file(
@@ -123,7 +123,7 @@ async def google_oauth2callback(request: Request):
     return RedirectResponse("/")
 
 
-@app.get("/google/sheets/{sheet_id}")
+@router.get("/sheets/{sheet_id}")
 def read_sheet(sheet_id: str, range: str = None):
     creds = load_credentials_db()
     if not creds:
@@ -136,7 +136,7 @@ def read_sheet(sheet_id: str, range: str = None):
     return JSONResponse(content={"values": values})
 
 
-@app.get("/google/sheets/{sheet_id}/export.xlsx")
+@router.get("/sheets/{sheet_id}/export.xlsx")
 def export_sheet_xlsx(sheet_id: str, range: str = None):
     creds = load_credentials_db()
     if not creds:
@@ -161,7 +161,7 @@ def export_sheet_xlsx(sheet_id: str, range: str = None):
     return StreamingResponse(stream, media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", headers=headers)
 
 
-@app.get("/google/forms/{form_id}")
+@router.get("/forms/{form_id}")
 def get_form_responses(form_id: str):
     creds = load_credentials_db()
     if not creds:
@@ -175,7 +175,7 @@ def get_form_responses(form_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.get("/google/docs/{doc_id}/export.pdf")
+@router.get("/docs/{doc_id}/export.pdf")
 def export_doc_pdf(doc_id: str):
     creds = load_credentials_db()
     if not creds:
@@ -188,7 +188,7 @@ def export_doc_pdf(doc_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/google/analytics")
+@router.post("/analytics")
 def run_analytics_report(payload: dict = Body(...)):
     creds = load_credentials_db()
     if not creds:
@@ -206,7 +206,7 @@ def run_analytics_report(payload: dict = Body(...)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.get("/google/export/combined/{sheet_id}")
+@router.get("/export/combined/{sheet_id}")
 def export_combined(sheet_id: str, range: str = None):
     creds = load_credentials_db()
     if not creds:
@@ -235,6 +235,8 @@ def export_combined(sheet_id: str, range: str = None):
 
 
 if __name__ == "__main__":
+    app = FastAPI()
+    app.include_router(router, prefix="/google")
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=8000)

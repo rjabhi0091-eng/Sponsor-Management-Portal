@@ -104,6 +104,9 @@ const contactStatus = document.getElementById("contact-status");
 const contactName = document.getElementById("contact-name");
 const contactEmailInput = document.getElementById("contact-email");
 const contactMessageInput = document.getElementById("contact-message-input");
+const chatInput = document.getElementById("chat-input");
+const chatSend = document.getElementById("chat-send");
+const chatResponse = document.getElementById("chat-response");
 const installAppBtn = document.getElementById("install-app-btn");
 const sponsorGate = document.getElementById("sponsor-gate");
 const clientGate = document.getElementById("client-gate");
@@ -122,6 +125,7 @@ let currentUser = null;
 let installPromptEvent = null;
 
 function setStatus(el, message, type = "success") {
+  if (!el) return;
   el.textContent = message;
   el.style.color = type === "error" ? "#f87171" : "#a3e635";
 }
@@ -132,16 +136,16 @@ function updateMetrics() {
   const currentTime = now.toLocaleTimeString();
   const currentDate = now.toLocaleDateString();
 
-  totalSponsorsEl.textContent = sponsorsCache.length;
-  totalClientsEl.textContent = clientsCache.length;
-  heroSponsorCount.textContent = sponsorsCache.length;
-  heroClientCount.textContent = clientsCache.length;
+  if (totalSponsorsEl) totalSponsorsEl.textContent = sponsorsCache.length;
+  if (totalClientsEl) totalClientsEl.textContent = clientsCache.length;
+  if (heroSponsorCount) heroSponsorCount.textContent = sponsorsCache.length;
+  if (heroClientCount) heroClientCount.textContent = clientsCache.length;
   if (heroDashboardSponsors) heroDashboardSponsors.textContent = sponsorsCache.length;
   if (heroDashboardClients) heroDashboardClients.textContent = clientsCache.length;
   if (heroRegistrationCount) heroRegistrationCount.textContent = totalRegistrations;
   if (heroDashboardDate) heroDashboardDate.textContent = currentDate;
-  activeClientsEl.textContent = summaryCache?.active_clients ?? 0;
-  prospectSponsorsEl.textContent = summaryCache?.prospect_sponsors ?? 0;
+  if (activeClientsEl) activeClientsEl.textContent = summaryCache?.active_clients ?? 0;
+  if (prospectSponsorsEl) prospectSponsorsEl.textContent = summaryCache?.prospect_sponsors ?? 0;
   if (lastUpdated) lastUpdated.textContent = currentTime;
 
   if (footerSponsors) footerSponsors.textContent = sponsorsCache.length;
@@ -203,20 +207,46 @@ function updateAccessControls() {
   const sponsorLoggedIn = currentUser?.role === "sponsor";
   const clientLoggedIn = currentUser?.role === "client";
   const adminLoggedIn = currentUser?.role === "admin";
-  if (sponsorGate) sponsorGate.style.display = sponsorLoggedIn ? "none" : "block";
-  if (clientGate) clientGate.style.display = clientLoggedIn ? "none" : "block";
-  if (sponsorContent) sponsorContent.style.display = sponsorLoggedIn ? "block" : "none";
-  if (clientContent) clientContent.style.display = clientLoggedIn ? "block" : "none";
+  const canUseSponsorTools = sponsorLoggedIn || adminLoggedIn;
+  const canUseClientTools = clientLoggedIn || adminLoggedIn;
+  if (sponsorGate) sponsorGate.style.display = canUseSponsorTools ? "none" : "block";
+  if (clientGate) clientGate.style.display = canUseClientTools ? "none" : "block";
+  if (sponsorContent) sponsorContent.style.display = canUseSponsorTools ? "block" : "none";
+  if (clientContent) clientContent.style.display = canUseClientTools ? "block" : "none";
   if (adminSection) adminSection.hidden = !adminLoggedIn;
   if (openAdminBtn) openAdminBtn.hidden = !adminLoggedIn;
   if (currentUser) {
     if (adminLoggedIn) {
-      userWelcome.textContent = `Admin logged in: ${currentUser.name}`;
+      if (userWelcome) userWelcome.textContent = `Admin logged in: ${currentUser.name}`;
     } else {
-      userWelcome.textContent = `Logged in as ${currentUser.role}: ${currentUser.name}`;
+      if (userWelcome) userWelcome.textContent = `Logged in as ${currentUser.role}: ${currentUser.name}`;
     }
   } else {
-    userWelcome.textContent = "Login as a sponsor, client, or admin to personalize your portal experience.";
+    if (userWelcome) userWelcome.textContent = "Login as a sponsor, client, or admin to personalize your portal experience.";
+  }
+}
+
+function saveCurrentUser() {
+  try {
+    if (currentUser) {
+      localStorage.setItem("sponsorPortalCurrentUser", JSON.stringify(currentUser));
+    } else {
+      localStorage.removeItem("sponsorPortalCurrentUser");
+    }
+  } catch (err) {
+    console.warn("Unable to save user state", err);
+  }
+}
+
+function loadCurrentUser() {
+  try {
+    const stored = localStorage.getItem("sponsorPortalCurrentUser");
+    if (stored) {
+      currentUser = JSON.parse(stored);
+    }
+  } catch (err) {
+    console.warn("Unable to restore user state", err);
+    currentUser = null;
   }
 }
 
@@ -266,6 +296,7 @@ function escapeText(value) {
 }
 
 function renderSponsors(sponsors) {
+  if (!sponsorList) return;
   sponsorList.innerHTML = sponsors
     .map(
       (sponsor) => `
@@ -285,6 +316,7 @@ function renderSponsors(sponsors) {
 }
 
 function renderSponsorOptions() {
+  if (!clientFields.sponsor) return;
   clientFields.sponsor.innerHTML = [
     `<option value="">Unassigned</option>`,
     ...sponsorsCache.map((sponsor) => `<option value="${sponsor.id}">${escapeText(sponsor.name)}</option>`),
@@ -292,6 +324,7 @@ function renderSponsorOptions() {
 }
 
 function renderClients(clients) {
+  if (!clientList) return;
   clientList.innerHTML = clients
     .map(
       (client) => `
@@ -337,18 +370,18 @@ async function fetchClients() {
 }
 
 function openLogin(role) {
-  const roleName = role === "sponsor" ? "Sponsor" : "Client";
+  const roleName = role === "admin" ? "Admin" : role === "sponsor" ? "Sponsor" : "Client";
   if (loginRole) loginRole.value = role;
-  loginEmail.value = "";
-  loginPassword.value = "";
-  loginStatus.textContent = "";
+  if (loginEmail) loginEmail.value = "";
+  if (loginPassword) loginPassword.value = "";
+  if (loginStatus) loginStatus.textContent = "";
   if (loginTitle) loginTitle.textContent = `${roleName} Login`;
   if (loginDescription) loginDescription.textContent = `Use your ${roleName.toLowerCase()} account to access the portal and manage your ${roleName.toLowerCase()} profile.`;
-  loginModal.classList.remove("hidden");
+  if (loginModal) loginModal.classList.remove("hidden");
 }
 
 function closeLogin() {
-  loginModal.classList.add("hidden");
+  loginModal?.classList.add("hidden");
 }
 
 document.addEventListener("keydown", (event) => {
@@ -356,9 +389,9 @@ document.addEventListener("keydown", (event) => {
 });
 function updateWelcome() {
   if (currentUser) {
-    userWelcome.textContent = `Logged in as ${currentUser.role}: ${currentUser.name}`;
+    if (userWelcome) userWelcome.textContent = `Logged in as ${currentUser.role}: ${currentUser.name}`;
   } else {
-    userWelcome.textContent = "Login as a sponsor or client to personalize your portfolio experience.";
+    if (userWelcome) userWelcome.textContent = "Login as a sponsor or client to personalize your portfolio experience.";
   }
 }
 
@@ -379,27 +412,59 @@ async function login(event) {
     if (!response.ok) {
       throw new Error(payload.detail || "Login failed");
     }
-    currentUser = { role: payload.role, name: payload.name };
+      currentUser = { role: payload.role, name: payload.name };
+    saveCurrentUser();
     updateAccessControls();
     setStatus(loginStatus, payload.message);
     closeLogin();
-    showWindow(payload.role);
+    showWindow(payload.role === "admin" ? "sponsor" : payload.role);
   } catch (err) {
     setStatus(loginStatus, err.message, "error");
   }
 }
 
-function submitContact(event) {
+async function submitContact(event) {
   event.preventDefault();
-  const name = contactName.value.trim();
-  const email = contactEmailInput.value.trim();
-  const message = contactMessageInput.value.trim();
+  const name = contactName?.value.trim();
+  const email = contactEmailInput?.value.trim();
+  const message = contactMessageInput?.value.trim();
   if (!name || !email || !message) {
     setStatus(contactStatus, "Please complete all fields.", "error");
     return;
   }
-  setStatus(contactStatus, "Thanks for your message! We'll reach out soon.");
-  contactForm.reset();
+  try {
+    const response = await fetch(`${apiBase}contact/message`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, message }),
+    });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.detail || "Unable to send message");
+    setStatus(contactStatus, payload.message || "Thanks for your message! We'll reach out soon.");
+    contactForm?.reset();
+  } catch (err) {
+    setStatus(contactStatus, err.message, "error");
+  }
+}
+
+async function askAssistant() {
+  const message = chatInput?.value?.trim();
+  if (!message) {
+    setStatus(chatResponse, "Please enter a message.", "error");
+    return;
+  }
+  try {
+    const response = await fetch(`${apiBase}chat/assistant`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message }),
+    });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.detail || "Assistant request failed");
+    setStatus(chatResponse, payload.reply || "Thanks for asking.");
+  } catch (err) {
+    setStatus(chatResponse, err.message, "error");
+  }
 }
 
 function applySponsorFilter() {
@@ -654,8 +719,8 @@ async function submitRegisterClient(event) {
   }
 }
 
-manageSponsorsBtn.addEventListener("click", () => showWindow("sponsor"));
-manageClientsBtn.addEventListener("click", () => showWindow("client"));
+manageSponsorsBtn?.addEventListener("click", () => showWindow("sponsor"));
+manageClientsBtn?.addEventListener("click", () => showWindow("client"));
 manageMarketingBtn?.addEventListener("click", () => {
   showWindow("marketing");
   document.querySelector(".management-window")?.scrollIntoView({ behavior: "smooth" });
@@ -675,8 +740,8 @@ ctaClientsBtn?.addEventListener("click", () => {
   showWindow("client");
   document.querySelector(".management-window")?.scrollIntoView({ behavior: "smooth" });
 });
-openSponsorLoginBtn.addEventListener("click", () => openLogin("sponsor"));
-openClientLoginBtn.addEventListener("click", () => openLogin("client"));
+openSponsorLoginBtn?.addEventListener("click", () => openLogin("sponsor"));
+openClientLoginBtn?.addEventListener("click", () => openLogin("client"));
 openAdminLoginBtn?.addEventListener("click", () => openLogin("admin"));
 openAdminBtn?.addEventListener("click", () => {
   window.location.href = "/admin";
@@ -684,13 +749,20 @@ openAdminBtn?.addEventListener("click", () => {
 openAdminSponsorsBtn?.addEventListener("click", () => showWindow("sponsor"));
 openAdminClientsBtn?.addEventListener("click", () => showWindow("client"));
 openAdminInsightsBtn?.addEventListener("click", () => showWindow("insights"));
-closeLoginBtn.addEventListener("click", closeLogin);
-closeLoginSecondary.addEventListener("click", closeLogin);
+closeLoginBtn?.addEventListener("click", closeLogin);
+closeLoginSecondary?.addEventListener("click", closeLogin);
 loginModal?.addEventListener("click", (event) => {
   if (event.target === loginModal) closeLogin();
 });
-contactUsBtn.addEventListener("click", () => document.getElementById("contact").scrollIntoView({ behavior: "smooth" }));
-contactForm.addEventListener("submit", submitContact);
+contactUsBtn?.addEventListener("click", () => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }));
+contactForm?.addEventListener("submit", submitContact);
+chatSend?.addEventListener("click", askAssistant);
+chatInput?.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    askAssistant();
+  }
+});
 
 sectionSearchInput?.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
@@ -751,9 +823,12 @@ document.addEventListener("DOMContentLoaded", () => {
   prev.addEventListener("keyup", (e) => { if (e.key === "Enter") prev.click(); });
   next.addEventListener("keyup", (e) => { if (e.key === "Enter") next.click(); });
 
-  const attachmentUpload = document.getElementById("attachment-upload");
-  const attachmentFileList = document.getElementById("attachment-file-list");
-  if (attachmentUpload && attachmentFileList) {
+  document.querySelectorAll(".attachment-upload").forEach((attachmentUpload) => {
+    const attachmentFileList = attachmentUpload
+      .closest(".upload-box")
+      ?.querySelector(".attachment-file-list");
+    if (!attachmentFileList) return;
+
     attachmentUpload.addEventListener("change", () => {
       const files = Array.from(attachmentUpload.files || []);
       if (!files.length) {
@@ -765,7 +840,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .map(file => `<div>${file.name} (${Math.round(file.size / 1024)} KB)</div>`)
         .join("");
     });
-  }
+  });
 });
 
 async function fetchSheetAndDisplay() {
@@ -869,28 +944,29 @@ fetchSheetBtn?.addEventListener('click', fetchSheetAndDisplay);
 
 if (sponsorSearch) sponsorSearch.addEventListener("input", applySponsorFilter);
 if (clientSearch) clientSearch.addEventListener("input", applyClientFilter);
-sponsorForm.addEventListener("submit", submitSponsor);
-clientForm.addEventListener("submit", submitClient);
+sponsorForm?.addEventListener("submit", submitSponsor);
+clientForm?.addEventListener("submit", submitClient);
 document.getElementById("register-sponsor-form")?.addEventListener("submit", submitRegisterSponsor);
 document.getElementById("register-client-form")?.addEventListener("submit", submitRegisterClient);
 document.getElementById("register-sponsor-clear")?.addEventListener("click", clearRegisterSponsorForm);
 document.getElementById("register-client-clear")?.addEventListener("click", clearRegisterClientForm);
-loginForm.addEventListener("submit", login);
-sponsorRefresh.addEventListener("click", fetchSponsors);
-clientRefresh.addEventListener("click", fetchClients);
-sponsorClear.addEventListener("click", () => {
+loginForm?.addEventListener("submit", login);
+sponsorRefresh?.addEventListener("click", fetchSponsors);
+clientRefresh?.addEventListener("click", fetchClients);
+sponsorClear?.addEventListener("click", () => {
   clearSponsorForm();
   setStatus(sponsorStatus, "Sponsor form cleared.");
 });
-clientClear.addEventListener("click", () => {
+clientClear?.addEventListener("click", () => {
   clearClientForm();
   setStatus(clientStatus, "Client form cleared.");
 });
 
 window.addEventListener("load", async () => {
+  loadCurrentUser();
   registerServiceWorker();
-  await fetchSponsors();
-  await fetchClients();
+  if (sponsorList || sponsorForm) await fetchSponsors();
+  if (clientList || clientForm) await fetchClients();
   await fetchSummary();
   updateAccessControls();
   updateLiveClock();

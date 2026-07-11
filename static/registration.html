@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registration | R-Abhi Tech Solution</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-brand">
+      <img src="/static/logo.png" alt="R-Abhi Tech Solution" class="site-logo" />
+      <div class="brand-details">
+        <p class="brand-name">R-ABHI TECH SOLUTION</p>
+        <p class="brand-tagline">Separate registration experience.</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <a href="/" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Home</a>
+      <a href="/about" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">About</a>
+      <a href="/media" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Media</a>
+      <a href="/contact" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Contact</a>
+      <a href="/admin" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Admin</a>
+    </div>
+  </header>
+  <div class="page-shell">
+    <section class="registration-section">
+      <div class="section-head">
+        <span class="eyebrow">Registration</span>
+        <h2>Create your sponsor or client account.</h2>
+        <p>Use the dedicated registration page to sign up and start your portal journey.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Sponsor registration</h3>
+          <form id="register-sponsor-form" class="record-form">
+            <label>Name<input type="text" id="register-sponsor-name" required /></label>
+            <label>Email<input type="email" id="register-sponsor-email" required /></label>
+            <label>Phone<input type="text" id="register-sponsor-phone" /></label>
+            <label>Status<select id="register-sponsor-status"><option value="prospect">Prospect</option><option value="active">Active</option><option value="inactive">Inactive</option></select></label>
+            <label>Password<input type="password" id="register-sponsor-password" required /></label>
+            <label>Notes<textarea id="register-sponsor-notes" rows="3"></textarea></label>
+            <div class="button-row">
+              <button type="submit" class="primary">Register Sponsor</button>
+              <button type="button" id="register-sponsor-clear" class="secondary">Clear</button>
+            </div>
+            <div id="register-sponsor-feedback" class="status-message"></div>
+          </form>
+        </article>
+        <article class="feature-card">
+          <h3>Client registration</h3>
+          <form id="register-client-form" class="record-form">
+            <label>Name<input type="text" id="register-client-name" required /></label>
+            <label>Email<input type="email" id="register-client-email" required /></label>
+            <label>Company<input type="text" id="register-client-company" /></label>
+            <label>Phone<input type="text" id="register-client-phone" /></label>
+            <label>Status<select id="register-client-status"><option value="active">Active</option><option value="inactive">Inactive</option><option value="prospect">Prospect</option></select></label>
+            <label>Password<input type="password" id="register-client-password" required /></label>
+            <label>Notes<textarea id="register-client-notes" rows="3"></textarea></label>
+            <div class="button-row">
+              <button type="submit" class="primary">Register Client</button>
+              <button type="button" id="register-client-clear" class="secondary">Clear</button>
+            </div>
+            <div id="register-client-feedback" class="status-message"></div>
+          </form>
+        </article>
+      </div>
+    </section>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

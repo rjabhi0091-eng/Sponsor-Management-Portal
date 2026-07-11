@@ -21,7 +21,11 @@
       </div>
     </div>
     <div class="header-actions">
-      <a href="/" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Home</a>
+      <a href="/" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Front Page</a>
+      <a href="/about" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">About</a>
+      <a href="/media" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Media</a>
+      <a href="/registration" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Registration</a>
+      <a href="/contact" class="secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Contact</a>
       <button id="open-admin-login" class="secondary" data-icon="🔐">Admin Login</button>
     </div>
   </header>
@@ -38,9 +42,9 @@
           <span class="admin-nav-note">Central control panel</span>
         </div>
         <a href="#admin-summary"><span class="nav-icon">🏁</span><span>Overview</span></a>
-        <a href="#admin-sponsors"><span class="nav-icon">🧾</span><span>Sponsors</span></a>
-        <a href="#admin-clients"><span class="nav-icon">📂</span><span>Clients</span></a>
-        <a href="#admin-insights"><span class="nav-icon">📊</span><span>Insights</span></a>
+        <a href="#management"><span class="nav-icon">🧾</span><span>Sponsors</span></a>
+        <a href="#clients"><span class="nav-icon">📂</span><span>Clients</span></a>
+        <a href="#insights-window"><span class="nav-icon">📊</span><span>Insights</span></a>
         <a href="#contact"><span class="nav-icon">💬</span><span>Support</span></a>
       </nav>
     </section>
@@ -85,6 +89,172 @@
             </article>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="management-window" aria-label="Admin management panel">
+      <div class="window-tabs">
+        <button id="tab-sponsor" class="window-tab active">Sponsor Window</button>
+        <button id="tab-client" class="window-tab">Client Window</button>
+        <button id="tab-insights" class="window-tab">Insights Window</button>
+      </div>
+      <div class="window-panels">
+        <section class="management-panel window-panel active sponsor-window" id="management">
+          <div class="management-header">
+            <div>
+              <h2>Manage Sponsors</h2>
+              <p>Add, update, search, or remove sponsor records from the admin dashboard.</p>
+            </div>
+          </div>
+          <div class="search-row">
+            <label>Search sponsors
+              <input type="search" id="sponsor-search" placeholder="Search by name, email, phone, status or notes" />
+            </label>
+          </div>
+          <div id="sponsor-gate" class="window-gate">
+            <p>Login as admin to manage sponsor records.</p>
+          </div>
+          <div class="window-panel-content sponsor-content">
+            <div class="panel active-panel">
+              <div class="panel-heading">
+                <div>
+                  <h3>Sponsor Management</h3>
+                  <p>Keep sponsor profiles and statuses up to date.</p>
+                </div>
+                <button id="sponsor-refresh" class="secondary" data-icon="🔄">Refresh</button>
+              </div>
+              <form id="sponsor-form" class="record-form">
+                <input type="hidden" id="sponsor-id" />
+                <div class="field-grid">
+                  <label>Name<input type="text" id="sponsor-name" required /></label>
+                  <label>Email<input type="email" id="sponsor-email" required /></label>
+                  <label>Phone<input type="text" id="sponsor-phone" required /></label>
+                  <label>Status
+                    <select id="sponsor-status-select" required>
+                      <option value="prospect">Prospect</option>
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
+                    </select>
+                  </label>
+                </div>
+                <label>Password<input type="password" id="sponsor-password" autocomplete="new-password" /></label>
+                <p class="form-note">Leave password blank when updating a sponsor without changing credentials.</p>
+                <label>Notes<textarea id="sponsor-notes" rows="4"></textarea></label>
+                <div class="button-row">
+                  <button type="submit" data-icon="💾">Save Sponsor</button>
+                  <button type="button" id="sponsor-clear" class="secondary" data-icon="🧹">Clear</button>
+                </div>
+              </form>
+              <div class="status-panel">
+                <div id="sponsor-status-message" class="status-message"></div>
+              </div>
+              <table>
+                <thead>
+                  <tr><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="sponsor-list"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="management-panel window-panel client-window" id="clients">
+          <div class="management-header">
+            <div>
+              <h2>Manage Clients</h2>
+              <p>Add, update, search, or remove client records and sponsor assignments.</p>
+            </div>
+          </div>
+          <div class="search-row">
+            <label>Search clients
+              <input type="search" id="client-search" placeholder="Search by name, email, company, status or notes" />
+            </label>
+          </div>
+          <div id="client-gate" class="window-gate">
+            <p>Login as admin to manage client records.</p>
+          </div>
+          <div class="window-panel-content client-content">
+            <div class="panel active-panel">
+              <div class="panel-heading">
+                <div>
+                  <h3>Client Management</h3>
+                  <p>Maintain client details, status, and sponsor ownership.</p>
+                </div>
+                <button id="client-refresh" class="secondary" data-icon="🔄">Refresh</button>
+              </div>
+              <form id="client-form" class="record-form">
+                <input type="hidden" id="client-id" />
+                <div class="field-grid">
+                  <label>Name<input type="text" id="client-name" required /></label>
+                  <label>Email<input type="email" id="client-email" required /></label>
+                  <label>Company<input type="text" id="client-company" required /></label>
+                  <label>Assigned Sponsor
+                    <select id="client-sponsor" required>
+                      <option value="">Unassigned</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="field-grid">
+                  <label>Phone<input type="text" id="client-phone" required /></label>
+                  <label>Status
+                    <select id="client-status-select" required>
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
+                      <option value="prospect">Prospect</option>
+                    </select>
+                  </label>
+                  <label>Password<input type="password" id="client-password" autocomplete="new-password" /></label>
+                </div>
+                <p class="form-note">Leave password blank when updating a client without changing credentials.</p>
+                <label>Notes<textarea id="client-notes" rows="4"></textarea></label>
+                <div class="button-row">
+                  <button type="submit" data-icon="💾">Save Client</button>
+                  <button type="button" id="client-clear" class="secondary" data-icon="🧹">Clear</button>
+                </div>
+              </form>
+              <div class="status-panel">
+                <div id="client-status-message" class="status-message"></div>
+              </div>
+              <table>
+                <thead>
+                  <tr><th>Name</th><th>Email</th><th>Company</th><th>Assigned Sponsor</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="client-list"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="management-panel window-panel insights-window" id="insights-window">
+          <div class="management-header">
+            <div>
+              <h2>Insights & Analytics</h2>
+              <p>Review sponsor and client totals from the admin dashboard.</p>
+            </div>
+          </div>
+          <div class="window-panel-content">
+            <div class="panel active-panel">
+              <div class="analysis-grid">
+                <article class="metric-card accent-1">
+                  <span>Total Sponsors</span>
+                  <strong id="insight-sponsors">0</strong>
+                </article>
+                <article class="metric-card accent-2">
+                  <span>Total Clients</span>
+                  <strong id="insight-clients">0</strong>
+                </article>
+                <article class="metric-card accent-3">
+                  <span>Active Clients</span>
+                  <strong id="insight-active-clients">0</strong>
+                </article>
+                <article class="metric-card accent-4">
+                  <span>Prospect Sponsors</span>
+                  <strong id="insight-prospect-sponsors">0</strong>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </section>
 
