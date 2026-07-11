@@ -95,6 +95,25 @@ class LoginResponse(BaseModel):
     message: str
 
 
+class ContactMessage(BaseModel):
+    name: str
+    email: EmailStr
+    message: str
+
+
+class ChatRequest(BaseModel):
+    message: str
+
+
+class MessageResponse(BaseModel):
+    status: str
+    message: str
+
+
+class ChatResponse(BaseModel):
+    reply: str
+
+
 class Summary(BaseModel):
     total_sponsors: int
     total_clients: int

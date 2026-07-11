@@ -417,7 +417,11 @@ async function login(event) {
     updateAccessControls();
     setStatus(loginStatus, payload.message);
     closeLogin();
-    showWindow(payload.role === "admin" ? "sponsor" : payload.role);
+    if (payload.role === "admin") {
+      window.location.href = "/admin";
+    } else {
+      showWindow(payload.role);
+    }
   } catch (err) {
     setStatus(loginStatus, err.message, "error");
   }

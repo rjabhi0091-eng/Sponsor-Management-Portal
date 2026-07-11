@@ -7,6 +7,7 @@ from fastapi.responses import RedirectResponse, StreamingResponse, JSONResponse
 from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
+from google.auth.transport.requests import Request
 import pandas as pd
 from dotenv import load_dotenv
 
@@ -91,6 +92,14 @@ def load_credentials_db() -> Optional[Credentials]:
         client_secret=data.get("client_secret"),
         scopes=data.get("scopes"),
     )
+
+    if not creds.valid and creds.refresh_token:
+        try:
+            creds.refresh(Request())
+            save_tokens_db(creds)
+        except Exception:
+            return creds
+
     return creds
 
 

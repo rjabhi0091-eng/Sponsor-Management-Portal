@@ -30,7 +30,7 @@ class Client(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(200), nullable=False, unique=True)
-    email = Column(String(200), nullable=False)
+    email = Column(String(200), nullable=False, unique=True)
     phone = Column(String(50), nullable=True)
     company = Column(String(200), nullable=True)
     sponsor_id = Column(Integer, ForeignKey("sponsors.id"), nullable=True)

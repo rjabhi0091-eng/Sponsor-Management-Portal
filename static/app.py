@@ -362,20 +362,15 @@ def delete_client(client_id: int, db: Session = Depends(get_db)):
     return None
 
 
-@app.post("/contact/message", tags=["contact"])
-def submit_contact_message(payload: dict):
-    name = str(payload.get("name", "")).strip()
-    email = str(payload.get("email", "")).strip()
-    message = str(payload.get("message", "")).strip()
-    if not all([name, email, message]):
-        raise HTTPException(status_code=400, detail="Name, email, and message are required")
-    result = send_contact_email(name, email, message)
+@app.post("/contact/message", response_model=schemas.MessageResponse, tags=["contact"])
+def submit_contact_message(payload: schemas.ContactMessage):
+    result = send_contact_email(payload.name, payload.email, payload.message)
     return {"status": result["status"], "message": result["message"]}
 
 
-@app.post("/chat/assistant", tags=["chat"])
-def chat_assistant(payload: dict):
-    message = str(payload.get("message", "")).strip().lower()
+@app.post("/chat/assistant", response_model=schemas.ChatResponse, tags=["chat"])
+def chat_assistant(payload: schemas.ChatRequest):
+    message = payload.message.strip().lower()
     if not message:
         raise HTTPException(status_code=400, detail="Please enter a question")
     if any(keyword in message for keyword in ["about", "who", "company"]):
