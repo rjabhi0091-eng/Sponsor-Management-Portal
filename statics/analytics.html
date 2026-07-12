@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .analytics-container { padding: 40px 5%; max-width: 1400px; margin: 0 auto; color: #fff; }
         .tabs { display: flex; gap: 15px; margin-bottom: 30px; }
@@ -58,6 +59,21 @@
                         <strong style="font-size: 32px; color: #f59e0b;">24%</strong>
                     </article>
                 </div>
+                
+                <div class="chart-grid">
+                    <div class="chart-card">
+                        <h3>ROI Conversion (6 Months)</h3>
+                        <div class="chart-container">
+                            <canvas id="sponsorLineChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Reach by Platform</h3>
+                        <div class="chart-container">
+                            <canvas id="sponsorBarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -76,17 +92,92 @@
                         <strong style="font-size: 32px; color: #10b981;">$120k</strong>
                     </article>
                 </div>
+                <div class="chart-grid">
+                    <div class="chart-card">
+                        <h3>Audience Growth (YTD)</h3>
+                        <div class="chart-container">
+                            <canvas id="clientLineChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Funding Goals vs Secured</h3>
+                        <div class="chart-container">
+                            <canvas id="clientBarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Social Media Marketing Panel -->
         <div id="smm" class="tab-panel">
             <div class="glass-box">
-                <h2>Social Media Marketing</h2>
-                <p style="color: #94a3b8; margin-bottom: 20px;">Integrated marketing services provided by R-Abhi Tech Solution.</p>
-                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <img src="Social_media_marketing.png" alt="Marketing 1" style="flex: 1; min-width: 300px; border-radius: 12px; object-fit: cover;">
-                    <img src="types-of-social-media-marketing.png" alt="Marketing 2" style="flex: 1; min-width: 300px; border-radius: 12px; object-fit: cover;">
+                <h2>Active Marketing Campaigns</h2>
+                <p style="color: #94a3b8; margin-bottom: 20px;">Manage and monitor active social media drives.</p>
+                
+                <div class="campaign-board">
+                    <div class="campaign-card">
+                        <div class="campaign-header">
+                            <span class="campaign-title">Summer Tech Expo</span>
+                            <span class="campaign-platform platform-ig">Instagram</span>
+                        </div>
+                        <div class="campaign-status">
+                            <div class="status-indicator status-active"></div>
+                            <span>Active</span>
+                        </div>
+                        <div class="campaign-metrics">
+                            <div class="metric-box">
+                                <span class="label">Reach</span>
+                                <span class="value">450k</span>
+                            </div>
+                            <div class="metric-box">
+                                <span class="label">Engagement</span>
+                                <span class="value">8.2%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="campaign-card">
+                        <div class="campaign-header">
+                            <span class="campaign-title">B2B SaaS Launch</span>
+                            <span class="campaign-platform platform-li">LinkedIn</span>
+                        </div>
+                        <div class="campaign-status">
+                            <div class="status-indicator status-planning"></div>
+                            <span>Planning</span>
+                        </div>
+                        <div class="campaign-metrics">
+                            <div class="metric-box">
+                                <span class="label">Target Reach</span>
+                                <span class="value">100k</span>
+                            </div>
+                            <div class="metric-box">
+                                <span class="label">Budget</span>
+                                <span class="value">$15k</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="campaign-card">
+                        <div class="campaign-header">
+                            <span class="campaign-title">Flash Sale Promo</span>
+                            <span class="campaign-platform platform-tw">Twitter</span>
+                        </div>
+                        <div class="campaign-status">
+                            <div class="status-indicator status-completed"></div>
+                            <span>Completed</span>
+                        </div>
+                        <div class="campaign-metrics">
+                            <div class="metric-box">
+                                <span class="label">Reach</span>
+                                <span class="value">850k</span>
+                            </div>
+                            <div class="metric-box">
+                                <span class="label">Conversion</span>
+                                <span class="value">3.4%</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,15 +200,17 @@
 
                 <h3 style="margin-bottom: 15px;">Available Portfolios (For Sponsors)</h3>
                 <div class="portfolio-grid">
-                    <article style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
-                        <h4 style="margin-bottom: 10px; color: #8b5cf6;">Tech Startup Campaign</h4>
-                        <p style="color: #a1a1aa; font-size: 14px;">A successful 3-month Instagram push resulting in 200k new followers.</p>
-                        <button class="secondary" style="margin-top: 15px; font-size: 13px;">View Full Data</button>
+                    <article class="portfolio-card">
+                        <span class="portfolio-tag">Tech & Software</span>
+                        <h4 style="margin-bottom: 10px; color: #8b5cf6; font-size: 1.2rem;">Tech Startup Campaign</h4>
+                        <p style="color: #a1a1aa; font-size: 14px; margin-bottom: 20px;">A successful 3-month Instagram push resulting in 200k new followers and a 15% increase in MRR.</p>
+                        <button class="primary" style="width: 100%; font-size: 14px; padding: 10px;">View Full Data</button>
                     </article>
-                    <article style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
-                        <h4 style="margin-bottom: 10px; color: #8b5cf6;">Fashion Brand Launch</h4>
-                        <p style="color: #a1a1aa; font-size: 14px;">Influencer marketing drive across Twitter and LinkedIn.</p>
-                        <button class="secondary" style="margin-top: 15px; font-size: 13px;">View Full Data</button>
+                    <article class="portfolio-card">
+                        <span class="portfolio-tag">Fashion</span>
+                        <h4 style="margin-bottom: 10px; color: #8b5cf6; font-size: 1.2rem;">Apparel Brand Launch</h4>
+                        <p style="color: #a1a1aa; font-size: 14px; margin-bottom: 20px;">Influencer marketing drive across Twitter and LinkedIn, generating $50k in day-one sales.</p>
+                        <button class="primary" style="width: 100%; font-size: 14px; padding: 10px;">View Full Data</button>
                     </article>
                 </div>
             </div>
@@ -132,6 +225,82 @@
             document.getElementById(id).classList.add('active');
             event.currentTarget.classList.add('active');
         }
+
+        // Initialize Charts when DOM loads
+        document.addEventListener('DOMContentLoaded', () => {
+            Chart.defaults.color = '#a1a1aa';
+            Chart.defaults.font.family = 'Inter, sans-serif';
+
+            // Sponsor ROI Line Chart
+            const ctxSponsorLine = document.getElementById('sponsorLineChart').getContext('2d');
+            new Chart(ctxSponsorLine, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'ROI Conversion (%)',
+                        data: [12, 14, 18, 17, 21, 24],
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            // Sponsor Reach Bar Chart
+            const ctxSponsorBar = document.getElementById('sponsorBarChart').getContext('2d');
+            new Chart(ctxSponsorBar, {
+                type: 'bar',
+                data: {
+                    labels: ['Instagram', 'Twitter', 'LinkedIn', 'YouTube'],
+                    datasets: [{
+                        label: 'Reach (in Thousands)',
+                        data: [500, 300, 250, 150],
+                        backgroundColor: ['#ff6b95', '#1da1f2', '#64b5f6', '#ef4444'],
+                        borderRadius: 6
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            // Client Audience Line Chart
+            const ctxClientLine = document.getElementById('clientLineChart').getContext('2d');
+            new Chart(ctxClientLine, {
+                type: 'line',
+                data: {
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                    datasets: [{
+                        label: 'Audience Growth (%)',
+                        data: [10, 25, 30, 45],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            // Client Funding Bar Chart
+            const ctxClientBar = document.getElementById('clientBarChart').getContext('2d');
+            new Chart(ctxClientBar, {
+                type: 'bar',
+                data: {
+                    labels: ['Goal', 'Secured'],
+                    datasets: [{
+                        label: 'Funding (in $K)',
+                        data: [150, 120],
+                        backgroundColor: ['#3b82f6', '#10b981'],
+                        borderRadius: 6
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        });
     </script>
 </body>
 </html>
