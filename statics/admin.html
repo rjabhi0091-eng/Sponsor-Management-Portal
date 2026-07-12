@@ -175,42 +175,8 @@
                             <th style="padding: 12px;">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: #a1a1aa;">
-                            <td style="padding: 12px;">#1001</td>
-                            <td style="padding: 12px;">Sponsor</td>
-                            <td style="padding: 12px;">Rahul Sharma</td>
-                            <td style="padding: 12px;">rahul@example.com</td>
-                            <td style="padding: 12px; color: #f59e0b;">Pending</td>
-                            <td style="padding: 12px;">
-                                <button class="action-btn btn-approve" onclick="alert('Approved!')">Approve</button>
-                                <button class="action-btn btn-delete"
-                                    onclick="this.parentElement.parentElement.remove()">Delete</button>
-                            </td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: #a1a1aa;">
-                            <td style="padding: 12px;">#1002</td>
-                            <td style="padding: 12px;">Client</td>
-                            <td style="padding: 12px;">Priya Singh</td>
-                            <td style="padding: 12px;">priya@brand.com</td>
-                            <td style="padding: 12px; color: #f59e0b;">Pending</td>
-                            <td style="padding: 12px;">
-                                <button class="action-btn btn-approve" onclick="alert('Approved!')">Approve</button>
-                                <button class="action-btn btn-delete"
-                                    onclick="this.parentElement.parentElement.remove()">Delete</button>
-                            </td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: #a1a1aa;">
-                            <td style="padding: 12px;">#1003</td>
-                            <td style="padding: 12px;">Sponsor</td>
-                            <td style="padding: 12px;">Amit Kumar</td>
-                            <td style="padding: 12px;">amit@tech.in</td>
-                            <td style="padding: 12px; color: #10b981;">Active</td>
-                            <td style="padding: 12px;">
-                                <button class="action-btn btn-delete"
-                                    onclick="this.parentElement.parentElement.remove()">Delete</button>
-                            </td>
-                        </tr>
+                    <tbody id="registrations-body">
+                        <!-- Rows will be dynamically loaded here by JavaScript -->
                     </tbody>
                 </table>
             </div>
@@ -270,6 +236,96 @@
                     tr[i].style.display = "none";
                 }
             }
+        }
+    </script>
+
+    <script>
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            window.location.href = 'login.html';
+        }
+
+        async function fetchRegistrations() {
+            try {
+                // Fetch Sponsors
+                const spRes = await fetch('/sponsors/', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                // Fetch Clients
+                const clRes = await fetch('/clients/', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (spRes.status === 401 || clRes.status === 401 || spRes.status === 403) {
+                    alert('Session expired. Please log in again.');
+                    localStorage.removeItem('access_token');
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                const sponsors = await spRes.json();
+                const clients = await clRes.json();
+                
+                const tbody = document.getElementById('registrations-body');
+                tbody.innerHTML = '';
+
+                // Render Sponsors
+                sponsors.forEach(s => {
+                    tbody.innerHTML += `
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: #a1a1aa;">
+                            <td style="padding: 12px;">#${s.id}</td>
+                            <td style="padding: 12px;">Sponsor</td>
+                            <td style="padding: 12px;">${s.name}</td>
+                            <td style="padding: 12px;">${s.email}</td>
+                            <td style="padding: 12px; color: #10b981;">Active</td>
+                            <td style="padding: 12px;">
+                                <button class="action-btn btn-delete" onclick="deleteRecord('sponsors', ${s.id}, this)">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                // Render Clients
+                clients.forEach(c => {
+                    tbody.innerHTML += `
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: #a1a1aa;">
+                            <td style="padding: 12px;">#${c.id}</td>
+                            <td style="padding: 12px;">Client</td>
+                            <td style="padding: 12px;">${c.name}</td>
+                            <td style="padding: 12px;">${c.email}</td>
+                            <td style="padding: 12px; color: #10b981;">Active</td>
+                            <td style="padding: 12px;">
+                                <button class="action-btn btn-delete" onclick="deleteRecord('clients', ${c.id}, this)">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+        async function deleteRecord(type, id, btn) {
+            if(!confirm('Are you sure you want to delete this record?')) return;
+            try {
+                const res = await fetch(`/${type}/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    btn.parentElement.parentElement.remove();
+                } else {
+                    alert('Failed to delete record.');
+                }
+            } catch(err) {
+                console.error(err);
+            }
+        }
+
+        // Load data on page load
+        if(token) {
+            fetchRegistrations();
         }
     </script>
 </body>

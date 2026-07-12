@@ -313,12 +313,36 @@
             }
         }
 
-        function handleLogin(event) {
+        async function handleLogin(event) {
             event.preventDefault();
-            if (currentType === 'admin') {
-                window.location.href = 'admin.html';
-            } else {
-                window.location.href = 'analytics.html';
+            const email = document.getElementById('email-input').value;
+            const password = document.getElementById('password-input').value;
+            const endpoint = currentType === 'admin' ? '/auth/admin-login' : 
+                             currentType === 'sponsor' ? '/auth/sponsor-login' : '/auth/client-login';
+                             
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, password: password })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('access_token', data.access_token);
+                    localStorage.setItem('user_type', data.user_type || currentType);
+                    
+                    if (currentType === 'admin') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'dashboard.html';
+                    }
+                } else {
+                    alert('Login failed. Please check your credentials.');
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                alert('An error occurred. Please try again.');
             }
         }
 
