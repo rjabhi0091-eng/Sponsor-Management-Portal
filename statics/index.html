@@ -11,48 +11,57 @@
   <link rel="apple-touch-icon" href="logo.png" />
   <title>R-Abhi Tech Solution - Sponsor Management and Social Media Marketing</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e293b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 
 <body>
   <header class="topbar">
     <div class="topbar-brand">
-      <img src="logo.png" alt="R-Abhi Tech Solution" class="site-logo" />
+      <img src="logo2.png" alt="R-Abhi Tech Solution" class="site-logo" />
       <div class="brand-details">
-        <p class="brand-name">R-ABHI TECH SOLUTION</p>
+        <p class="brand-name">R-ABHI TECH SOLUTION <img src="logostar.png" alt="star" style="height: 1em; width: auto;" /></p>
         <p class="brand-tagline">Connecting Brands, Creating Impact, Driving Growth.</p>
       </div>
     </div>
-    <div class="header-actions">
-      <a href="analytics.html" class="secondary" data-icon="🛠️"
-        style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:8px 16px;border-radius:8px;">Dashboard</a>
-      <a href="login.html" class="primary" data-icon="🔐"
-        style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:8px 16px;border-radius:8px;background:var(--button-bg);color:#fff;">Login</a>
+    
+    <div class="header-main-actions">
+      <a href="admin.html" class="secondary" ><i class="ph ph-shield-check" style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Admin</a>
+      <a href="analytics.html" class="secondary" ><i class="ph ph-chart-bar" style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Dashboard</a>
+      <a href="login.html" class="primary" ><i class="ph ph-lock-key" style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Login</a>
+    </div>
+
+    <div class="header-nav-actions">
+      <a href="#overview" class="nav-link"><i class="ph ph-house" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Overview</a>
+      <a href="login.html" class="nav-link"><i class="ph ph-sign-in" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Login Portals</a>
+      <a href="#sponsor-registration" class="nav-link"><i class="ph ph-handshake" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Sponsors</a>
+      <a href="#client-registration" class="nav-link"><i class="ph ph-users" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Clients</a>
+      <a href="analytics.html" class="nav-link"><i class="ph ph-megaphone" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Marketing</a>
+      <a href="#register" class="nav-link"><i class="ph ph-user-plus" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Register</a>
+      <a href="#about" class="nav-link"><i class="ph ph-info" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>About</a>
+      <a href="analytics.html#media" class="nav-link"><i class="ph ph-image" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Media</a>
+      <a href="#team" class="nav-link"><i class="ph ph-users-three" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Team</a>
+      <a href="#registration-stats" class="nav-link"><i class="ph ph-activity" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Live Registration</a>
+      <a href="#contact" class="nav-link"><i class="ph ph-envelope-simple" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Contact</a>
     </div>
   </header>
   <div class="page-shell">
 
     <nav class="bottom-nav" aria-label="Bottom navigation">
       <button class="bottom-nav-item" type="button" onclick="window.location.href='#'" aria-label="Home">🏠</button>
-      <button class="bottom-nav-item" type="button" onclick="window.location.href='#sponsor-registration'" aria-label="Sponsors">🤝</button>
-      <button class="bottom-nav-item" type="button" onclick="window.location.href='#client-registration'" aria-label="Clients">👥</button>
-      <button class="bottom-nav-item" type="button" onclick="window.location.href='analytics.html'" aria-label="Marketing">📣</button>
-      <button class="bottom-nav-item" type="button" onclick="window.location.href='#registration-stats'" aria-label="Insights">📊</button>
+      <button class="bottom-nav-item" type="button" onclick="window.location.href='#sponsor-registration'"
+        aria-label="Sponsors">🤝</button>
+      <button class="bottom-nav-item" type="button" onclick="window.location.href='#client-registration'"
+        aria-label="Clients">👥</button>
+      <button class="bottom-nav-item" type="button" onclick="window.location.href='analytics.html'"
+        aria-label="Marketing">📣</button>
+      <button class="bottom-nav-item" type="button" onclick="window.location.href='#registration-stats'"
+        aria-label="Insights">📊</button>
     </nav>
-    <section class="nav-section">
-      <nav class="site-nav">
-        <a href="#overview">Overview</a>
-        <a href="login.html">Login Portals</a>
-        <a href="#sponsor-registration">Sponsors</a>
-        <a href="#client-registration">Clients</a>
-        <a href="analytics.html">Marketing</a>
-        <a href="#register">Register</a>
-        <a href="#about">About</a>
-        <a href="analytics.html#media">Media</a>
-        <a href="#team">Team</a>
-        <a href="#registration-stats">Live Registration</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </section>
+
     <section class="search-section">
       <div class="search-panel">
         <label for="section-search">Quick search</label>
@@ -60,19 +69,14 @@
         <p>Type words like sponsors, clients, marketing, register, or about to jump directly to that area.</p>
       </div>
     </section>
-    <header class="site-header" id="overview"
-      style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 40px 20px; flex-wrap: wrap; background: url('topbackground.jpg.webp') center/cover no-repeat; position: relative; border-radius: 24px; box-shadow: inset 0 0 100px rgba(0,0,0,0.5); overflow: hidden;">
-      <div class="hero-copy"
-        style="flex: 1; width: 100%; max-width: 900px; text-align: center; position: relative; z-index: 1; margin: 0 auto;">
-        <span class="eyebrow"
-          style="font-size: 14px; font-weight: 600; color: #8b5cf6; display: block; margin-bottom: 12px; letter-spacing: 1px; text-transform: uppercase;">Sponsor
-          & Client Portal</span>
-        <h1 style="font-size: 3.5rem; line-height: 1.15; margin: 0 0 20px 0; font-weight: 800; color: #ffffff;">Sponsor
-          Management and Social Media Marketing</h1>
-        <p style="font-size: 1.2rem; line-height: 1.6; margin: 0 auto 15px auto; color: #e2e8f0; max-width: 800px;">
+    <header class="site-header" id="overview">
+      <div class="hero-copy">
+        <span class="eyebrow">Sponsor & Client Portal</span>
+        <h1>Sponsor Management and Social Media Marketing</h1>
+        <p class="subtitle1">
           Reimagine how brands and sponsors collaborate with transparent workflows and powerful campaign tools. Built
           for trust, growth, and business-ready deployment across teams and client networks.</p>
-        <p style="font-size: 1rem; margin: 0 auto 25px auto; color: #a1a1aa; max-width: 600px;">A polished sponsor
+        <p class="subtitle2">A polished sponsor
           portal and social media marketing hub for business use — ready to launch, manage relationships, and drive
           campaigns.</p>
 
@@ -103,6 +107,137 @@
         <strong id="hero-portfolio-label">Live</strong>
         <p>Built for modern sponsor portfolio tracking.</p>
       </article>
+    </section>
+
+    <section class="about-section" id="about">
+      <div class="about-copy">
+        <span class="eyebrow">About Us</span>
+        <h2>R-ABHI TECH SOLUTION</h2>
+        <p><strong>R-ABHI TECH SOLUTION</strong> is a professional Sponsor Management and Social Media Marketing agency
+          dedicated to helping businesses, startups, events, organizations, influencers, and brands maximize their
+          market presence and business growth.</p>
+        <p>We specialize in sponsorship acquisition, brand partnerships, digital marketing, social media management,
+          content creation, influencer marketing, and event promotions. Our team works strategically to connect brands
+          with the right sponsors and target audiences, ensuring maximum visibility, engagement, and return on
+          investment.</p>
+        <p>At R-ABHI TECH SOLUTION, we believe that strong partnerships and innovative marketing strategies are the
+          foundation of sustainable business growth. We help our clients build powerful brand identities, attract
+          quality sponsors, generate leads, and achieve measurable results through creative and data-driven marketing
+          solutions.</p>
+      </div>
+      <div class="about-profile">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80"
+          alt="Company team meeting" />
+        <div class="about-profile-text">
+          <h3>Connecting Brands, Creating Impact, Driving Growth.</h3>
+          <p>Our portal supports sponsor acquisition, influencer collaboration, campaign planning, and transparent
+            performance reporting so every partner stays aligned and accountable.</p>
+          <p>We combine sponsor network management with social media marketing to deliver campaigns that win attention,
+            build trust, and grow business results.</p>
+        </div>
+      </div>
+      <div class="about-grid">
+        <article class="about-card">
+          <h3>Mission</h3>
+          <p>To empower businesses and brands through innovative sponsorship solutions and result-oriented digital
+            marketing strategies that create long-term value and growth.</p>
+        </article>
+        <article class="about-card">
+          <h3>Vision</h3>
+          <p>To become one of India's most trusted Sponsor Management and Digital Marketing companies by delivering
+            exceptional service, strategic partnerships, and measurable business success.</p>
+        </article>
+        <article class="about-card">
+          <h3>Sponsor Management</h3>
+          <ul>
+            <li>Sponsorship Acquisition</li>
+            <li>Brand Partnership Development</li>
+            <li>Sponsorship Proposal & Pitch Deck Creation</li>
+            <li>Sponsor Negotiation & Deal Closure</li>
+            <li>Event Sponsorship Management</li>
+          </ul>
+        </article>
+        <article class="about-card">
+          <h3>Social Media Marketing</h3>
+          <ul>
+            <li>Social Media Strategy Development</li>
+            <li>Facebook, Instagram & LinkedIn Marketing</li>
+            <li>Content Creation & Branding</li>
+            <li>Influencer Marketing & Paid Advertising</li>
+            <li>Lead Generation Campaigns</li>
+          </ul>
+        </article>
+      </div>
+      <div class="workflow-grid">
+        <article class="workflow-block">
+          <h4>Phase 1 – Client Acquisition</h4>
+          <pre>Lead Generation
+↓
+Client Inquiry
+↓
+Requirement Discussion
+↓
+Business Analysis
+↓
+Proposal Submission
+↓
+Agreement & Onboarding</pre>
+        </article>
+        <article class="workflow-block">
+          <h4>Phase 2 – Sponsor Management Workflow</h4>
+          <pre>Client Requirement Analysis
+↓
+Sponsor Research
+↓
+Database Creation
+↓
+Sponsor Outreach
+↓
+Meeting & Presentation
+↓
+Negotiation
+↓
+Sponsorship Deal Closure
+↓
+Contract Management
+↓
+Sponsor Activation
+↓
+Performance Report
+↓
+Relationship Management
+↓
+Renewal & Upselling</pre>
+        </article>
+        <article class="workflow-block">
+          <h4>Phase 3 – Social Media Marketing Workflow</h4>
+          <pre>Brand Audit
+↓
+Market Research
+↓
+Content Strategy
+↓
+Content Calendar
+↓
+Creative Design
+↓
+Content Approval
+↓
+Post Scheduling
+↓
+Community Engagement
+↓
+Paid Advertising
+↓
+Lead Generation
+↓
+Analytics & Reporting
+↓
+Optimization
+↓
+Growth Scaling</pre>
+        </article>
+      </div>
     </section>
 
     <section class="landing-features">
@@ -251,196 +386,7 @@
 
 
 
-    <section class="registration-section" id="register">
-      <div class="about-copy">
-        <span class="eyebrow">Registration</span>
-        <h2>Account Registration</h2>
-        <p>Choose the appropriate registration path below to create your sponsor or client account and get started
-          quickly.</p>
-      </div>
-      <div class="register-grid">
-        <article class="register-card" id="sponsor-registration">
-          <h3>Sponsor Registration</h3>
-          <p>Register as a sponsor to manage brand partnerships and campaign opportunities.</p>
-          <form id="register-sponsor-form" class="record-form">
-            <label>Name<input type="text" id="register-sponsor-name" required /></label>
-            <label>Email<input type="email" id="register-sponsor-email" required /></label>
-            <label>Phone<input type="text" id="register-sponsor-phone" required /></label>
-            <label>Status
-              <select id="register-sponsor-status" required>
-                <option value="prospect">Prospect</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
-            </label>
-            <label>Password<input type="password" id="register-sponsor-password" required
-                autocomplete="new-password" /></label>
-            <label>Notes<textarea id="register-sponsor-notes" rows="4"></textarea></label>
-            <div class="button-row">
-              <button type="submit" data-icon="📝">Register Sponsor</button>
-              <button type="button" id="register-sponsor-clear" class="secondary" data-icon="🧹">Clear</button>
-            </div>
-            <div id="register-sponsor-feedback" class="status-message"></div>
-          </form>
-        </article>
-        <article class="register-card" id="client-registration">
-          <h3>Client Registration</h3>
-          <p>Register as a client to join sponsor campaigns and manage your own profile.</p>
-          <form id="register-client-form" class="record-form">
-            <label>Name<input type="text" id="register-client-name" required /></label>
-            <label>Email<input type="email" id="register-client-email" required /></label>
-            <label>Company<input type="text" id="register-client-company" required /></label>
-            <label>Phone<input type="text" id="register-client-phone" required /></label>
-            <label>Status
-              <select id="register-client-status" required>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-                <option value="prospect">Prospect</option>
-              </select>
-            </label>
-            <label>Password<input type="password" id="register-client-password" required
-                autocomplete="new-password" /></label>
-            <label>Notes<textarea id="register-client-notes" rows="4"></textarea></label>
-            <div class="button-row">
-              <button type="submit" data-icon="📝">Register Client</button>
-              <button type="button" id="register-client-clear" class="secondary" data-icon="🧹">Clear</button>
-            </div>
-            <div id="register-client-feedback" class="status-message"></div>
-          </form>
-        </article>
-      </div>
-    </section>
 
-    <section class="about-section" id="about">
-      <div class="about-copy">
-        <span class="eyebrow">About Us</span>
-        <h2>R-ABHI TECH SOLUTION</h2>
-        <p><strong>R-ABHI TECH SOLUTION</strong> is a professional Sponsor Management and Social Media Marketing agency
-          dedicated to helping businesses, startups, events, organizations, influencers, and brands maximize their
-          market presence and business growth.</p>
-        <p>We specialize in sponsorship acquisition, brand partnerships, digital marketing, social media management,
-          content creation, influencer marketing, and event promotions. Our team works strategically to connect brands
-          with the right sponsors and target audiences, ensuring maximum visibility, engagement, and return on
-          investment.</p>
-        <p>At R-ABHI TECH SOLUTION, we believe that strong partnerships and innovative marketing strategies are the
-          foundation of sustainable business growth. We help our clients build powerful brand identities, attract
-          quality sponsors, generate leads, and achieve measurable results through creative and data-driven marketing
-          solutions.</p>
-      </div>
-      <div class="about-profile">
-        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80"
-          alt="Company team meeting" />
-        <div class="about-profile-text">
-          <h3>Connecting Brands, Creating Impact, Driving Growth.</h3>
-          <p>Our portal supports sponsor acquisition, influencer collaboration, campaign planning, and transparent
-            performance reporting so every partner stays aligned and accountable.</p>
-          <p>We combine sponsor network management with social media marketing to deliver campaigns that win attention,
-            build trust, and grow business results.</p>
-        </div>
-      </div>
-      <div class="about-grid">
-        <article class="about-card">
-          <h3>Mission</h3>
-          <p>To empower businesses and brands through innovative sponsorship solutions and result-oriented digital
-            marketing strategies that create long-term value and growth.</p>
-        </article>
-        <article class="about-card">
-          <h3>Vision</h3>
-          <p>To become one of India's most trusted Sponsor Management and Digital Marketing companies by delivering
-            exceptional service, strategic partnerships, and measurable business success.</p>
-        </article>
-        <article class="about-card">
-          <h3>Sponsor Management</h3>
-          <ul>
-            <li>Sponsorship Acquisition</li>
-            <li>Brand Partnership Development</li>
-            <li>Sponsorship Proposal & Pitch Deck Creation</li>
-            <li>Sponsor Negotiation & Deal Closure</li>
-            <li>Event Sponsorship Management</li>
-          </ul>
-        </article>
-        <article class="about-card">
-          <h3>Social Media Marketing</h3>
-          <ul>
-            <li>Social Media Strategy Development</li>
-            <li>Facebook, Instagram & LinkedIn Marketing</li>
-            <li>Content Creation & Branding</li>
-            <li>Influencer Marketing & Paid Advertising</li>
-            <li>Lead Generation Campaigns</li>
-          </ul>
-        </article>
-      </div>
-      <div class="workflow-grid">
-        <article class="workflow-block">
-          <h4>Phase 1 – Client Acquisition</h4>
-          <pre>Lead Generation
-↓
-Client Inquiry
-↓
-Requirement Discussion
-↓
-Business Analysis
-↓
-Proposal Submission
-↓
-Agreement & Onboarding</pre>
-        </article>
-        <article class="workflow-block">
-          <h4>Phase 2 – Sponsor Management Workflow</h4>
-          <pre>Client Requirement Analysis
-↓
-Sponsor Research
-↓
-Database Creation
-↓
-Sponsor Outreach
-↓
-Meeting & Presentation
-↓
-Negotiation
-↓
-Sponsorship Deal Closure
-↓
-Contract Management
-↓
-Sponsor Activation
-↓
-Performance Report
-↓
-Relationship Management
-↓
-Renewal & Upselling</pre>
-        </article>
-        <article class="workflow-block">
-          <h4>Phase 3 – Social Media Marketing Workflow</h4>
-          <pre>Brand Audit
-↓
-Market Research
-↓
-Content Strategy
-↓
-Content Calendar
-↓
-Creative Design
-↓
-Content Approval
-↓
-Post Scheduling
-↓
-Community Engagement
-↓
-Paid Advertising
-↓
-Lead Generation
-↓
-Analytics & Reporting
-↓
-Optimization
-↓
-Growth Scaling</pre>
-        </article>
-      </div>
-    </section>
 
 
     <section class="team-section" id="team">
@@ -614,6 +560,66 @@ Growth Scaling</pre>
     </section>
 
 
+    <section class="registration-section" id="register">
+      <div class="about-copy">
+        <span class="eyebrow">Registration</span>
+        <h2>Account Registration</h2>
+        <p>Choose the appropriate registration path below to create your sponsor or client account and get started
+          quickly.</p>
+      </div>
+      <div class="register-grid">
+        <article class="register-card" id="sponsor-registration">
+          <h3>Sponsor Registration</h3>
+          <p>Register as a sponsor to manage brand partnerships and campaign opportunities.</p>
+          <form id="register-sponsor-form" class="record-form">
+            <label>Name<input type="text" id="register-sponsor-name" required /></label>
+            <label>Email<input type="email" id="register-sponsor-email" required /></label>
+            <label>Phone<input type="text" id="register-sponsor-phone" required /></label>
+            <label>Status
+              <select id="register-sponsor-status" required>
+                <option value="prospect">Prospect</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </label>
+            <label>Password<input type="password" id="register-sponsor-password" required
+                autocomplete="new-password" /></label>
+            <label>Notes<textarea id="register-sponsor-notes" rows="4"></textarea></label>
+            <div class="button-row">
+              <button type="submit" data-icon="📝">Register Sponsor</button>
+              <button type="button" id="register-sponsor-clear" class="secondary" data-icon="🧹">Clear</button>
+            </div>
+            <div id="register-sponsor-feedback" class="status-message"></div>
+          </form>
+        </article>
+        <article class="register-card" id="client-registration">
+          <h3>Client Registration</h3>
+          <p>Register as a client to join sponsor campaigns and manage your own profile.</p>
+          <form id="register-client-form" class="record-form">
+            <label>Name<input type="text" id="register-client-name" required /></label>
+            <label>Email<input type="email" id="register-client-email" required /></label>
+            <label>Company<input type="text" id="register-client-company" required /></label>
+            <label>Phone<input type="text" id="register-client-phone" required /></label>
+            <label>Status
+              <select id="register-client-status" required>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="prospect">Prospect</option>
+              </select>
+            </label>
+            <label>Password<input type="password" id="register-client-password" required
+                autocomplete="new-password" /></label>
+            <label>Notes<textarea id="register-client-notes" rows="4"></textarea></label>
+            <div class="button-row">
+              <button type="submit" data-icon="📝">Register Client</button>
+              <button type="button" id="register-client-clear" class="secondary" data-icon="🧹">Clear</button>
+            </div>
+            <div id="register-client-feedback" class="status-message"></div>
+          </form>
+        </article>
+      </div>
+    </section>
+
     <section id="registration-stats" class="live-analytics" style="margin-top: 60px; margin-bottom: 40px;">
       <div class="hero-dashboard"
         style="text-align: center; max-width: 1200px; margin: 0 auto; background: rgba(15, 23, 42, 0.6); padding: 40px; border-radius: 24px; border: 1px solid rgba(56, 189, 248, 0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
@@ -666,37 +672,51 @@ Growth Scaling</pre>
         <label>Email<input type="email" id="login-email" required /></label>
         <label>Password<input type="password" id="login-password" required /></label>
         <div class="button-row">
-          <button type="submit" data-icon="🔑">Login</button>
-          <button type="button" id="close-login-secondary" class="secondary" data-icon="❌">Cancel</button>
+          <button type="submit" ><i class="ph ph-key" style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Login</button>
+          <button type="button" id="close-login-secondary" class="secondary" ><i class="ph ph-x" style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Cancel</button>
         </div>
       </form>
       <div id="login-status" class="status-message"></div>
     </div>
   </div>
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
+  </script>
+
   <script src="/static/app.js"></script>
 
-    <!-- Floating Actions -->
-    <div class="floating-actions">
-        <button class="float-btn" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to Top">
-            <ion-icon name="arrow-up-outline"></ion-icon>
-        </button>
-        <button class="float-btn chat-btn" onclick="alert('Live chat support connecting...')" title="Live Chat Support">
-            <ion-icon name="chatbubbles-outline"></ion-icon>
-        </button>
-    </div>
+  <!-- Floating Actions -->
+  <div class="floating-actions">
+    <button class="float-btn" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+      title="Back to Top">
+      <ion-icon name="arrow-up-outline"></ion-icon>
+    </button>
+    <button class="float-btn chat-btn" onclick="alert('Live chat support connecting...')" title="Live Chat Support">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+    </button>
+  </div>
 
-    <script>
-        // Back to Top Logic
-        window.addEventListener('scroll', () => {
-            const btn = document.getElementById('backToTop');
-            if (window.scrollY > 300) {
-                btn.classList.add('show');
-            } else {
-                btn.classList.remove('show');
-            }
-        });
-    </script>
+  <script>
+    // Back to Top Logic
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('backToTop');
+      if (window.scrollY > 300) {
+        btn.classList.add('show');
+      } else {
+        btn.classList.remove('show');
+      }
+    });
+  </script>
 </body>
 
 

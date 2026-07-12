@@ -93,3 +93,20 @@ class Admin(Base):
             return pwd_context.verify(password, self.password_hash)
         except Exception:
             return False
+
+class ContactMessage(Base):
+    __tablename__ = "contact_messages"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(200), nullable=False)
+    email = Column(String(200), nullable=False)
+    message = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class MarketingCampaign(Base):
+    __tablename__ = "marketing_campaigns"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(200), nullable=False)
+    platform = Column(String(50), nullable=False)
+    status = Column(String(50), nullable=False, default="planning")
+    metrics = Column(Text, nullable=True) # JSON string
+    created_at = Column(DateTime(timezone=True), server_default=func.now())

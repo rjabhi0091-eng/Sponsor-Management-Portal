@@ -26,12 +26,38 @@
             <a href="index.html" style="color: #a1a1aa; text-decoration: none; display: flex; align-items: center; gap: 8px;">
                 <ion-icon name="arrow-back-outline"></ion-icon> Back to Home
             </a>
+            <a href="admin.html" style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 8px; margin-left: 20px; font-weight: bold;">
+                <ion-icon name="shield-checkmark-outline"></ion-icon> Admin Panel
+            </a>
         </div>
     </header>
 
     <div class="analytics-container">
         <h1 style="font-size: 36px; margin-bottom: 10px;">Analytics & Marketing Hub</h1>
-        <p style="color: #a1a1aa; margin-bottom: 40px;">Analyze your data, manage social media marketing, and view portfolios.</p>
+        <p style="color: #a1a1aa; margin-bottom: 20px;">Analyze your data, manage social media marketing, and view portfolios.</p>
+
+        <div class="export-actions">
+            <button class="export-btn"><ion-icon name="download-outline"></ion-icon> Export CSV</button>
+            <button class="export-btn"><ion-icon name="document-text-outline"></ion-icon> Export PDF</button>
+        </div>
+
+        <div class="kpi-row">
+            <div class="kpi-card">
+                <span class="kpi-label">Total Platform Revenue</span>
+                <span class="kpi-value">$2.4M</span>
+                <span class="kpi-trend positive"><ion-icon name="trending-up-outline"></ion-icon> +14.5% vs last month</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">Active Deals</span>
+                <span class="kpi-value">342</span>
+                <span class="kpi-trend positive"><ion-icon name="trending-up-outline"></ion-icon> +5% vs last month</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">Avg. Campaign ROI</span>
+                <span class="kpi-value">28.4%</span>
+                <span class="kpi-trend negative"><ion-icon name="trending-down-outline"></ion-icon> -1.2% vs last month</span>
+            </div>
+        </div>
 
         <div class="tabs">
             <button class="tab-btn active" onclick="showTab('sponsor-data')">Sponsor Data</button>
@@ -74,6 +100,48 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="data-grid-container" style="padding: 20px;">
+                    <h3 style="margin-bottom: 15px;">Recent Sponsorship Transactions</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>Sponsor</th>
+                                <th>Client / Campaign</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#TRX-8923</td>
+                                <td>TechFlow Capital</td>
+                                <td>Summer Tech Expo</td>
+                                <td>Oct 12, 2025</td>
+                                <td>$45,000</td>
+                                <td><span style="color: #10b981;">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>#TRX-8924</td>
+                                <td>Global Brands Inc.</td>
+                                <td>Apparel Launch</td>
+                                <td>Oct 14, 2025</td>
+                                <td>$12,500</td>
+                                <td><span style="color: #f59e0b;">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td>#TRX-8925</td>
+                                <td>FinServe Group</td>
+                                <td>B2B SaaS Launch</td>
+                                <td>Oct 15, 2025</td>
+                                <td>$8,000</td>
+                                <td><span style="color: #10b981;">Completed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -103,6 +171,12 @@
                         <h3>Funding Goals vs Secured</h3>
                         <div class="chart-container">
                             <canvas id="clientBarChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Audience Demographics (Age)</h3>
+                        <div class="chart-container">
+                            <canvas id="demographicsChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -299,6 +373,28 @@
                     }]
                 },
                 options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            // Client Demographics Doughnut Chart
+            const ctxDemo = document.getElementById('demographicsChart').getContext('2d');
+            new Chart(ctxDemo, {
+                type: 'doughnut',
+                data: {
+                    labels: ['18-24', '25-34', '35-44', '45+'],
+                    datasets: [{
+                        data: [25, 45, 20, 10],
+                        backgroundColor: ['#8b5cf6', '#3b82f6', '#10b981', '#f59e0b'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
             });
         });
     </script>

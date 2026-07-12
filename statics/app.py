@@ -1,10 +1,11 @@
 import os
-import json
 import smtplib
 from email.message import EmailMessage
 
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy import or_, text
@@ -50,6 +51,17 @@ app = FastAPI(
     title="Sponsor and Client Management Portal",
     description="Backend API and UI for managing sponsors and clients in a single portal.",
     version="0.1.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # For production, specify domains
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.add_middleware(
+    TrustedHostMiddleware, allowed_hosts=["*"]
 )
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key-for-development-only")
@@ -392,9 +404,35 @@ def delete_client(client_id: int, db: Session = Depends(get_db), current_user: d
 
 
 @app.post("/contact/message", response_model=schemas.MessageResponse, tags=["contact"])
-def submit_contact_message(payload: schemas.ContactMessage):
+def submit_contact_message(payload: schemas.ContactMessageCreate, db: Session = Depends(get_db)):
+    try:
+        db_msg = models.ContactMessage(
+            name=payload.name,
+            email=payload.email,
+            message=payload.message
+        )
+        db.add(db_msg)
+        db.commit()
+    except Exception as e:
+        print(f"Error saving to DB: {e}")
+        
     result = send_contact_email(payload.name, payload.email, payload.message)
     return {"status": result["status"], "message": result["message"]}
+
+@app.post("/marketing/campaigns", response_model=schemas.MarketingCampaignCreate, tags=["marketing"])
+def create_marketing_campaign(payload: schemas.MarketingCampaignCreate, db: Session = Depends(get_db)):
+    try:
+        db_camp = models.MarketingCampaign(
+            title=payload.title,
+            platform=payload.platform,
+            status=payload.status,
+            metrics=payload.metrics
+        )
+        db.add(db_camp)
+        db.commit()
+        return payload
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
 
 
 @app.post("/chat/assistant", response_model=schemas.ChatResponse, tags=["chat"])

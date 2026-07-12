@@ -1,11 +1,11 @@
 {
-  "name": "Admin Editing App",
-  "short_name": "AdminApp",
-  "description": "Sponsor Management and Client Registration Editing App",
-  "start_url": "/admin.html",
+  "name": "R-Abhi Tech Solution",
+  "short_name": "Tech Portal",
+  "description": "Sponsor Management and Social Media Marketing Portal.",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#38bdf8",
+  "background_color": "#09090b",
+  "theme_color": "#1e293b",
   "icons": [
     {
       "src": "logo.png",

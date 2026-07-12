@@ -123,3 +123,14 @@ class Summary(BaseModel):
 
     class Config:
         orm_mode = True
+
+class ContactMessageCreate(BaseModel):
+    name: str
+    email: EmailStr
+    message: str
+
+class MarketingCampaignCreate(BaseModel):
+    title: str
+    platform: str
+    status: Optional[str] = "planning"
+    metrics: Optional[str] = None
