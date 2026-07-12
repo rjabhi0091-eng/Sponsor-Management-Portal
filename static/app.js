@@ -993,53 +993,6 @@ function registerServiceWorker() {
   }
 }
 
-function setupBottomNavigation() {
-  const bottomNav = document.querySelector(".bottom-nav");
-  if (!bottomNav) return;
-
-  const items = Array.from(bottomNav.querySelectorAll(".bottom-nav-item"));
-  const activeByType = (type) => {
-    items.forEach((btn) => {
-      const nav = btn.getAttribute("data-nav");
-      btn.classList.toggle("active", nav === type);
-    });
-  };
-
-  bottomNav.addEventListener("click", (event) => {
-    const btn = event.target.closest(".bottom-nav-item");
-    if (!btn) return;
-    const nav = btn.getAttribute("data-nav");
-
-    if (nav === "home") {
-      document.getElementById("overview")?.scrollIntoView({ behavior: "smooth" });
-      activeByType("home");
-      return;
-    }
-    if (nav === "sponsor") {
-      showWindow("sponsor");
-      activeByType("sponsor");
-      return;
-    }
-    if (nav === "client") {
-      showWindow("client");
-      activeByType("client");
-      return;
-    }
-    if (nav === "marketing") {
-      showWindow("marketing");
-      activeByType("marketing");
-      return;
-    }
-    if (nav === "insights") {
-      showWindow("insights");
-      activeByType("insights");
-      return;
-    }
-  });
-
-  activeByType("home");
-}
-
 function setupMarketingWorkflowUI() {
   const campaignForm = document.getElementById("campaign-form");
   const listEl = document.getElementById("marketing-campaign-list");

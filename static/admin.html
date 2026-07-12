@@ -1,367 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0b253d" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="logo.png" />
-  <title>Admin Dashboard - R-Abhi Tech Solution</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3b82f6" />
+    <title>Admin Dashboard - R-Abhi Tech Solution</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        .admin-header {
+            background-color: #0b0c10;
+            padding: 20px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #1e293b;
+        }
+        .admin-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #3b82f6;
+        }
+        .back-home {
+            color: #cbd5e1;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .back-home:hover {
+            color: #3b82f6;
+        }
+        
+        .admin-content {
+            padding: 40px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .admin-table-wrapper {
+            margin-bottom: 40px;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+            overflow-x: auto;
+        }
+        
+        .admin-table-wrapper h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .btn-approve { background: #10b981; color: white; }
+        .btn-reject { background: #ef4444; color: white; }
+        .btn-view { background: #3b82f6; color: white; }
+    </style>
 </head>
-
 <body>
-    <header class="topbar">
-    <div class="topbar-brand">
-      <img src="logo.png" alt="R-Abhi Tech Solution" class="site-logo" />
-      <div class="brand-details">
-        <p class="brand-name">R-ABHI TECH SOLUTION</p>
-        <p class="brand-tagline">Admin dashboard for Sponsor Management.</p>
-      </div>
-    </div>
-    <div class="header-actions">
-      <button id="open-sponsor-login" class="secondary" data-icon="🔐">Sponsor Login</button>
-      <button id="open-client-login" class="secondary" data-icon="👥">Client Login</button>
-      <button id="open-admin-login" class="secondary" data-icon="🛠️">Admin Login</button>
-      <a id="open-admin-btn" href="/admin" class="primary" data-icon="🛠️" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Admin Dashboard</a>
-    </div>
-  </header>
 
-  <div class="page-shell">
-        <section class="nav-section">
-      <nav class="site-nav">
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/media">Media</a>
-        <a href="/registration">Registration</a>
-        <a href="/work">Work</a>
-        <a href="/contact">Contact</a>
-        <a href="/admin" class="active">Admin</a>
-      </nav>
-    </section>
-
-    <section class="nav-section admin-nav-section">
-      <div class="admin-badge-row">
-        <span class="admin-badge">Admin mode</span>
-        <span class="admin-badge-label">Secure portal access</span>
-      </div>
-      <nav class="admin-nav">
-        <div class="admin-nav-header">
-          <p class="admin-nav-title">Admin Dashboard</p>
-          <span class="admin-nav-note">Central control panel</span>
-        </div>
-        <a href="#admin-summary"><span class="nav-icon">🏁</span><span>Overview</span></a>
-        <a href="#management"><span class="nav-icon">🧾</span><span>Sponsors</span></a>
-        <a href="#clients"><span class="nav-icon">📂</span><span>Clients</span></a>
-        <a href="#insights-window"><span class="nav-icon">📊</span><span>Insights</span></a>
-
-        <div class="admin-nav-header" style="margin-top: 1.5rem;">
-          <p class="admin-nav-title">Portal Pages</p>
-          <span class="admin-nav-note">Quick Navigation</span>
-        </div>
-        <a href="/"><span class="nav-icon">🏠</span><span>Home Page</span></a>
-        <a href="/about"><span class="nav-icon">ℹ️</span><span>About Us</span></a>
-        <a href="/media"><span class="nav-icon">🖼️</span><span>Media Hub</span></a>
-        <a href="/registration"><span class="nav-icon">📝</span><span>Registration</span></a>
-        <a href="/work"><span class="nav-icon">📣</span><span>Marketing Work</span></a>
-        <a href="/contact"><span class="nav-icon">💬</span><span>Contact</span></a>
-      </nav>
-    </section>
-
-    <header class="site-header">
-      <div class="hero-copy">
-        <span class="eyebrow">Admin Control</span>
+    <div class="admin-header">
         <h1>Admin Dashboard</h1>
-        <p class="hero-note">Secure admin tools for reviewing portal data and managing sponsor/client workflows.</p>
-        <div class="hero-actions">
-          <button id="admin-sponsors" class="primary" data-icon="🧾">Manage Sponsors</button>
-          <button id="admin-clients" class="secondary" data-icon="📁">Manage Clients</button>
-          <button id="admin-insights" class="secondary" data-icon="📊">View Insights</button>
-        </div>
-      </div>
-    </header>
-
-    <section id="admin-summary" class="live-analytics">
-      <div class="page-shell">
-        <div class="hero-dashboard">
-          <div class="hero-dashboard-head">
-            <span class="eyebrow">Admin summary</span>
-            <h2>Portal overview for administrators</h2>
-            <p>Review sponsor and client totals at a glance and launch the management tools.</p>
-          </div>
-          <div class="hero-dashboard-grid">
-            <article class="hero-dashboard-card accent-1">
-              <span>Total Sponsors</span>
-              <strong id="admin-total-sponsors">0</strong>
-            </article>
-            <article class="hero-dashboard-card accent-2">
-              <span>Total Clients</span>
-              <strong id="admin-total-clients">0</strong>
-            </article>
-            <article class="hero-dashboard-card accent-3">
-              <span>Active Clients</span>
-              <strong id="admin-active-clients">0</strong>
-            </article>
-            <article class="hero-dashboard-card accent-4">
-              <span>Prospect Sponsors</span>
-              <strong id="admin-prospect-sponsors">0</strong>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-block quick-links-section">
-      <div class="section-head">
-        <span class="eyebrow">Portal Pages</span>
-        <h2>Quick Access Directory</h2>
-        <p>Jump to any section of the live portal from your admin dashboard.</p>
-      </div>
-      <div class="feature-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
-        <a href="/" class="feature-card" style="text-decoration:none; text-align:center; display:block;">
-          <h3 style="margin-top:0.5rem">Home Page</h3>
-          <p>Main portal landing.</p>
-        </a>
-        <a href="/about" class="feature-card" style="text-decoration:none; text-align:center; display:block;">
-          <h3 style="margin-top:0.5rem">About Us</h3>
-          <p>Mission and team.</p>
-        </a>
-        <a href="/media" class="feature-card" style="text-decoration:none; text-align:center; display:block;">
-          <h3 style="margin-top:0.5rem">Media Hub</h3>
-          <p>Photos and creators.</p>
-        </a>
-        <a href="/registration" class="feature-card" style="text-decoration:none; text-align:center; display:block;">
-          <h3 style="margin-top:0.5rem">Registration</h3>
-          <p>Sponsor/Client signup.</p>
-        </a>
-        <a href="/work" class="feature-card" style="text-decoration:none; text-align:center; display:block;">
-          <h3 style="margin-top:0.5rem">Marketing</h3>
-          <p>Campaign work.</p>
-        </a>
-        <a href="/contact" class="feature-card" style="text-decoration:none; text-align:center; display:block;">
-          <h3 style="margin-top:0.5rem">Contact</h3>
-          <p>Get in touch.</p>
-        </a>
-      </div>
-    </section>
-
-    <section class="management-window" aria-label="Admin management panel">
-      <div class="window-tabs">
-        <button id="tab-sponsor" class="window-tab active">Sponsor Window</button>
-        <button id="tab-client" class="window-tab">Client Window</button>
-        <button id="tab-insights" class="window-tab">Insights Window</button>
-      </div>
-      <div class="window-panels">
-        <section class="management-panel window-panel active sponsor-window" id="management">
-          <div class="management-header">
-            <div>
-              <h2>Manage Sponsors</h2>
-              <p>Add, update, search, or remove sponsor records from the admin dashboard.</p>
-            </div>
-          </div>
-          <div class="search-row">
-            <label>Search sponsors
-              <input type="search" id="sponsor-search" placeholder="Search by name, email, phone, status or notes" />
-            </label>
-          </div>
-          <div id="sponsor-gate" class="window-gate">
-            <p>Login as admin to manage sponsor records.</p>
-          </div>
-          <div class="window-panel-content sponsor-content">
-            <div class="panel active-panel">
-              <div class="panel-heading">
-                <div>
-                  <h3>Sponsor Management</h3>
-                  <p>Keep sponsor profiles and statuses up to date.</p>
-                </div>
-                <button id="sponsor-refresh" class="secondary" data-icon="🔄">Refresh</button>
-              </div>
-              <form id="sponsor-form" class="record-form">
-                <input type="hidden" id="sponsor-id" />
-                <div class="field-grid">
-                  <label>Name<input type="text" id="sponsor-name" required /></label>
-                  <label>Email<input type="email" id="sponsor-email" required /></label>
-                  <label>Phone<input type="text" id="sponsor-phone" required /></label>
-                  <label>Status
-                    <select id="sponsor-status-select" required>
-                      <option value="prospect">Prospect</option>
-                      <option value="active">Active</option>
-                      <option value="inactive">Inactive</option>
-                    </select>
-                  </label>
-                </div>
-                <label>Password<input type="password" id="sponsor-password" autocomplete="new-password" /></label>
-                <p class="form-note">Leave password blank when updating a sponsor without changing credentials.</p>
-                <label>Notes<textarea id="sponsor-notes" rows="4"></textarea></label>
-                <div class="button-row">
-                  <button type="submit" data-icon="💾">Save Sponsor</button>
-                  <button type="button" id="sponsor-clear" class="secondary" data-icon="🧹">Clear</button>
-                </div>
-              </form>
-              <div class="status-panel">
-                <div id="sponsor-status-message" class="status-message"></div>
-              </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="sponsor-list"></tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <section class="management-panel window-panel client-window" id="clients">
-          <div class="management-header">
-            <div>
-              <h2>Manage Clients</h2>
-              <p>Add, update, search, or remove client records and sponsor assignments.</p>
-            </div>
-          </div>
-          <div class="search-row">
-            <label>Search clients
-              <input type="search" id="client-search" placeholder="Search by name, email, company, status or notes" />
-            </label>
-          </div>
-          <div id="client-gate" class="window-gate">
-            <p>Login as admin to manage client records.</p>
-          </div>
-          <div class="window-panel-content client-content">
-            <div class="panel active-panel">
-              <div class="panel-heading">
-                <div>
-                  <h3>Client Management</h3>
-                  <p>Maintain client details, status, and sponsor ownership.</p>
-                </div>
-                <button id="client-refresh" class="secondary" data-icon="🔄">Refresh</button>
-              </div>
-              <form id="client-form" class="record-form">
-                <input type="hidden" id="client-id" />
-                <div class="field-grid">
-                  <label>Name<input type="text" id="client-name" required /></label>
-                  <label>Email<input type="email" id="client-email" required /></label>
-                  <label>Company<input type="text" id="client-company" required /></label>
-                  <label>Assigned Sponsor
-                    <select id="client-sponsor" required>
-                      <option value="">Unassigned</option>
-                    </select>
-                  </label>
-                </div>
-                <div class="field-grid">
-                  <label>Phone<input type="text" id="client-phone" required /></label>
-                  <label>Status
-                    <select id="client-status-select" required>
-                      <option value="active">Active</option>
-                      <option value="inactive">Inactive</option>
-                      <option value="prospect">Prospect</option>
-                    </select>
-                  </label>
-                  <label>Password<input type="password" id="client-password" autocomplete="new-password" /></label>
-                </div>
-                <p class="form-note">Leave password blank when updating a client without changing credentials.</p>
-                <label>Notes<textarea id="client-notes" rows="4"></textarea></label>
-                <div class="button-row">
-                  <button type="submit" data-icon="💾">Save Client</button>
-                  <button type="button" id="client-clear" class="secondary" data-icon="🧹">Clear</button>
-                </div>
-              </form>
-              <div class="status-panel">
-                <div id="client-status-message" class="status-message"></div>
-              </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Company</th>
-                    <th>Assigned Sponsor</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="client-list"></tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <section class="management-panel window-panel insights-window" id="insights-window">
-          <div class="management-header">
-            <div>
-              <h2>Insights & Analytics</h2>
-              <p>Review sponsor and client totals from the admin dashboard.</p>
-            </div>
-          </div>
-          <div class="window-panel-content">
-            <div class="panel active-panel">
-              <div class="analysis-grid">
-                <article class="metric-card accent-1">
-                  <span>Total Sponsors</span>
-                  <strong id="insight-sponsors">0</strong>
-                </article>
-                <article class="metric-card accent-2">
-                  <span>Total Clients</span>
-                  <strong id="insight-clients">0</strong>
-                </article>
-                <article class="metric-card accent-3">
-                  <span>Active Clients</span>
-                  <strong id="insight-active-clients">0</strong>
-                </article>
-                <article class="metric-card accent-4">
-                  <span>Prospect Sponsors</span>
-                  <strong id="insight-prospect-sponsors">0</strong>
-                </article>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </section>
-
-    <section class="section-block" id="contact">
-      <div class="section-head">
-        <span class="eyebrow">Support</span>
-        <h2>Need help with admin configuration?</h2>
-        <p>Use the login button to sign in as admin and then manage sponsors, clients, and analytics from the portal.
-        </p>
-      </div>
-    </section>
-  </div>
-
-  <div class="modal-backdrop hidden" id="login-modal">
-    <div class="modal-card">
-      <button id="close-login" class="modal-close" data-icon="✖️"></button>
-      <h2 id="login-title">Account Login</h2>
-      <p id="login-description">Sign in as an admin to access the portal controls.</p>
-      <form id="login-form" class="record-form">
-        <label class="hidden-role">Login role
-          <select id="login-role">
-            <option value="sponsor">Sponsor</option>
-            <option value="client">Client</option>
-            <option value="admin">Admin</option>
-          </select>
-        </label>
-        <label>Email<input type="email" id="login-email" required /></label>
-        <label>Password<input type="password" id="login-password" required /></label>
-        <div class="button-row">
-          <button type="submit" data-icon="🔑">Login</button>
-          <button type="button" id="close-login-secondary" class="secondary" data-icon="❌">Cancel</button>
-        </div>
-      </form>
-      <div id="login-status" class="status-message"></div>
+        <a href="index.html" class="back-home"><ion-icon name="arrow-back-outline"></ion-icon> Back to Home</a>
     </div>
-  </div>
+    
+    <div class="admin-content">
+        <!-- Dashboard Stats Grid -->
+        <div class="hero-dashboard-grid" style="margin-bottom: 40px; margin-top: 0;">
+            <article class="hero-dashboard-card">
+                <span>Total Sponsors</span>
+                <strong>42</strong>
+            </article>
+            <article class="hero-dashboard-card">
+                <span>Total Clients</span>
+                <strong>156</strong>
+            </article>
+            <article class="hero-dashboard-card">
+                <span>Pending Approvals</span>
+                <strong style="color: #ef4444;">12</strong>
+            </article>
+        </div>
 
-  <script src="/static/app.js"></script>
+        <div class="admin-table-wrapper">
+            <h3><ion-icon name="people-circle-outline"></ion-icon> Sponsor Registrations</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Company</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="sponsor-list">
+                    <tr>
+                        <td>#SP-101</td>
+                        <td>Rahul Sharma</td>
+                        <td>rahul@example.com</td>
+                        <td>TechNova Solutions</td>
+                        <td><span style="color: #f59e0b;">Pending</span></td>
+                        <td>
+                            <button class="action-btn btn-approve">Approve</button>
+                            <button class="action-btn btn-reject">Reject</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#SP-102</td>
+                        <td>Amit Kumar</td>
+                        <td>amit@buildcorp.in</td>
+                        <td>BuildCorp India</td>
+                        <td><span style="color: #10b981;">Active</span></td>
+                        <td>
+                            <button class="action-btn btn-view">View Details</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="admin-table-wrapper">
+            <h3><ion-icon name="briefcase-outline"></ion-icon> Client Registrations</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Requirement</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="client-list">
+                    <tr>
+                        <td>#CL-201</td>
+                        <td>Priya Singh</td>
+                        <td>priya@fashionhub.com</td>
+                        <td>Social Media Campaign</td>
+                        <td><span style="color: #10b981;">Active</span></td>
+                        <td>
+                            <button class="action-btn btn-view">View Details</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#CL-202</td>
+                        <td>Vikram Singh</td>
+                        <td>vikram@techgear.in</td>
+                        <td>Brand Sponsorship</td>
+                        <td><span style="color: #f59e0b;">Pending</span></td>
+                        <td>
+                            <button class="action-btn btn-approve">Approve</button>
+                            <button class="action-btn btn-reject">Reject</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
-
 </html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3b82f6" />
+    <title>Login - R-Abhi Tech Solution</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #0b0c10;
+            position: relative;
+        }
+        .back-home {
+            position: absolute;
+            top: 30px;
+            left: 5%;
+            color: #cbd5e1;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .back-home:hover {
+            color: #3b82f6;
+        }
+        .login-card {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #334155;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-card h2 {
+            margin-bottom: 25px;
+            font-size: 28px;
+            color: #fff;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .social-icons a {
+            color: #cbd5e1;
+            font-size: 24px;
+            transition: 0.3s;
+        }
+        .social-icons a:hover {
+            color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        .login-footer {
+            margin-top: 25px;
+            color: #cbd5e1;
+        }
+        .login-footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <a href="index.html" class="back-home"><ion-icon name="arrow-back-outline"></ion-icon> Back to Home</a>
+        
+        <div class="login-card">
+            <h2>Portal Login</h2>
+            <form id="spa-login-form">
+                <label style="text-align: left; margin-bottom: 5px;">Email Address</label>
+                <input type="email" name="email" placeholder="Enter Email Here" required>
+                
+                <label style="text-align: left; margin-top: 15px; margin-bottom: 5px;">Password</label>
+                <input type="password" name="" placeholder="Enter Password Here" required>
+                
+                <button class="primary" type="submit" style="width: 100%; justify-content: center; margin-top: 25px;">Login to Dashboard</button>
+            </form>
+
+            <div class="login-footer">
+                <p>Don't have an account? <a href="index.html#register">Sign up</a> here</p>
+                <p style="margin-top: 20px;">Or log in with</p>
+                <div class="social-icons">
+                    <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+                    <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+                    <a href="#"><ion-icon name="logo-google"></ion-icon></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
