@@ -93,6 +93,7 @@ class LoginResponse(BaseModel):
     role: str
     name: str
     message: str
+    token: str
 
 
 class ContactMessage(BaseModel):

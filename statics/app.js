@@ -175,7 +175,7 @@ function updateLiveClock() {
 
 async function fetchSummary() {
   try {
-    const response = await fetch(`${apiBase}summary`);
+    const response = await fetch(`${apiBase}summary`, { headers: getAuthHeaders() });
     summaryCache = await response.json();
     updateMetrics();
   } catch (err) {
@@ -253,6 +253,13 @@ function loadCurrentUser() {
     console.warn("Unable to restore user state", err);
     currentUser = null;
   }
+}
+
+function getAuthHeaders(includeJson = false) {
+  const headers = {};
+  if (includeJson) headers["Content-Type"] = "application/json";
+  if (currentUser && currentUser.token) headers["Authorization"] = `Bearer ${currentUser.token}`;
+  return headers;
 }
 
 function requireRole(role) {
@@ -351,7 +358,7 @@ function renderClients(clients) {
 
 async function fetchSponsors() {
   try {
-    const response = await fetch(`${apiBase}sponsors/`);
+    const response = await fetch(`${apiBase}sponsors/`, { headers: getAuthHeaders() });
     sponsorsCache = await response.json();
     renderSponsors(sponsorsCache);
     renderSponsorOptions();
@@ -364,7 +371,7 @@ async function fetchSponsors() {
 
 async function fetchClients() {
   try {
-    const response = await fetch(`${apiBase}clients/`);
+    const response = await fetch(`${apiBase}clients/`, { headers: getAuthHeaders() });
     clientsCache = await response.json();
     renderClients(clientsCache);
     updateMetrics();
@@ -417,7 +424,7 @@ async function login(event) {
     if (!response.ok) {
       throw new Error(payload.detail || "Login failed");
     }
-      currentUser = { role: payload.role, name: payload.name };
+    currentUser = { role: payload.role, name: payload.name, token: payload.token };
     saveCurrentUser();
     updateAccessControls();
     setStatus(loginStatus, payload.message);
@@ -498,7 +505,7 @@ function applyClientFilter() {
 
 async function editSponsor(id) {
   try {
-    const response = await fetch(`${apiBase}sponsors/${id}`);
+    const response = await fetch(`${apiBase}sponsors/${id}`, { headers: getAuthHeaders() });
     if (!response.ok) throw new Error("Sponsor not found");
     const sponsor = await response.json();
     sponsorFields.id.value = sponsor.id;
@@ -516,7 +523,7 @@ async function editSponsor(id) {
 
 async function editClient(id) {
   try {
-    const response = await fetch(`${apiBase}clients/${id}`);
+    const response = await fetch(`${apiBase}clients/${id}`, { headers: getAuthHeaders() });
     if (!response.ok) throw new Error("Client not found");
     const client = await response.json();
     clientFields.id.value = client.id;
@@ -537,7 +544,7 @@ async function editClient(id) {
 async function deleteSponsor(id) {
   if (!confirm("Delete this sponsor?")) return;
   try {
-    const response = await fetch(`${apiBase}sponsors/${id}`, { method: "DELETE" });
+    const response = await fetch(`${apiBase}sponsors/${id}`, { method: "DELETE", headers: getAuthHeaders() });
     if (!response.ok) throw new Error("Delete failed");
     setStatus(sponsorStatus, "Sponsor deleted.");
     await fetchSponsors();
@@ -550,7 +557,7 @@ async function deleteSponsor(id) {
 async function deleteClient(id) {
   if (!confirm("Delete this client?")) return;
   try {
-    const response = await fetch(`${apiBase}clients/${id}`, { method: "DELETE" });
+    const response = await fetch(`${apiBase}clients/${id}`, { method: "DELETE", headers: getAuthHeaders() });
     if (!response.ok) throw new Error("Delete failed");
     setStatus(clientStatus, "Client deleted.");
     await fetchClients();
@@ -579,7 +586,7 @@ async function submitSponsor(event) {
   try {
     const response = await fetch(url, {
       method,
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(true),
       body: JSON.stringify(payload),
     });
     if (!response.ok) {
@@ -617,7 +624,7 @@ async function submitClient(event) {
   try {
     const response = await fetch(url, {
       method,
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(true),
       body: JSON.stringify(payload),
     });
     if (!response.ok) {

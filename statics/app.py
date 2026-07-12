@@ -6,8 +6,11 @@ from email.message import EmailMessage
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy import or_, text
 from sqlalchemy.orm import Session
+from jose import JWTError, jwt
+from datetime import datetime, timedelta
 from googleapiclient.discovery import build
 
 import models
@@ -48,6 +51,26 @@ app = FastAPI(
     description="Backend API and UI for managing sponsors and clients in a single portal.",
     version="0.1.0",
 )
+
+SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key-for-development-only")
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
+security = HTTPBearer()
+
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        if payload.get("sub") is None:
+            raise HTTPException(status_code=401, detail="Invalid token")
+        return payload
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 app.mount("/static", StaticFiles(directory=BASE_DIR), name="static")
 app.include_router(google_integration.router, prefix="/google")
@@ -151,13 +174,13 @@ def create_sponsor(sponsor: schemas.SponsorCreate, db: Session = Depends(get_db)
             db_sponsor.notes or "",
             "sponsor",
         ])
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"Error appending to Google Sheet: {e}")
     return db_sponsor
 
 
 @app.get("/sponsors/", response_model=list[schemas.Sponsor], tags=["sponsors"])
-def list_sponsors(skip: int = 0, limit: int = 100, search: str | None = None, status: str | None = None, db: Session = Depends(get_db)):
+def list_sponsors(skip: int = 0, limit: int = 100, search: str | None = None, status: str | None = None, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     query = db.query(models.Sponsor)
     if search:
         filter_value = f"%{search}%"
@@ -176,7 +199,7 @@ def list_sponsors(skip: int = 0, limit: int = 100, search: str | None = None, st
 
 
 @app.get("/sponsors/{sponsor_id}", response_model=schemas.Sponsor, tags=["sponsors"])
-def get_sponsor(sponsor_id: int, db: Session = Depends(get_db)):
+def get_sponsor(sponsor_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == sponsor_id).first()
     if not sponsor:
         raise HTTPException(status_code=404, detail="Sponsor not found")
@@ -184,7 +207,7 @@ def get_sponsor(sponsor_id: int, db: Session = Depends(get_db)):
 
 
 @app.put("/sponsors/{sponsor_id}", response_model=schemas.Sponsor, tags=["sponsors"])
-def update_sponsor(sponsor_id: int, sponsor_update: schemas.SponsorUpdate, db: Session = Depends(get_db)):
+def update_sponsor(sponsor_id: int, sponsor_update: schemas.SponsorUpdate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == sponsor_id).first()
     if not sponsor:
         raise HTTPException(status_code=404, detail="Sponsor not found")
@@ -207,7 +230,7 @@ def update_sponsor(sponsor_id: int, sponsor_update: schemas.SponsorUpdate, db: S
 
 
 @app.delete("/sponsors/{sponsor_id}", status_code=204, tags=["sponsors"])
-def delete_sponsor(sponsor_id: int, db: Session = Depends(get_db)):
+def delete_sponsor(sponsor_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == sponsor_id).first()
     if not sponsor:
         raise HTTPException(status_code=404, detail="Sponsor not found")
@@ -244,13 +267,13 @@ def create_client(client: schemas.ClientCreate, db: Session = Depends(get_db)):
             db_client.sponsor_id or "",
             "client",
         ])
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"Error appending to Google Sheet: {e}")
     return db_client
 
 
 @app.get("/sponsors/{sponsor_id}/clients", response_model=list[schemas.Client], tags=["sponsors"])
-def list_sponsor_clients(sponsor_id: int, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def list_sponsor_clients(sponsor_id: int, skip: int = 0, limit: int = 100, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == sponsor_id).first()
     if not sponsor:
         raise HTTPException(status_code=404, detail="Sponsor not found")
@@ -258,7 +281,7 @@ def list_sponsor_clients(sponsor_id: int, skip: int = 0, limit: int = 100, db: S
 
 
 @app.get("/clients/", response_model=list[schemas.Client], tags=["clients"])
-def list_clients(skip: int = 0, limit: int = 100, search: str | None = None, status: str | None = None, db: Session = Depends(get_db)):
+def list_clients(skip: int = 0, limit: int = 100, search: str | None = None, status: str | None = None, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     query = db.query(models.Client)
     if search:
         filter_value = f"%{search}%"
@@ -278,7 +301,7 @@ def list_clients(skip: int = 0, limit: int = 100, search: str | None = None, sta
 
 
 @app.get("/clients/{client_id}", response_model=schemas.Client, tags=["clients"])
-def get_client(client_id: int, db: Session = Depends(get_db)):
+def get_client(client_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     client = db.query(models.Client).filter(models.Client.id == client_id).first()
     if not client:
         raise HTTPException(status_code=404, detail="Client not found")
@@ -286,7 +309,7 @@ def get_client(client_id: int, db: Session = Depends(get_db)):
 
 
 @app.get("/summary", response_model=schemas.Summary, tags=["dashboard"])
-def get_summary(db: Session = Depends(get_db)):
+def get_summary(db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     total_sponsors = db.query(models.Sponsor).count()
     total_clients = db.query(models.Client).count()
     active_clients = db.query(models.Client).filter(models.Client.status == "active").count()
@@ -304,7 +327,9 @@ def sponsor_login(payload: schemas.UserLogin, db: Session = Depends(get_db)):
     sponsor = db.query(models.Sponsor).filter(models.Sponsor.email == payload.email).first()
     if not sponsor or not sponsor.verify_password(payload.password):
         raise HTTPException(status_code=401, detail="Invalid sponsor credentials")
-    return schemas.LoginResponse(role="sponsor", name=sponsor.name, message="Sponsor login successful")
+    db.commit()
+    token = create_access_token({"sub": sponsor.email, "role": "sponsor"})
+    return schemas.LoginResponse(role="sponsor", name=sponsor.name, message="Sponsor login successful", token=token)
 
 
 @app.post("/auth/client-login", response_model=schemas.LoginResponse, tags=["auth"])
@@ -312,7 +337,9 @@ def client_login(payload: schemas.UserLogin, db: Session = Depends(get_db)):
     client = db.query(models.Client).filter(models.Client.email == payload.email).first()
     if not client or not client.verify_password(payload.password):
         raise HTTPException(status_code=401, detail="Invalid client credentials")
-    return schemas.LoginResponse(role="client", name=client.name, message="Client login successful")
+    db.commit()
+    token = create_access_token({"sub": client.email, "role": "client"})
+    return schemas.LoginResponse(role="client", name=client.name, message="Client login successful", token=token)
 
 
 @app.post("/auth/admin-login", response_model=schemas.LoginResponse, tags=["auth"])
@@ -320,11 +347,13 @@ def admin_login(payload: schemas.UserLogin, db: Session = Depends(get_db)):
     admin = db.query(models.Admin).filter(models.Admin.email == payload.email).first()
     if not admin or not admin.verify_password(payload.password):
         raise HTTPException(status_code=401, detail="Invalid admin credentials")
-    return schemas.LoginResponse(role="admin", name=admin.username, message="Admin login successful")
+    db.commit()
+    token = create_access_token({"sub": admin.email, "role": "admin"})
+    return schemas.LoginResponse(role="admin", name=admin.username, message="Admin login successful", token=token)
 
 
 @app.put("/clients/{client_id}", response_model=schemas.Client, tags=["clients"])
-def update_client(client_id: int, client_update: schemas.ClientUpdate, db: Session = Depends(get_db)):
+def update_client(client_id: int, client_update: schemas.ClientUpdate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     client = db.query(models.Client).filter(models.Client.id == client_id).first()
     if not client:
         raise HTTPException(status_code=404, detail="Client not found")
@@ -353,7 +382,7 @@ def update_client(client_id: int, client_update: schemas.ClientUpdate, db: Sessi
 
 
 @app.delete("/clients/{client_id}", status_code=204, tags=["clients"])
-def delete_client(client_id: int, db: Session = Depends(get_db)):
+def delete_client(client_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     client = db.query(models.Client).filter(models.Client.id == client_id).first()
     if not client:
         raise HTTPException(status_code=404, detail="Client not found")

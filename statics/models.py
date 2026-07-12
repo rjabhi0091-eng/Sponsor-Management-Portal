@@ -1,4 +1,7 @@
 import hashlib
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 from sqlalchemy import Column, Integer, String, Text, DateTime, func, ForeignKey
 from sqlalchemy.orm import relationship
@@ -19,10 +22,18 @@ class Sponsor(Base):
     clients = relationship("Client", back_populates="sponsor", cascade="all, delete-orphan")
 
     def set_password(self, password: str):
-        self.password_hash = hashlib.sha256(password.encode("utf-8")).hexdigest()
+        self.password_hash = pwd_context.hash(password)
 
     def verify_password(self, password: str) -> bool:
-        return self.password_hash == hashlib.sha256(password.encode("utf-8")).hexdigest()
+        if len(self.password_hash) == 64 and "$" not in self.password_hash:
+            if hashlib.sha256(password.encode("utf-8")).hexdigest() == self.password_hash:
+                self.set_password(password)
+                return True
+            return False
+        try:
+            return pwd_context.verify(password, self.password_hash)
+        except Exception:
+            return False
 
 
 class Client(Base):
@@ -42,10 +53,18 @@ class Client(Base):
     sponsor = relationship("Sponsor", back_populates="clients")
 
     def set_password(self, password: str):
-        self.password_hash = hashlib.sha256(password.encode("utf-8")).hexdigest()
+        self.password_hash = pwd_context.hash(password)
 
     def verify_password(self, password: str) -> bool:
-        return self.password_hash == hashlib.sha256(password.encode("utf-8")).hexdigest()
+        if len(self.password_hash) == 64 and "$" not in self.password_hash:
+            if hashlib.sha256(password.encode("utf-8")).hexdigest() == self.password_hash:
+                self.set_password(password)
+                return True
+            return False
+        try:
+            return pwd_context.verify(password, self.password_hash)
+        except Exception:
+            return False
 
     @property
     def sponsor_name(self):
@@ -62,7 +81,15 @@ class Admin(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     def set_password(self, password: str):
-        self.password_hash = hashlib.sha256(password.encode("utf-8")).hexdigest()
+        self.password_hash = pwd_context.hash(password)
 
     def verify_password(self, password: str) -> bool:
-        return self.password_hash == hashlib.sha256(password.encode("utf-8")).hexdigest()
+        if len(self.password_hash) == 64 and "$" not in self.password_hash:
+            if hashlib.sha256(password.encode("utf-8")).hexdigest() == self.password_hash:
+                self.set_password(password)
+                return True
+            return False
+        try:
+            return pwd_context.verify(password, self.password_hash)
+        except Exception:
+            return False
