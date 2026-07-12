@@ -1,0 +1,146 @@
+import re
+
+filepath = 'd:/WebPortal/Sponsor-Management-Portal/static/analytics.html'
+
+new_analytics_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3b82f6" />
+    <title>Analytics & Portfolios - R-Abhi Tech</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        .analytics-container { padding: 40px 5%; max-width: 1400px; margin: 0 auto; color: #fff; }
+        .tabs { display: flex; gap: 15px; margin-bottom: 30px; }
+        .tab-btn { padding: 12px 25px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); background: rgba(15,23,42,0.6); color: #fff; cursor: pointer; font-size: 16px; font-weight: 600; }
+        .tab-btn.active { background: #3b82f6; border-color: #3b82f6; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .glass-box { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 16px; margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-brand">
+            <a href="index.html" style="color: #cbd5e1; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                <ion-icon name="arrow-back-outline"></ion-icon> Back to Home
+            </a>
+        </div>
+    </header>
+
+    <div class="analytics-container">
+        <h1 style="font-size: 36px; margin-bottom: 10px;">Analytics & Marketing Hub</h1>
+        <p style="color: #cbd5e1; margin-bottom: 40px;">Analyze your data, manage social media marketing, and view portfolios.</p>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('sponsor-data')">Sponsor Data</button>
+            <button class="tab-btn" onclick="showTab('client-data')">Client Data</button>
+            <button class="tab-btn" onclick="showTab('smm')">Social Media Marketing</button>
+            <button class="tab-btn" onclick="showTab('portfolio')">Client Portfolios</button>
+        </div>
+
+        <!-- Sponsor Data Panel -->
+        <div id="sponsor-data" class="tab-panel active">
+            <div class="glass-box">
+                <h2>Sponsor Analytics</h2>
+                <p style="color: #94a3b8; margin-bottom: 20px;">Analyze ROI, active campaigns, and client reach.</p>
+                <div class="hero-dashboard-grid">
+                    <article class="hero-dashboard-card" style="background: rgba(255,255,255,0.05); border: none;">
+                        <span>Total Reach</span>
+                        <strong style="font-size: 32px; color: #38bdf8;">1.2M+</strong>
+                    </article>
+                    <article class="hero-dashboard-card" style="background: rgba(255,255,255,0.05); border: none;">
+                        <span>Active Campaigns</span>
+                        <strong style="font-size: 32px; color: #10b981;">14</strong>
+                    </article>
+                    <article class="hero-dashboard-card" style="background: rgba(255,255,255,0.05); border: none;">
+                        <span>ROI Conversion</span>
+                        <strong style="font-size: 32px; color: #f59e0b;">24%</strong>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Data Panel -->
+        <div id="client-data" class="tab-panel">
+            <div class="glass-box">
+                <h2>Client Analytics</h2>
+                <p style="color: #94a3b8; margin-bottom: 20px;">Analyze engagement, sponsorship funds, and audience growth.</p>
+                <div class="hero-dashboard-grid">
+                    <article class="hero-dashboard-card" style="background: rgba(255,255,255,0.05); border: none;">
+                        <span>Audience Growth</span>
+                        <strong style="font-size: 32px; color: #38bdf8;">+45%</strong>
+                    </article>
+                    <article class="hero-dashboard-card" style="background: rgba(255,255,255,0.05); border: none;">
+                        <span>Sponsorships Secured</span>
+                        <strong style="font-size: 32px; color: #10b981;">$120k</strong>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Media Marketing Panel -->
+        <div id="smm" class="tab-panel">
+            <div class="glass-box">
+                <h2>Social Media Marketing</h2>
+                <p style="color: #94a3b8; margin-bottom: 20px;">Integrated marketing services provided by R-Abhi Tech Solution.</p>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <img src="Social_media_marketing.png" alt="Marketing 1" style="flex: 1; min-width: 300px; border-radius: 12px; object-fit: cover;">
+                    <img src="types-of-social-media-marketing.png" alt="Marketing 2" style="flex: 1; min-width: 300px; border-radius: 12px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Portfolio Panel -->
+        <div id="portfolio" class="tab-panel">
+            <div class="glass-box">
+                <h2>Client Portfolios</h2>
+                <p style="color: #94a3b8; margin-bottom: 20px;">Clients can add their portfolios here for Sponsors to view and analyze.</p>
+                
+                <div style="margin-bottom: 40px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px;">
+                    <h3 style="margin-bottom: 15px;">Add New Portfolio (Client)</h3>
+                    <form class="record-form" style="max-width: 600px;" onsubmit="event.preventDefault(); alert('Portfolio Submitted!');">
+                        <input type="text" placeholder="Project Name" required style="width: 100%; margin-bottom: 10px; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff;">
+                        <textarea placeholder="Project Details & Metrics" required rows="4" style="width: 100%; margin-bottom: 10px; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff;"></textarea>
+                        <input type="url" placeholder="Portfolio Link (Optional)" style="width: 100%; margin-bottom: 15px; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff;">
+                        <button type="submit" class="primary">Submit Portfolio</button>
+                    </form>
+                </div>
+
+                <h3 style="margin-bottom: 15px;">Available Portfolios (For Sponsors)</h3>
+                <div class="portfolio-grid">
+                    <article style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+                        <h4 style="margin-bottom: 10px; color: #38bdf8;">Tech Startup Campaign</h4>
+                        <p style="color: #cbd5e1; font-size: 14px;">A successful 3-month Instagram push resulting in 200k new followers.</p>
+                        <button class="secondary" style="margin-top: 15px; font-size: 13px;">View Full Data</button>
+                    </article>
+                    <article style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+                        <h4 style="margin-bottom: 10px; color: #38bdf8;">Fashion Brand Launch</h4>
+                        <p style="color: #cbd5e1; font-size: 14px;">Influencer marketing drive across Twitter and LinkedIn.</p>
+                        <button class="secondary" style="margin-top: 15px; font-size: 13px;">View Full Data</button>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showTab(id) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>"""
+
+with open(filepath, 'w', encoding='utf-8') as f:
+    f.write(new_analytics_html)
+
+print("Redesigned analytics.html successfully.")
