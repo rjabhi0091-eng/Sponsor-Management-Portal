@@ -1,9 +1,13 @@
-<!DOCTYPE html>
+import re
+
+filepath = 'd:/WebPortal/Sponsor-Management-Portal/static/analytics.html'
+
+new_analytics_html = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#8b5cf6" />
+    <meta name="theme-color" content="#3b82f6" />
     <title>Analytics & Portfolios - R-Abhi Tech</title>
     <link rel="stylesheet" href="style.css">
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -12,17 +16,17 @@
         .analytics-container { padding: 40px 5%; max-width: 1400px; margin: 0 auto; color: #fff; }
         .tabs { display: flex; gap: 15px; margin-bottom: 30px; }
         .tab-btn { padding: 12px 25px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); background: rgba(15,23,42,0.6); color: #fff; cursor: pointer; font-size: 16px; font-weight: 600; }
-        .tab-btn.active { background: #8b5cf6; border-color: #8b5cf6; }
+        .tab-btn.active { background: #3b82f6; border-color: #3b82f6; }
         .tab-panel { display: none; }
         .tab-panel.active { display: block; }
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .glass-box { background: rgba(24, 24, 27, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 16px; margin-bottom: 30px; }
+        .glass-box { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 16px; margin-bottom: 30px; }
     </style>
 </head>
 <body>
     <header class="topbar">
         <div class="topbar-brand">
-            <a href="index.html" style="color: #a1a1aa; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+            <a href="index.html" style="color: #cbd5e1; text-decoration: none; display: flex; align-items: center; gap: 8px;">
                 <ion-icon name="arrow-back-outline"></ion-icon> Back to Home
             </a>
         </div>
@@ -30,7 +34,7 @@
 
     <div class="analytics-container">
         <h1 style="font-size: 36px; margin-bottom: 10px;">Analytics & Marketing Hub</h1>
-        <p style="color: #a1a1aa; margin-bottom: 40px;">Analyze your data, manage social media marketing, and view portfolios.</p>
+        <p style="color: #cbd5e1; margin-bottom: 40px;">Analyze your data, manage social media marketing, and view portfolios.</p>
 
         <div class="tabs">
             <button class="tab-btn active" onclick="showTab('sponsor-data')">Sponsor Data</button>
@@ -47,7 +51,7 @@
                 <div class="hero-dashboard-grid">
                     <article class="hero-dashboard-card" style="background: rgba(255,255,255,0.05); border: none;">
                         <span>Total Reach</span>
-                        <strong style="font-size: 32px; color: #8b5cf6;">1.2M+</strong>
+                        <strong style="font-size: 32px; color: #38bdf8;">1.2M+</strong>
                     </article>
                     <article class="hero-dashboard-card" style="background: rgba(255,255,255,0.05); border: none;">
                         <span>Active Campaigns</span>
@@ -69,7 +73,7 @@
                 <div class="hero-dashboard-grid">
                     <article class="hero-dashboard-card" style="background: rgba(255,255,255,0.05); border: none;">
                         <span>Audience Growth</span>
-                        <strong style="font-size: 32px; color: #8b5cf6;">+45%</strong>
+                        <strong style="font-size: 32px; color: #38bdf8;">+45%</strong>
                     </article>
                     <article class="hero-dashboard-card" style="background: rgba(255,255,255,0.05); border: none;">
                         <span>Sponsorships Secured</span>
@@ -100,9 +104,9 @@
                 <div style="margin-bottom: 40px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px;">
                     <h3 style="margin-bottom: 15px;">Add New Portfolio (Client)</h3>
                     <form class="record-form" style="max-width: 600px;" onsubmit="event.preventDefault(); alert('Portfolio Submitted!');">
-                        <input type="text" placeholder="Project Name" required style="width: 100%; margin-bottom: 10px; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: #18181b; color: #fff;">
-                        <textarea placeholder="Project Details & Metrics" required rows="4" style="width: 100%; margin-bottom: 10px; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: #18181b; color: #fff;"></textarea>
-                        <input type="url" placeholder="Portfolio Link (Optional)" style="width: 100%; margin-bottom: 15px; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: #18181b; color: #fff;">
+                        <input type="text" placeholder="Project Name" required style="width: 100%; margin-bottom: 10px; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff;">
+                        <textarea placeholder="Project Details & Metrics" required rows="4" style="width: 100%; margin-bottom: 10px; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff;"></textarea>
+                        <input type="url" placeholder="Portfolio Link (Optional)" style="width: 100%; margin-bottom: 15px; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff;">
                         <button type="submit" class="primary">Submit Portfolio</button>
                     </form>
                 </div>
@@ -110,13 +114,13 @@
                 <h3 style="margin-bottom: 15px;">Available Portfolios (For Sponsors)</h3>
                 <div class="portfolio-grid">
                     <article style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
-                        <h4 style="margin-bottom: 10px; color: #8b5cf6;">Tech Startup Campaign</h4>
-                        <p style="color: #a1a1aa; font-size: 14px;">A successful 3-month Instagram push resulting in 200k new followers.</p>
+                        <h4 style="margin-bottom: 10px; color: #38bdf8;">Tech Startup Campaign</h4>
+                        <p style="color: #cbd5e1; font-size: 14px;">A successful 3-month Instagram push resulting in 200k new followers.</p>
                         <button class="secondary" style="margin-top: 15px; font-size: 13px;">View Full Data</button>
                     </article>
                     <article style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
-                        <h4 style="margin-bottom: 10px; color: #8b5cf6;">Fashion Brand Launch</h4>
-                        <p style="color: #a1a1aa; font-size: 14px;">Influencer marketing drive across Twitter and LinkedIn.</p>
+                        <h4 style="margin-bottom: 10px; color: #38bdf8;">Fashion Brand Launch</h4>
+                        <p style="color: #cbd5e1; font-size: 14px;">Influencer marketing drive across Twitter and LinkedIn.</p>
                         <button class="secondary" style="margin-top: 15px; font-size: 13px;">View Full Data</button>
                     </article>
                 </div>
@@ -134,4 +138,9 @@
         }
     </script>
 </body>
-</html>
+</html>"""
+
+with open(filepath, 'w', encoding='utf-8') as f:
+    f.write(new_analytics_html)
+
+print("Redesigned analytics.html successfully.")

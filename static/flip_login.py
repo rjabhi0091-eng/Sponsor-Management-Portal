@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+import os
+
+filepath = 'd:/WebPortal/Sponsor-Management-Portal/static/login.html'
+
+html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -167,49 +171,6 @@
         .admin-link:hover {
             color: #f43f5e;
         }
-    
-        .password-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .password-container input {
-            padding-right: 40px;
-        }
-        .toggle-password {
-            position: absolute;
-            right: 10px;
-            color: #a1a1aa;
-            cursor: pointer;
-            font-size: 20px;
-            transition: 0.3s;
-        }
-        .toggle-password:hover {
-            color: #8b5cf6;
-        }
-        .login-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-        .login-options label {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: #a1a1aa;
-            cursor: pointer;
-        }
-        .login-options a {
-            color: #8b5cf6;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .login-options a:hover {
-            text-decoration: underline;
-        }
-
     </style>
 </head>
 <body>
@@ -267,3 +228,9 @@
     </script>
 </body>
 </html>
+"""
+
+with open(filepath, 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("login.html updated with 3D Flip effect successfully.")
