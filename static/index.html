@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <header class="topbar">
+  <header class="topbar">
     <div class="topbar-brand">
       <img src="logo.png" alt="R-Abhi Tech Solution" class="site-logo" />
       <div class="brand-details">
@@ -26,11 +26,11 @@
       <button id="open-sponsor-login" class="secondary" data-icon="🔐">Sponsor Login</button>
       <button id="open-client-login" class="secondary" data-icon="👥">Client Login</button>
       <button id="open-admin-login" class="secondary" data-icon="🛠️">Admin Login</button>
-      <a id="open-admin-btn" href="/admin" class="primary" data-icon="🛠️" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Admin Dashboard</a>
+      <a id="open-admin-btn" href="/admin" class="primary" data-icon="🛠️"
+        style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Admin Dashboard</a>
     </div>
   </header>
   <div class="page-shell">
-
     <nav class="bottom-nav" aria-label="Bottom navigation">
       <button class="bottom-nav-item" type="button" data-nav="home" aria-label="Home">🏠</button>
       <button class="bottom-nav-item" type="button" data-nav="sponsor" aria-label="Sponsors">🤝</button>
@@ -38,7 +38,7 @@
       <button class="bottom-nav-item" type="button" data-nav="marketing" aria-label="Marketing">📣</button>
       <button class="bottom-nav-item" type="button" data-nav="insights" aria-label="Insights">📊</button>
     </nav>
-        <section class="nav-section">
+    <section class="nav-section">
       <nav class="site-nav">
         <a href="/" class="active">Home</a>
         <a href="/about">About</a>
@@ -190,7 +190,8 @@
           <h3 style="margin-top:0.5rem">Contact</h3>
           <p>Get in touch and find our info.</p>
         </a>
-        <a href="/admin" class="feature-card" style="text-decoration:none; text-align:center; display:block; background-color: rgba(56, 189, 248, 0.05); border-color: rgba(56, 189, 248, 0.2);">
+        <a href="/admin" class="feature-card"
+          style="text-decoration:none; text-align:center; display:block; background-color: rgba(56, 189, 248, 0.05); border-color: rgba(56, 189, 248, 0.2);">
           <h3 style="margin-top:0.5rem; color: #38bdf8;">Admin</h3>
           <p>Secure admin dashboard.</p>
         </a>
@@ -349,12 +350,10 @@
         <button id="cta-clients-btn" class="secondary" data-icon="🧑‍💼">Manage Clients</button>
       </div>
     </section>
-
     <section class="management-window">
       <div class="window-tabs">
         <button id="tab-sponsor" class="window-tab active">Sponsor Window</button>
         <button id="tab-client" class="window-tab">Client Window</button>
-        <button id="tab-marketing" class="window-tab">Marketing Window</button>
         <button id="tab-insights" class="window-tab">Insights Window</button>
       </div>
       <div class="window-panels">
@@ -507,91 +506,7 @@
           </div>
         </section>
 
-        <section class="management-panel window-panel marketing-window" id="marketing-window">
-          <div class="management-header">
-            <div>
-              <h2>Marketing Workflow</h2>
-              <p>Plan social media campaigns, manage content calendars, and drive sponsor engagement from a dedicated
-                marketing dashboard.</p>
-            </div>
-          </div>
-          <div class="window-panel-content">
-            <div class="panel active-panel">
-              <div class="panel-heading">
-                <div>
-                  <h3>Social Media Marketing</h3>
-                  <p>Track campaign planning, content creation, influencer outreach, and ad performance in one place.
-                  </p>
-                </div>
-              </div>
-              <div class="marketing-summary">
-                <div class="metric-card accent-1">
-                  <span>Active Campaigns</span>
-                  <strong id="m-active-campaigns">0</strong>
-                </div>
-                <div class="metric-card accent-2">
-                  <span>Content Pieces</span>
-                  <strong id="m-content-pieces">0</strong>
-                </div>
-                <div class="metric-card accent-3">
-                  <span>Influencer Actions</span>
-                  <strong id="m-influencer-actions">0</strong>
-                </div>
-              </div>
-              <div class="marketing-actions">
-                <form id="campaign-form" class="campaign-form" autocomplete="off">
-                  <div class="field-grid">
-                    <label>Campaign Name<input type="text" id="campaign-name"
-                        placeholder="e.g., Sponsor Post Series - Q3" required /></label>
-                    <label>Channel
-                      <select id="campaign-channel" required>
-                        <option value="Instagram">Instagram</option>
-                        <option value="LinkedIn">LinkedIn</option>
-                        <option value="Twitter">Twitter</option>
-                        <option value="Facebook">Facebook</option>
-                      </select>
-                    </label>
-                  </div>
-                  <div class="field-grid">
-                    <label>Status
-                      <select id="campaign-status" required>
-                        <option value="planned">Planned</option>
-                        <option value="active">Active</option>
-                        <option value="completed">Completed</option>
-                      </select>
-                    </label>
-                    <label>Next Step
-                      <input type="text" id="campaign-next-step" placeholder="e.g., Schedule drafts" required />
-                    </label>
-                  </div>
-                  <div class="button-row">
-                    <button type="submit" class="primary" data-icon="➕">Add Campaign</button>
-                  </div>
-                </form>
-              </div>
-
-              <div class="marketing-grid">
-                <article class="marketing-card">
-                  <h3>Campaign Planning</h3>
-                  <p>Map posts, ads, and sponsor activations with a clean workflow designed for growth.</p>
-                </article>
-                <article class="marketing-card">
-                  <h3>Your Campaigns</h3>
-                  <p>Quick list of campaigns created from this mobile workflow.</p>
-                  <div id="marketing-campaign-list" style="margin-top:1rem"></div>
-                </article>
-                <article class="marketing-card">
-                  <h3>Content Calendar</h3>
-                  <p>Organize posts, stories, and reels for consistent brand presence across channels.</p>
-                </article>
-                <article class="marketing-card">
-                  <h3>Influencer Hub</h3>
-                  <p>Coordinate creators, partnerships, and performance updates in one unified window.</p>
-                </article>
-              </div>
-            </div>
-          </div>
-        </section>
+        <!-- Marketing Workflow moved to work.html -->
 
         <section class="management-panel window-panel insights-window" id="insights-window">
           <div class="management-header">

@@ -42,22 +42,83 @@
     </div>
 
     <section class="social-marketing" id="marketing">
-      <div class="marketing-grid">
-        <article class="marketing-card" style="padding-top: 180px; position: relative; overflow: hidden; background-color: var(--card-bg);">
-          <div style="position: absolute; top: 0; left: 0; right: 0; height: 160px; background-image: url('https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
-          <h3>Campaign Planning</h3>
-          <p>Map posts, ads, and sponsor activations with a clean workflow designed for growth.</p>
-        </article>
-        <article class="marketing-card" style="padding-top: 180px; position: relative; overflow: hidden; background-color: var(--card-bg);">
-          <div style="position: absolute; top: 0; left: 0; right: 0; height: 160px; background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
-          <h3>Creator & Influencer Hub</h3>
-          <p>Connect sponsors, clients, and creators through clear collaboration tools and performance tracking.</p>
-        </article>
-        <article class="marketing-card" style="padding-top: 180px; position: relative; overflow: hidden; background-color: var(--card-bg);">
-          <div style="position: absolute; top: 0; left: 0; right: 0; height: 160px; background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
-          <h3>Analytics & Reach</h3>
-          <p>Measure engagement, impressions, and campaign outcomes for every marketing activity.</p>
-        </article>
+      <div class="management-header" style="text-align:center; margin-bottom: 2rem;">
+        <h2>Marketing Workflow</h2>
+        <p>Plan social media campaigns, manage content calendars, and drive sponsor engagement.</p>
+      </div>
+      <div class="window-panel-content">
+        <div class="panel active-panel" style="display:block;">
+          <div class="panel-heading">
+            <div>
+              <h3>Social Media Marketing</h3>
+              <p>Track campaign planning, content creation, influencer outreach, and ad performance in one place.</p>
+            </div>
+          </div>
+          <div class="marketing-summary">
+            <div class="metric-card accent-1">
+              <span>Active Campaigns</span>
+              <strong id="m-active-campaigns">0</strong>
+            </div>
+            <div class="metric-card accent-2">
+              <span>Content Pieces</span>
+              <strong id="m-content-pieces">0</strong>
+            </div>
+            <div class="metric-card accent-3">
+              <span>Influencer Actions</span>
+              <strong id="m-influencer-actions">0</strong>
+            </div>
+          </div>
+          <div class="marketing-actions">
+            <form id="campaign-form" class="campaign-form" autocomplete="off">
+              <div class="field-grid">
+                <label>Campaign Name<input type="text" id="campaign-name" placeholder="e.g., Sponsor Post Series - Q3" required /></label>
+                <label>Channel
+                  <select id="campaign-channel" required>
+                    <option value="Instagram">Instagram</option>
+                    <option value="LinkedIn">LinkedIn</option>
+                    <option value="Twitter">Twitter</option>
+                    <option value="Facebook">Facebook</option>
+                  </select>
+                </label>
+              </div>
+              <div class="field-grid">
+                <label>Status
+                  <select id="campaign-status" required>
+                    <option value="planned">Planned</option>
+                    <option value="active">Active</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                </label>
+                <label>Next Step
+                  <input type="text" id="campaign-next-step" placeholder="e.g., Schedule drafts" required />
+                </label>
+              </div>
+              <div class="button-row">
+                <button type="submit" class="primary" data-icon="➕">Add Campaign</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="marketing-grid">
+            <article class="marketing-card">
+              <h3>Campaign Planning</h3>
+              <p>Map posts, ads, and sponsor activations with a clean workflow designed for growth.</p>
+            </article>
+            <article class="marketing-card">
+              <h3>Your Campaigns</h3>
+              <p>Quick list of campaigns created from this workflow.</p>
+              <div id="marketing-campaign-list" style="margin-top:1rem"></div>
+            </article>
+            <article class="marketing-card">
+              <h3>Content Calendar</h3>
+              <p>Organize posts, stories, and reels for consistent brand presence across channels.</p>
+            </article>
+            <article class="marketing-card">
+              <h3>Influencer Hub</h3>
+              <p>Coordinate creators, partnerships, and performance updates.</p>
+            </article>
+          </div>
+        </div>
       </div>
       <div class="hero-actions" style="margin-top:2rem; justify-content: center;">
         <a href="/" class="primary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Back to Dashboard</a>

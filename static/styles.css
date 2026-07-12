@@ -2121,3 +2121,39 @@ td {
     color: #94a3b8;
   }
 }
+/* Front Page Landscape Hero */
+header#overview {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 3rem 0;
+}
+
+header#overview .hero-copy {
+  max-width: none;
+}
+
+header#overview .hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header#overview .hero-visual img.hero-illustration {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+}
+
+@media (max-width: 980px) {
+  header#overview {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 2rem 0;
+  }
+  
+  header#overview .hero-actions {
+    justify-content: center;
+  }
+}
