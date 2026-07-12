@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+import os
+
+filepath = 'd:/WebPortal/Sponsor-Management-Portal/static/login.html'
+
+html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -336,3 +340,9 @@
     </script>
 </body>
 </html>
+"""
+
+with open(filepath, 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("login.html completely restored with selection tabs AND all latest features successfully.")
