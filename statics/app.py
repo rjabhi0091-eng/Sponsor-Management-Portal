@@ -364,6 +364,31 @@ def admin_login(payload: schemas.UserLogin, db: Session = Depends(get_db)):
     return schemas.LoginResponse(role="admin", name=admin.username, message="Admin login successful", token=token)
 
 
+@app.put("/admins/me", response_model=schemas.Admin, tags=["admin"])
+def update_admin(admin_update: schemas.AdminUpdate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    if current_user.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized")
+    admin = db.query(models.Admin).filter(models.Admin.email == current_user.get("sub")).first()
+    if not admin:
+        raise HTTPException(status_code=404, detail="Admin not found")
+        
+    if admin_update.username:
+        admin.username = admin_update.username
+    if admin_update.email:
+        # Check if email is already taken
+        existing = db.query(models.Admin).filter(models.Admin.email == admin_update.email).first()
+        if existing and existing.id != admin.id:
+            raise HTTPException(status_code=400, detail="Email already registered")
+        admin.email = admin_update.email
+    if admin_update.password:
+        admin.set_password(admin_update.password)
+        
+    db.commit()
+    db.refresh(admin)
+    return admin
+
+
+
 @app.put("/clients/{client_id}", response_model=schemas.Client, tags=["clients"])
 def update_client(client_id: int, client_update: schemas.ClientUpdate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     client = db.query(models.Client).filter(models.Client.id == client_id).first()

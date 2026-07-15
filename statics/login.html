@@ -240,7 +240,6 @@
         <div class="selection-section">
             <button class="select-btn active" onclick="setLoginType('sponsor', this)">Sponsor</button>
             <button class="select-btn" onclick="setLoginType('client', this)">Client</button>
-            <button class="select-btn" onclick="setLoginType('admin', this)">Admin</button>
         </div>
 
         <h2 id="login-title"><ion-icon name="business-outline" id="login-icon"></ion-icon> <span id="login-text">Sponsor Login</span></h2>
@@ -305,11 +304,6 @@
                 text.innerText = 'Client Login';
                 emailInput.placeholder = 'client@brand.com';
                 submitBtn.innerText = 'Login as Client';
-            } else if (type === 'admin') {
-                icon.name = 'shield-checkmark-outline';
-                text.innerText = 'Admin Login';
-                emailInput.placeholder = 'admin@portal.com';
-                submitBtn.innerText = 'Login as Admin';
             }
         }
 
@@ -317,11 +311,11 @@
             event.preventDefault();
             const email = document.getElementById('email-input').value;
             const password = document.getElementById('password-input').value;
-            const endpoint = currentType === 'admin' ? '/auth/admin-login' : 
-                             currentType === 'sponsor' ? '/auth/sponsor-login' : '/auth/client-login';
+            const BASE_URL = 'http://127.0.0.1:8000';
+            const endpoint = currentType === 'sponsor' ? '/auth/sponsor-login' : '/auth/client-login';
                              
             try {
-                const response = await fetch(endpoint, {
+                const response = await fetch(BASE_URL + endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: email, password: password })
@@ -329,12 +323,10 @@
                 
                 if (response.ok) {
                     const data = await response.json();
-                    localStorage.setItem('access_token', data.access_token);
+                    localStorage.setItem('access_token', data.token);
                     localStorage.setItem('user_type', data.user_type || currentType);
                     
-                    if (currentType === 'admin') {
-                        window.location.href = 'admin.html';
-                    } else {
+                    if (currentType === 'sponsor' || currentType === 'client') {
                         window.location.href = 'dashboard.html';
                     }
                 } else {

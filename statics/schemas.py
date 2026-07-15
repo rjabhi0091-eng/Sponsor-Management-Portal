@@ -76,6 +76,12 @@ class AdminCreate(AdminBase):
     password: str
 
 
+class AdminUpdate(BaseModel):
+    username: Optional[str] = None
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None
+
+
 class Admin(AdminBase):
     id: int
     created_at: Optional[datetime] = None
