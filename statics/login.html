@@ -240,6 +240,7 @@
         <div class="selection-section">
             <button class="select-btn active" onclick="setLoginType('sponsor', this)">Sponsor</button>
             <button class="select-btn" onclick="setLoginType('client', this)">Client</button>
+            <button class="select-btn" onclick="setLoginType('admin', this)">Admin</button>
         </div>
 
         <h2 id="login-title"><ion-icon name="business-outline" id="login-icon"></ion-icon> <span id="login-text">Sponsor Login</span></h2>
@@ -304,6 +305,11 @@
                 text.innerText = 'Client Login';
                 emailInput.placeholder = 'client@brand.com';
                 submitBtn.innerText = 'Login as Client';
+            } else if (type === 'admin') {
+                icon.name = 'shield-checkmark-outline';
+                text.innerText = 'Admin Login';
+                emailInput.placeholder = 'admin@example.com';
+                submitBtn.innerText = 'Login as Admin';
             }
         }
 
@@ -312,7 +318,9 @@
             const email = document.getElementById('email-input').value;
             const password = document.getElementById('password-input').value;
             const BASE_URL = 'http://127.0.0.1:8000';
-            const endpoint = currentType === 'sponsor' ? '/auth/sponsor-login' : '/auth/client-login';
+            let endpoint = '/auth/sponsor-login';
+            if (currentType === 'client') endpoint = '/auth/client-login';
+            if (currentType === 'admin') endpoint = '/auth/admin-login';
                              
             try {
                 const response = await fetch(BASE_URL + endpoint, {
@@ -326,7 +334,9 @@
                     localStorage.setItem('access_token', data.token);
                     localStorage.setItem('user_type', data.user_type || currentType);
                     
-                    if (currentType === 'sponsor' || currentType === 'client') {
+                    if (currentType === 'admin') {
+                        window.location.href = 'admin.html';
+                    } else {
                         window.location.href = 'dashboard.html';
                     }
                 } else {
