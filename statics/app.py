@@ -3,7 +3,7 @@ import smtplib
 from email.message import EmailMessage
 
 from fastapi import FastAPI, Depends, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -364,6 +364,61 @@ def admin_login(payload: schemas.UserLogin, db: Session = Depends(get_db)):
     db.commit()
     token = create_access_token({"sub": admin.email, "role": "admin"})
     return schemas.LoginResponse(role="admin", name=admin.username, message="Admin login successful", token=token)
+
+@app.get("/auth/social/{provider}")
+def social_login(provider: str):
+    """
+    Redirects the user to the social provider's authentication page.
+    This is a mock implementation until actual OAuth secrets are provided.
+    """
+    # Mock redirect back to the callback
+    return RedirectResponse(url=f"/auth/social/callback/{provider}?code=mock_code_123")
+
+
+@app.get("/auth/social/callback/{provider}")
+def social_callback(provider: str, code: str = None, error: str = None, db: Session = Depends(get_db)):
+    """
+    Handles the callback from the social provider.
+    Mocks a successful login by returning a token and redirecting to the frontend dashboard logic.
+    """
+    if error:
+        return RedirectResponse(url=f"/login.html?error={error}")
+
+    if not code:
+        return RedirectResponse(url="/login.html?error=missing_code")
+
+    # In a real implementation, exchange 'code' for an access token using authlib/requests
+    # and fetch the user's profile from the provider.
+    
+    mock_email = f"user@{provider}.com"
+    mock_name = f"{provider.capitalize()} User"
+    
+    # Check if a sponsor with this email exists
+    sponsor = db.query(models.Sponsor).filter(models.Sponsor.email == mock_email).first()
+    
+    if not sponsor:
+        # Create a mock sponsor for demonstration
+        new_sponsor = models.Sponsor(
+            name=mock_name,
+            email=mock_email,
+            phone="1234567890",
+            status="active"
+        )
+        new_sponsor.set_password("mock_password_do_not_use")
+        db.add(new_sponsor)
+        db.commit()
+        db.refresh(new_sponsor)
+        sponsor = new_sponsor
+
+    # Create our JWT token
+    token = create_access_token({"sub": sponsor.email, "role": "sponsor"})
+    
+    # Redirect back to index.html with the token and user data in the hash or query params
+    # Alternatively, for a clean implementation, redirect to a generic endpoint that sets localStorage
+    # Here, we'll redirect to index.html and include query parameters that app.js can intercept.
+    
+    redirect_url = f"/index.html?social_token={token}&role=sponsor&name={sponsor.name}"
+    return RedirectResponse(url=redirect_url)
 
 
 @app.put("/admins/me", response_model=schemas.Admin, tags=["admin"])
