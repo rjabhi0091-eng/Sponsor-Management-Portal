@@ -2,7 +2,7 @@ import os
 import smtplib
 from email.message import EmailMessage
 
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
@@ -18,6 +18,9 @@ import models
 import schemas
 import google_integration
 from database import SessionLocal, engine, get_db
+
+from authlib.integrations.starlette_client import OAuth
+from starlette.middleware.sessions import SessionMiddleware
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -68,6 +71,26 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key-for-development-o
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 security = HTTPBearer()
+
+app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
+
+oauth = OAuth()
+oauth.register(
+    name='google',
+    client_id=os.environ.get("GOOGLE_CLIENT_ID", ""),
+    client_secret=os.environ.get("GOOGLE_CLIENT_SECRET", ""),
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'}
+)
+oauth.register(
+    name='facebook',
+    client_id=os.environ.get("FACEBOOK_CLIENT_ID", ""),
+    client_secret=os.environ.get("FACEBOOK_CLIENT_SECRET", ""),
+    api_base_url='https://graph.facebook.com/',
+    access_token_url='https://graph.facebook.com/v12.0/oauth/access_token',
+    authorize_url='https://www.facebook.com/v12.0/dialog/oauth',
+    client_kwargs={'scope': 'email public_profile'}
+)
 
 def create_access_token(data: dict):
     to_encode = data.copy()
@@ -366,20 +389,25 @@ def admin_login(payload: schemas.UserLogin, db: Session = Depends(get_db)):
     return schemas.LoginResponse(role="admin", name=admin.username, message="Admin login successful", token=token)
 
 @app.get("/auth/social/{provider}")
-def social_login(provider: str):
+async def social_login(provider: str, request: Request):
     """
     Redirects the user to the social provider's authentication page.
-    This is a mock implementation until actual OAuth secrets are provided.
+    Uses real OAuth if credentials are provided in the environment, else falls back to mock.
     """
+    client = oauth.create_client(provider)
+    if client and client.client_id:
+        redirect_uri = str(request.url_for('social_callback', provider=provider))
+        return await client.authorize_redirect(request, redirect_uri)
+    
     # Mock redirect back to the callback
     return RedirectResponse(url=f"/auth/social/callback/{provider}?code=mock_code_123")
 
 
 @app.get("/auth/social/callback/{provider}")
-def social_callback(provider: str, code: str = None, error: str = None, db: Session = Depends(get_db)):
+async def social_callback(provider: str, request: Request, code: str = None, error: str = None, db: Session = Depends(get_db)):
     """
     Handles the callback from the social provider.
-    Mocks a successful login by returning a token and redirecting to the frontend dashboard logic.
+    Mocks a successful login or uses real OAuth if configured.
     """
     if error:
         return RedirectResponse(url=f"/login.html?error={error}")
@@ -387,11 +415,18 @@ def social_callback(provider: str, code: str = None, error: str = None, db: Sess
     if not code:
         return RedirectResponse(url="/login.html?error=missing_code")
 
-    # In a real implementation, exchange 'code' for an access token using authlib/requests
-    # and fetch the user's profile from the provider.
-    
-    mock_email = f"user@{provider}.com"
-    mock_name = f"{provider.capitalize()} User"
+    client = oauth.create_client(provider)
+    if client and client.client_id:
+        token = await client.authorize_access_token(request)
+        userinfo = token.get('userinfo')
+        if not userinfo:
+            userinfo = await client.userinfo(token=token)
+        mock_email = userinfo.get("email")
+        mock_name = userinfo.get("name", f"{provider.capitalize()} User")
+    else:
+        # Mock fallback
+        mock_email = f"user@{provider}.com"
+        mock_name = f"{provider.capitalize()} User"
     
     # Check if a sponsor with this email exists
     sponsor = db.query(models.Sponsor).filter(models.Sponsor.email == mock_email).first()
@@ -414,9 +449,6 @@ def social_callback(provider: str, code: str = None, error: str = None, db: Sess
     token = create_access_token({"sub": sponsor.email, "role": "sponsor"})
     
     # Redirect back to index.html with the token and user data in the hash or query params
-    # Alternatively, for a clean implementation, redirect to a generic endpoint that sets localStorage
-    # Here, we'll redirect to index.html and include query parameters that app.js can intercept.
-    
     redirect_url = f"/index.html?social_token={token}&role=sponsor&name={sponsor.name}"
     return RedirectResponse(url=redirect_url)
 
