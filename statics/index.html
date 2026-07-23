@@ -53,10 +53,9 @@
       <a href="login.html" class="nav-link"><i class="ph ph-sign-in" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Login Portals</a>
       <a href="#sponsor-registration" class="nav-link"><i class="ph ph-handshake" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Sponsors</a>
       <a href="#client-registration" class="nav-link"><i class="ph ph-users" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Clients</a>
-      <a href="analytics.html" class="nav-link"><i class="ph ph-megaphone" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Marketing</a>
+      <a href="analytics.html" class="nav-link"><i class="ph ph-megaphone" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Marketing & Media</a>
       <a href="#register" class="nav-link"><i class="ph ph-user-plus" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Register</a>
       <a href="#about" class="nav-link"><i class="ph ph-info" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>About</a>
-      <a href="analytics.html#media" class="nav-link"><i class="ph ph-image" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Media</a>
       <a href="#team" class="nav-link"><i class="ph ph-users-three" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Team</a>
       <a href="#registration-stats" class="nav-link"><i class="ph ph-activity" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Live Registration</a>
       <a href="#contact" class="nav-link"><i class="ph ph-envelope-simple" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Contact</a>
@@ -71,7 +70,7 @@
       <button class="bottom-nav-item" type="button" onclick="window.location.href='#client-registration'"
         aria-label="Clients">👥</button>
       <button class="bottom-nav-item" type="button" onclick="window.location.href='analytics.html'"
-        aria-label="Marketing">📣</button>
+        aria-label="Marketing & Media">📣</button>
       <button class="bottom-nav-item" type="button" onclick="window.location.href='#registration-stats'"
         aria-label="Insights">📊</button>
     </nav>
@@ -996,6 +995,62 @@ Growth Scaling</pre>
       </div>
     </section>
 
+    <!-- Front Page Quick Email Sender Section -->
+    <section class="email-sender-section" id="front-email-sender" style="margin-top: 60px; margin-bottom: 40px;">
+      <div class="glass-panel" style="max-width: 1200px; margin: 0 auto; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(16px); padding: 40px; border-radius: 24px; border: 1px solid rgba(139, 92, 246, 0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <span class="eyebrow" style="color: #8b5cf6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; font-size: 14px;">Instant Dispatch</span>
+          <h2 style="font-size: 2.2rem; margin: 10px 0; color: #fff; display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <ion-icon name="mail-open-outline" style="color: #8b5cf6;"></ion-icon> Front Page Email Sender
+          </h2>
+          <p style="color: #94a3b8; max-width: 650px; margin: 0 auto;">Send instant campaign updates, sponsor proposals, or broadcast messages directly from the home page.</p>
+        </div>
+
+        <form id="front-email-form" onsubmit="handleFrontPageSendEmail(event)" style="max-width: 800px; margin: 0 auto;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+            <div>
+              <label style="color: #a1a1aa; display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600;">Target Recipients</label>
+              <select id="front-email-target" onchange="toggleFrontRecipientField()" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: #1e293b; color: #fff; font-size: 15px;">
+                <option value="all_sponsors">All Active Sponsors</option>
+                <option value="all_clients">All Active Clients</option>
+                <option value="all_users">All Portal Users</option>
+                <option value="custom">Custom Recipient Email(s)</option>
+              </select>
+            </div>
+            <div>
+              <label style="color: #a1a1aa; display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600;">Campaign Preset</label>
+              <select id="front-email-template" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: #1e293b; color: #fff; font-size: 15px;">
+                <option value="default">Standard Announcement</option>
+                <option value="sponsor_invite">Sponsorship Partnership Invitation</option>
+                <option value="promo">Special Promotional Discount</option>
+                <option value="campaign_update">Campaign Milestone Update</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="front-custom-email-group" style="margin-bottom: 20px; display: none;">
+            <label style="color: #a1a1aa; display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600;">Recipient Email(s)</label>
+            <input type="text" id="front-email-recipients" placeholder="sponsor@company.com, client@brand.com" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: #1e293b; color: #fff; font-size: 15px; box-sizing: border-box;">
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <label style="color: #a1a1aa; display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600;">Email Subject</label>
+            <input type="text" id="front-email-subject" required placeholder="e.g. New Partnership Proposal from R-Abhi Tech Solution" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: #1e293b; color: #fff; font-size: 15px; box-sizing: border-box;">
+          </div>
+
+          <div style="margin-bottom: 25px;">
+            <label style="color: #a1a1aa; display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600;">Message Content</label>
+            <textarea id="front-email-body" rows="5" required placeholder="Compose your campaign announcement or partner message..." style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: #1e293b; color: #fff; font-size: 15px; box-sizing: border-box; resize: vertical;"></textarea>
+          </div>
+
+          <button type="submit" id="front-send-email-btn" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: #fff; border: none; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4); transition: transform 0.2s;">
+            <ion-icon name="send" style="font-size: 20px;"></ion-icon> Dispatch Email Campaign
+          </button>
+        </form>
+        <div id="front-email-status" style="max-width: 800px; margin: 20px auto 0 auto; padding: 15px; border-radius: 10px; font-size: 14px; display: none; text-align: center;"></div>
+      </div>
+    </section>
+
 <section id="registration-stats" class="live-analytics" style="margin-top: 60px; margin-bottom: 40px;">
       <div class="hero-dashboard"
         style="text-align: center; max-width: 1200px; margin: 0 auto; background: rgba(15, 23, 42, 0.6); padding: 40px; border-radius: 24px; border: 1px solid rgba(56, 189, 248, 0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
@@ -1092,6 +1147,76 @@ Growth Scaling</pre>
         btn.classList.remove('show');
       }
     });
+
+    // Front Page Email Sender Logic
+    function toggleFrontRecipientField() {
+      const group = document.getElementById('front-email-target').value;
+      const customDiv = document.getElementById('front-custom-email-group');
+      if (group === 'custom') {
+        customDiv.style.display = 'block';
+        document.getElementById('front-email-recipients').required = true;
+      } else {
+        customDiv.style.display = 'none';
+        document.getElementById('front-email-recipients').required = false;
+      }
+    }
+
+    async function handleFrontPageSendEmail(event) {
+      event.preventDefault();
+      const btn = document.getElementById('front-send-email-btn');
+      const statusBox = document.getElementById('front-email-status');
+      
+      const targetGroup = document.getElementById('front-email-target').value;
+      const recipients = document.getElementById('front-email-recipients').value;
+      const template = document.getElementById('front-email-template').value;
+      const subject = document.getElementById('front-email-subject').value;
+      const body = document.getElementById('front-email-body').value;
+      const BASE_URL = 'http://127.0.0.1:8000';
+
+      btn.disabled = true;
+      btn.innerText = "Sending Email...";
+      statusBox.style.display = "block";
+      statusBox.style.background = "rgba(59, 130, 246, 0.2)";
+      statusBox.style.color = "#60a5fa";
+      statusBox.innerText = "Processing email dispatch...";
+
+      try {
+        const response = await fetch(BASE_URL + '/api/marketing/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            target_group: targetGroup,
+            recipient_email: recipients,
+            template_name: template,
+            subject: subject,
+            body: body
+          })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          statusBox.style.background = data.status === 'error' ? "rgba(239, 68, 68, 0.2)" : "rgba(16, 185, 129, 0.2)";
+          statusBox.style.color = data.status === 'error' ? "#f87171" : "#34d399";
+          statusBox.innerText = data.message;
+          if (data.status !== 'error') {
+            document.getElementById('front-email-form').reset();
+            toggleFrontRecipientField();
+          }
+        } else {
+          statusBox.style.background = "rgba(239, 68, 68, 0.2)";
+          statusBox.style.color = "#f87171";
+          statusBox.innerText = data.detail || "Failed to dispatch email.";
+        }
+      } catch (err) {
+        console.error("Front page email error:", err);
+        statusBox.style.background = "rgba(239, 68, 68, 0.2)";
+        statusBox.style.color = "#f87171";
+        statusBox.innerText = "Error connecting to backend server.";
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<ion-icon name="send" style="font-size: 20px;"></ion-icon> Dispatch Email Campaign`;
+      }
+    }
 
     // Admin Login Logic
     function showAdminLogin(event) {
