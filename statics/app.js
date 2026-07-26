@@ -1000,7 +1000,6 @@ window.addEventListener("load", async () => {
   updateLiveClock();
   setInterval(updateLiveClock, 1000);
 
-  setupBottomNavigation();
   setupMarketingWorkflowUI();
 });
 

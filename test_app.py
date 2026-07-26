@@ -1,6 +1,13 @@
-import httpx
+import pytest
+from fastapi.testclient import TestClient
+import sys
+import os
 
-BASE_URL = "http://127.0.0.1:8000"
+# Add statics directory to path so we can import app
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'statics'))
+from app import app
+
+client = TestClient(app)
 
 def test_contact_endpoint():
     payload = {
@@ -8,20 +15,20 @@ def test_contact_endpoint():
         "email": "test@example.com",
         "message": "This is a test message"
     }
-    response = httpx.post(f"{BASE_URL}/contact/message", json=payload)
+    response = client.post("/contact/message", json=payload)
     assert response.status_code == 200
     data = response.json()
     assert "status" in data
 
 def test_chat_endpoint():
     payload = {"message": "help"}
-    response = httpx.post(f"{BASE_URL}/chat/assistant", json=payload)
+    response = client.post("/chat/assistant", json=payload)
     assert response.status_code == 200
     assert "reply" in response.json()
 
 def test_admin_auth_failure():
     # Attempting to fetch clients without token should fail
-    response = httpx.get(f"{BASE_URL}/clients/")
+    response = client.get("/clients/")
     assert response.status_code in (401, 403)
 
 def test_marketing_endpoint():
@@ -31,7 +38,7 @@ def test_marketing_endpoint():
         "status": "planning",
         "metrics": "{}"
     }
-    response = httpx.post(f"{BASE_URL}/marketing/campaigns", json=payload)
+    response = client.post("/marketing/campaigns", json=payload)
     assert response.status_code == 200
     data = response.json()
     assert data["title"] == "Test Campaign"

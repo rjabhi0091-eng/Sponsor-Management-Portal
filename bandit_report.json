@@ -1,33 +1,118 @@
 {
   "errors": [],
-  "generated_at": "2026-07-12T17:52:48Z",
+  "generated_at": "2026-07-26T06:39:59Z",
   "metrics": {
     ".\\statics/app.py": {
       "CONFIDENCE.HIGH": 0,
       "CONFIDENCE.LOW": 0,
-      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.MEDIUM": 3,
       "CONFIDENCE.UNDEFINED": 0,
       "SEVERITY.HIGH": 0,
-      "SEVERITY.LOW": 0,
+      "SEVERITY.LOW": 3,
       "SEVERITY.MEDIUM": 0,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 383,
+      "loc": 591,
       "nosec": 0,
       "skipped_tests": 0
     },
     "_totals": {
       "CONFIDENCE.HIGH": 0,
       "CONFIDENCE.LOW": 0,
-      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.MEDIUM": 3,
       "CONFIDENCE.UNDEFINED": 0,
       "SEVERITY.HIGH": 0,
-      "SEVERITY.LOW": 0,
+      "SEVERITY.LOW": 3,
       "SEVERITY.MEDIUM": 0,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 383,
+      "loc": 591,
       "nosec": 0,
       "skipped_tests": 0
     }
   },
-  "results": []
+  "results": [
+    {
+      "code": "89     api_base_url='https://graph.facebook.com/',\n90     access_token_url='https://graph.facebook.com/v12.0/oauth/access_token',\n91     authorize_url='https://www.facebook.com/v12.0/dialog/oauth',\n92     client_kwargs={'scope': 'email public_profile'}\n93 )\n94 oauth.register(\n95     name='twitter',\n96     client_id=os.environ.get(\"TWITTER_CLIENT_ID\", \"\"),\n97     client_secret=os.environ.get(\"TWITTER_CLIENT_SECRET\", \"\"),\n98     api_base_url='https://api.twitter.com/2/',\n99     access_token_url='https://api.twitter.com/2/oauth2/token',\n",
+      "col_offset": 0,
+      "end_col_offset": 1,
+      "filename": ".\\statics/app.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 259,
+        "link": "https://cwe.mitre.org/data/definitions/259.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Possible hardcoded password: 'https://graph.facebook.com/v12.0/oauth/access_token'",
+      "line_number": 90,
+      "line_range": [
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b106_hardcoded_password_funcarg.html",
+      "test_id": "B106",
+      "test_name": "hardcoded_password_funcarg"
+    },
+    {
+      "code": "98     api_base_url='https://api.twitter.com/2/',\n99     access_token_url='https://api.twitter.com/2/oauth2/token',\n100     authorize_url='https://twitter.com/i/oauth2/authorize',\n101     client_kwargs={'scope': 'users.read tweet.read'}\n102 )\n103 oauth.register(\n104     name='apple',\n105     client_id=os.environ.get(\"APPLE_CLIENT_ID\", \"\"),\n106     client_secret=os.environ.get(\"APPLE_CLIENT_SECRET\", \"\"),\n107     api_base_url='https://appleid.apple.com/',\n108     access_token_url='https://appleid.apple.com/auth/token',\n",
+      "col_offset": 0,
+      "end_col_offset": 1,
+      "filename": ".\\statics/app.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 259,
+        "link": "https://cwe.mitre.org/data/definitions/259.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Possible hardcoded password: 'https://api.twitter.com/2/oauth2/token'",
+      "line_number": 99,
+      "line_range": [
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b106_hardcoded_password_funcarg.html",
+      "test_id": "B106",
+      "test_name": "hardcoded_password_funcarg"
+    },
+    {
+      "code": "107     api_base_url='https://appleid.apple.com/',\n108     access_token_url='https://appleid.apple.com/auth/token',\n109     authorize_url='https://appleid.apple.com/auth/authorize',\n110     client_kwargs={'scope': 'name email'}\n111 )\n112 \n113 def create_access_token(data: dict):\n114     to_encode = data.copy()\n115     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)\n116     to_encode.update({\"exp\": expire})\n117     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)\n",
+      "col_offset": 0,
+      "end_col_offset": 1,
+      "filename": ".\\statics/app.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 259,
+        "link": "https://cwe.mitre.org/data/definitions/259.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Possible hardcoded password: 'https://appleid.apple.com/auth/token'",
+      "line_number": 108,
+      "line_range": [
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b106_hardcoded_password_funcarg.html",
+      "test_id": "B106",
+      "test_name": "hardcoded_password_funcarg"
+    }
+  ]
 }
