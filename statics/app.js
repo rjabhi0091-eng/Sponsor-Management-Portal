@@ -444,6 +444,7 @@ async function login(event) {
     setStatus(loginStatus, payload.message);
     closeLogin();
     if (payload.role === "admin") {
+      localStorage.setItem('access_token', payload.token);
       window.location.href = "/admin";
     } else {
       showWindow(payload.role);
