@@ -1152,19 +1152,15 @@ async function handleAdminLoginFront(event) {
   }
 
   try {
-    const formData = new URLSearchParams();
-    formData.append("username", email);
-    formData.append("password", password);
-
-    const res = await fetch(`${apiBase}token`, {
+    const res = await fetch(`${apiBase}auth/admin-login`, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: formData
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
     });
 
     if (res.ok) {
       const data = await res.json();
-      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("access_token", data.token);
       localStorage.setItem("user_role", "admin");
       window.location.href = "admin.html";
     } else {
@@ -1180,11 +1176,14 @@ async function handleAdminLoginFront(event) {
 function toggleFrontRecipientField() {
   const select = document.getElementById("front-email-target");
   const customGroup = document.getElementById("front-custom-email-group");
+  const recipientsField = document.getElementById("front-email-recipients");
   if (select && customGroup) {
     if (select.value === "custom") {
       customGroup.style.display = "block";
+      if (recipientsField) recipientsField.required = true;
     } else {
       customGroup.style.display = "none";
+      if (recipientsField) recipientsField.required = false;
     }
   }
 }
