@@ -116,7 +116,7 @@ const ctaSponsorsBtn = document.getElementById("cta-sponsors-btn");
 const ctaClientsBtn = document.getElementById("cta-clients-btn");
 const openRegisterBtn = document.getElementById("open-register-btn");
 const sectionSearchInput = document.getElementById("section-search");
-const apiBase = "/";
+const apiBase = window.location.protocol === 'file:' ? 'http://127.0.0.1:8000/' : '/';
 
 let sponsorsCache = [];
 let clientsCache = [];
@@ -1008,7 +1008,7 @@ window.addEventListener("load", async () => {
 function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker
-      .register("/static/sw.js")
+      .register("sw.js")
       .then(() => console.log("Service worker registered."))
       .catch((error) => console.warn("Service worker registration failed:", error));
   }

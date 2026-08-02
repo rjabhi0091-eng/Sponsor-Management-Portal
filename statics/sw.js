@@ -1,12 +1,12 @@
 const CACHE_NAME = "r-abhi-portals-app-v1";
 const ASSETS_TO_CACHE = [
   "/",
-  "/static/index.html",
-  "/static/styles.css",
-  "/static/app.js",
-  "/static/logo.png",
-  "/static/manifest.json",
-  "/static/sw.js"
+  "index.html",
+  "styles.css",
+  "app.js",
+  "logo.png",
+  "manifest.json",
+  "sw.js"
 ];
 
 self.addEventListener("install", (event) => {
@@ -43,7 +43,7 @@ self.addEventListener("fetch", (event) => {
             return networkResponse;
           });
         })
-        .catch(() => caches.match("/static/index.html"));
+        .catch(() => caches.match("index.html"));
     })
   );
 });

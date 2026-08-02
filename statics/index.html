@@ -1188,7 +1188,7 @@ Growth Scaling</pre>
     }
   </script>
 
-  <script src="/static/app.js"></script>
+  <script src="app.js"></script>
 
   <!-- Floating Actions -->
   <div class="floating-actions">
@@ -1235,7 +1235,7 @@ Growth Scaling</pre>
       const template = document.getElementById('front-email-template').value;
       const subject = document.getElementById('front-email-subject').value;
       const body = document.getElementById('front-email-body').value;
-      const BASE_URL = '';
+      const BASE_URL = window.location.protocol === 'file:' ? 'http://127.0.0.1:8000' : '';
 
       btn.disabled = true;
       btn.innerText = "Sending Email...";
@@ -1292,7 +1292,7 @@ Growth Scaling</pre>
         event.preventDefault();
         const email = document.getElementById('admin-email').value;
         const password = document.getElementById('admin-password').value;
-        const BASE_URL = '';
+        const BASE_URL = window.location.protocol === 'file:' ? 'http://127.0.0.1:8000' : '';
         
         try {
             const response = await fetch(BASE_URL + '/auth/admin-login', {

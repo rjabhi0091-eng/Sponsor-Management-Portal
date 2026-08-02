@@ -332,7 +332,7 @@
             event.preventDefault();
             const email = document.getElementById('email-input').value;
             const password = document.getElementById('password-input').value;
-            const BASE_URL = '';
+            const BASE_URL = window.location.protocol === 'file:' ? 'http://127.0.0.1:8000' : '';
             let endpoint = '/auth/sponsor-login';
             if (currentType === 'client') endpoint = '/auth/client-login';
             if (currentType === 'admin') endpoint = '/auth/admin-login';
