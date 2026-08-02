@@ -43,6 +43,12 @@ def test_marketing_endpoint():
     data = response.json()
     assert data["title"] == "Test Campaign"
 
+
+def test_public_page_routes():
+    for route in ["/about", "/media", "/registration", "/contact", "/work"]:
+        response = client.get(route)
+        assert response.status_code == 200
+
 if __name__ == "__main__":
     try:
         test_contact_endpoint()
