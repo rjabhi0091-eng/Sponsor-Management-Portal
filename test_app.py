@@ -31,6 +31,17 @@ def test_admin_auth_failure():
     response = client.get("/clients/")
     assert response.status_code in (401, 403)
 
+
+def test_admin_login_with_default_password():
+    response = client.post(
+        "/auth/admin-login",
+        json={"email": "admin", "password": "Admin@2026!"},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["role"] == "admin"
+
+
 def test_marketing_endpoint():
     payload = {
         "title": "Test Campaign",
