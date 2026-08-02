@@ -1276,7 +1276,7 @@ Growth Scaling</pre>
       const template = document.getElementById('front-email-template').value;
       const subject = document.getElementById('front-email-subject').value;
       const body = document.getElementById('front-email-body').value;
-      const BASE_URL = 'http://127.0.0.1:8000';
+      const BASE_URL = '';
 
       btn.disabled = true;
       btn.innerText = "Sending Email...";
@@ -1333,7 +1333,7 @@ Growth Scaling</pre>
         event.preventDefault();
         const email = document.getElementById('admin-email').value;
         const password = document.getElementById('admin-password').value;
-        const BASE_URL = 'http://127.0.0.1:8000';
+        const BASE_URL = '';
         
         try {
             const response = await fetch(BASE_URL + '/auth/admin-login', {

@@ -271,10 +271,10 @@
         <!-- Social Login -->
         <div class="divider">Or continue with</div>
         <div class="social-login">
-            <button class="social-btn" title="Login with Google" onclick="window.location.href='http://127.0.0.1:8000/auth/social/google'"><ion-icon name="logo-google"></ion-icon></button>
-            <button class="social-btn" title="Login with Facebook" onclick="window.location.href='http://127.0.0.1:8000/auth/social/facebook'"><ion-icon name="logo-facebook"></ion-icon></button>
-            <button class="social-btn" title="Login with Twitter/X" onclick="window.location.href='http://127.0.0.1:8000/auth/social/twitter'"><ion-icon name="logo-twitter"></ion-icon></button>
-            <button class="social-btn" title="Login with Apple" onclick="window.location.href='http://127.0.0.1:8000/auth/social/apple'"><ion-icon name="logo-apple"></ion-icon></button>
+            <button class="social-btn" title="Login with Google" onclick="window.location.href='/auth/social/google'"><ion-icon name="logo-google"></ion-icon></button>
+            <button class="social-btn" title="Login with Facebook" onclick="window.location.href='/auth/social/facebook'"><ion-icon name="logo-facebook"></ion-icon></button>
+            <button class="social-btn" title="Login with Twitter/X" onclick="window.location.href='/auth/social/twitter'"><ion-icon name="logo-twitter"></ion-icon></button>
+            <button class="social-btn" title="Login with Apple" onclick="window.location.href='/auth/social/apple'"><ion-icon name="logo-apple"></ion-icon></button>
         </div>
 
     </div>
@@ -332,7 +332,7 @@
             event.preventDefault();
             const email = document.getElementById('email-input').value;
             const password = document.getElementById('password-input').value;
-            const BASE_URL = 'http://127.0.0.1:8000';
+            const BASE_URL = '';
             let endpoint = '/auth/sponsor-login';
             if (currentType === 'client') endpoint = '/auth/client-login';
             if (currentType === 'admin') endpoint = '/auth/admin-login';
