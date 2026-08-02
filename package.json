@@ -1,0 +1,26 @@
+{
+  "name": "sponsor-management-portal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjabhi0091-eng/Sponsor-Management-Portal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rjabhi0091-eng/Sponsor-Management-Portal/issues"
+  },
+  "homepage": "https://github.com/rjabhi0091-eng/Sponsor-Management-Portal#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.0",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1"
+  }
+}
