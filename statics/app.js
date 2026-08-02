@@ -1129,3 +1129,139 @@ window.submitRegisterSponsor = submitRegisterSponsor;
 window.submitRegisterClient = submitRegisterClient;
 window.clearRegisterSponsorForm = clearRegisterSponsorForm;
 window.clearRegisterClientForm = clearRegisterClientForm;
+
+// Front Page Admin Login Overlay
+function showAdminLogin(event) {
+  if (event) event.preventDefault();
+  const overlay = document.getElementById("admin-login-overlay");
+  if (overlay) {
+    overlay.style.display = "flex";
+  }
+}
+
+async function handleAdminLoginFront(event) {
+  if (event) event.preventDefault();
+  const emailInput = document.getElementById("admin-email");
+  const passInput = document.getElementById("admin-password");
+  const email = emailInput?.value?.trim();
+  const password = passInput?.value;
+
+  if (!email || !password) {
+    alert("Please enter both Admin ID/Email and Password.");
+    return;
+  }
+
+  try {
+    const formData = new URLSearchParams();
+    formData.append("username", email);
+    formData.append("password", password);
+
+    const res = await fetch(`${apiBase}token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formData
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("user_role", "admin");
+      window.location.href = "admin.html";
+    } else {
+      const err = await res.json().catch(() => ({}));
+      alert(`Admin Login Failed: ${err.detail || "Invalid credentials."}`);
+    }
+  } catch (err) {
+    console.error("Admin login error:", err);
+    alert("Error connecting to server for admin login.");
+  }
+}
+
+function toggleFrontRecipientField() {
+  const select = document.getElementById("front-email-target");
+  const customGroup = document.getElementById("front-custom-email-group");
+  if (select && customGroup) {
+    if (select.value === "custom") {
+      customGroup.style.display = "block";
+    } else {
+      customGroup.style.display = "none";
+    }
+  }
+}
+
+async function handleFrontPageSendEmail(event) {
+  if (event) event.preventDefault();
+  const targetGroup = document.getElementById("front-email-target")?.value;
+  const recipients = document.getElementById("front-email-recipients")?.value;
+  const template = document.getElementById("front-email-template")?.value;
+  const subject = document.getElementById("front-email-subject")?.value;
+  const body = document.getElementById("front-email-body")?.value;
+  const btn = document.getElementById("front-send-email-btn");
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<i class="ph ph-spinner spinner"></i> Sending...`;
+  }
+
+  try {
+    const res = await fetch(`${apiBase}api/marketing/send-email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        target_group: targetGroup,
+        recipient_email: recipients || "",
+        template_name: template,
+        subject: subject,
+        body: body
+      })
+    });
+
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.status !== "error") {
+      alert(data.message || "Email dispatched successfully!");
+      document.getElementById("front-email-form")?.reset();
+      toggleFrontRecipientField();
+    } else {
+      alert(data.detail || data.message || "Failed to send email.");
+    }
+  } catch (err) {
+    console.error("Front email send error:", err);
+    alert("Error dispatching email. Please verify backend service.");
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<ion-icon name="mail-open-outline"></ion-icon> Send Email Broadcast`;
+    }
+  }
+}
+
+function clearAllPageInputs() {
+  const forms = document.querySelectorAll("form");
+  forms.forEach(form => form.reset());
+
+  const inputs = document.querySelectorAll("input:not([type=submit]):not([type=button]), textarea, select");
+  inputs.forEach(input => {
+    if (input.type === "checkbox" || input.type === "radio") {
+      input.checked = false;
+    } else {
+      input.value = "";
+    }
+  });
+
+  const statusEls = document.querySelectorAll(".status-message, [id$='-status-message'], [id$='-status']");
+  statusEls.forEach(el => {
+    if (el) el.textContent = "";
+  });
+
+  localStorage.removeItem("draft_sponsor");
+  localStorage.removeItem("draft_client");
+
+  alert("All page form inputs and status messages cleared.");
+}
+
+window.showAdminLogin = showAdminLogin;
+window.handleAdminLoginFront = handleAdminLoginFront;
+window.toggleFrontRecipientField = toggleFrontRecipientField;
+window.handleFrontPageSendEmail = handleFrontPageSendEmail;
+window.clearAllPageInputs = clearAllPageInputs;
+

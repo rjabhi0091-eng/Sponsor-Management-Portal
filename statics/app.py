@@ -19,7 +19,13 @@ import schemas
 import google_integration
 from database import SessionLocal, engine, get_db
 
-from authlib.integrations.starlette_client import OAuth
+try:
+    from authlib.integrations.starlette_client import OAuth
+    HAS_AUTHLIB = True
+except ImportError:
+    HAS_AUTHLIB = False
+    OAuth = None
+
 from starlette.middleware.sessions import SessionMiddleware
 
 models.Base.metadata.create_all(bind=engine)
@@ -74,41 +80,44 @@ security = HTTPBearer()
 
 app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
 
-oauth = OAuth()
-oauth.register(
-    name='google',
-    client_id=os.environ.get("GOOGLE_CLIENT_ID", ""),
-    client_secret=os.environ.get("GOOGLE_CLIENT_SECRET", ""),
-    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
-    client_kwargs={'scope': 'openid email profile'}
-)
-oauth.register(
-    name='facebook',
-    client_id=os.environ.get("FACEBOOK_CLIENT_ID", ""),
-    client_secret=os.environ.get("FACEBOOK_CLIENT_SECRET", ""),
-    api_base_url='https://graph.facebook.com/',
-    access_token_url='https://graph.facebook.com/v12.0/oauth/access_token',
-    authorize_url='https://www.facebook.com/v12.0/dialog/oauth',
-    client_kwargs={'scope': 'email public_profile'}
-)
-oauth.register(
-    name='twitter',
-    client_id=os.environ.get("TWITTER_CLIENT_ID", ""),
-    client_secret=os.environ.get("TWITTER_CLIENT_SECRET", ""),
-    api_base_url='https://api.twitter.com/2/',
-    access_token_url='https://api.twitter.com/2/oauth2/token',
-    authorize_url='https://twitter.com/i/oauth2/authorize',
-    client_kwargs={'scope': 'users.read tweet.read'}
-)
-oauth.register(
-    name='apple',
-    client_id=os.environ.get("APPLE_CLIENT_ID", ""),
-    client_secret=os.environ.get("APPLE_CLIENT_SECRET", ""),
-    api_base_url='https://appleid.apple.com/',
-    access_token_url='https://appleid.apple.com/auth/token',
-    authorize_url='https://appleid.apple.com/auth/authorize',
-    client_kwargs={'scope': 'name email'}
-)
+if HAS_AUTHLIB and OAuth is not None:
+    oauth = OAuth()
+    oauth.register(
+        name='google',
+        client_id=os.environ.get("GOOGLE_CLIENT_ID", ""),
+        client_secret=os.environ.get("GOOGLE_CLIENT_SECRET", ""),
+        server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+        client_kwargs={'scope': 'openid email profile'}
+    )
+    oauth.register(
+        name='facebook',
+        client_id=os.environ.get("FACEBOOK_CLIENT_ID", ""),
+        client_secret=os.environ.get("FACEBOOK_CLIENT_SECRET", ""),
+        api_base_url='https://graph.facebook.com/',
+        access_token_url='https://graph.facebook.com/v12.0/oauth/access_token',
+        authorize_url='https://www.facebook.com/v12.0/dialog/oauth',
+        client_kwargs={'scope': 'email public_profile'}
+    )
+    oauth.register(
+        name='twitter',
+        client_id=os.environ.get("TWITTER_CLIENT_ID", ""),
+        client_secret=os.environ.get("TWITTER_CLIENT_SECRET", ""),
+        api_base_url='https://api.twitter.com/2/',
+        access_token_url='https://api.twitter.com/2/oauth2/token',
+        authorize_url='https://twitter.com/i/oauth2/authorize',
+        client_kwargs={'scope': 'users.read tweet.read'}
+    )
+    oauth.register(
+        name='apple',
+        client_id=os.environ.get("APPLE_CLIENT_ID", ""),
+        client_secret=os.environ.get("APPLE_CLIENT_SECRET", ""),
+        api_base_url='https://appleid.apple.com/',
+        access_token_url='https://appleid.apple.com/auth/token',
+        authorize_url='https://appleid.apple.com/auth/authorize',
+        client_kwargs={'scope': 'name email'}
+    )
+else:
+    oauth = None
 
 def create_access_token(data: dict):
     to_encode = data.copy()
