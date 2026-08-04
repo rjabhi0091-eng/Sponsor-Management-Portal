@@ -52,7 +52,7 @@ section {
   max-width: 1180px;
   margin: 0 auto;
   padding: 2rem 1.5rem 3rem;
-  background: rgba(105, 5, 151, 0.96);
+  background: transparent;
   border: 1px solid rgba(56, 189, 248, 0.16);
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.32);
   border-radius: 32px;
@@ -612,8 +612,7 @@ section {
   align-items: center;
   padding: 2rem 2rem 2rem 1rem;
   border-radius: 36px;
-  background: linear-gradient(135deg, rgba(8, 16, 32, 0.96), rgba(15, 23, 42, 0.94)),
-    url("https://images.unsplash.com/photo-1519648023493-d82b5f8d7b9a?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
+  background: url("https://images.unsplash.com/photo-1519648023493-d82b5f8d7b9a?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
   border: 1px solid var(--panel-border);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
   overflow: hidden;
@@ -623,7 +622,7 @@ section {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(7, 12, 26, 0.6);
+  background: transparent;
   pointer-events: none;
 }
 
