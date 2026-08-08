@@ -1,4 +1,9 @@
 {
     "livePreview.defaultPreviewPath": "/static/index.html",
-    "cSpell.enabled": false
+    "cSpell.enabled": false,
+    "python.testing.pytestArgs": [
+        "test-results"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }
