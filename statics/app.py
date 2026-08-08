@@ -77,6 +77,19 @@ with SessionLocal() as db:
         db.add(admin)
         db.commit()
 
+    # Ensure there's at least one sponsor and client for quick testing
+    if db.query(models.Sponsor).count() == 0:
+        test_sponsor = models.Sponsor(name="Test Sponsor", email="sponsor@example.com")
+        test_sponsor.set_password("password")
+        db.add(test_sponsor)
+        db.commit()
+
+    if db.query(models.Client).count() == 0:
+        test_client = models.Client(name="Test Client", email="client@example.com")
+        test_client.set_password("password")
+        db.add(test_client)
+        db.commit()
+
 BASE_DIR = os.path.dirname(__file__)
 
 app = FastAPI(
@@ -199,6 +212,47 @@ def send_contact_email(name: str, email: str, message: str):
         server.send_message(email_msg)
 
     return {"status": "sent", "message": "Message sent successfully."}
+
+
+@app.post('/auth/admin-login')
+def admin_login(payload: dict, db: Session = Depends(get_db)):
+    identifier = (payload.get('email') or payload.get('username') or '').strip()
+    password = payload.get('password') or ''
+    if not identifier or not password:
+        raise HTTPException(status_code=400, detail='Missing credentials')
+    admin = db.query(models.Admin).filter(
+        or_(models.Admin.username == identifier, models.Admin.email == identifier)
+    ).first()
+    if not admin or not admin.verify_password(password):
+        raise HTTPException(status_code=401, detail='Invalid credentials')
+    token = create_access_token({"sub": f"admin:{admin.id}", "username": admin.username, "role": "admin"})
+    return {"token": token, "user_type": "admin"}
+
+
+@app.post('/auth/sponsor-login')
+def sponsor_login(payload: dict, db: Session = Depends(get_db)):
+    email = (payload.get('email') or '').strip()
+    password = payload.get('password') or ''
+    if not email or not password:
+        raise HTTPException(status_code=400, detail='Missing credentials')
+    sponsor = db.query(models.Sponsor).filter(models.Sponsor.email == email).first()
+    if not sponsor or not sponsor.verify_password(password):
+        raise HTTPException(status_code=401, detail='Invalid credentials')
+    token = create_access_token({"sub": f"sponsor:{sponsor.id}", "email": sponsor.email, "role": "sponsor"})
+    return {"role": "sponsor", "name": sponsor.name, "token": token}
+
+
+@app.post('/auth/client-login')
+def client_login(payload: dict, db: Session = Depends(get_db)):
+    email = (payload.get('email') or '').strip()
+    password = payload.get('password') or ''
+    if not email or not password:
+        raise HTTPException(status_code=400, detail='Missing credentials')
+    client = db.query(models.Client).filter(models.Client.email == email).first()
+    if not client or not client.verify_password(password):
+        raise HTTPException(status_code=401, detail='Invalid credentials')
+    token = create_access_token({"sub": f"client:{client.id}", "email": client.email, "role": "client"})
+    return {"role": "client", "name": client.name, "token": token}
 
 
 @app.get("/", response_class=FileResponse, tags=["ui"])
