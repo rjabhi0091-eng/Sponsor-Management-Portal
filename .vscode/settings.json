@@ -1,3 +1,4 @@
 {
-    "livePreview.defaultPreviewPath": "/static/index.html"
+    "livePreview.defaultPreviewPath": "/static/index.html",
+    "cSpell.enabled": false
 }
