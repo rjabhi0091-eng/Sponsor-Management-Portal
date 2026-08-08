@@ -31,8 +31,9 @@ from starlette.middleware.sessions import SessionMiddleware
 models.Base.metadata.create_all(bind=engine)
 
 ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
-ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "admin@portal.com")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "Admin@2026!")
+# Development-friendly defaults (change via env vars in production)
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "admin@example.com")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "password")
 
 with engine.connect() as connection:
     def existing_columns(table_name: str):

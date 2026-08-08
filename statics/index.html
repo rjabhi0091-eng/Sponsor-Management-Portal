@@ -1175,9 +1175,9 @@ Growth Scaling</pre>
             });
             
             if (response.ok) {
-                const data = await response.json();
-                localStorage.setItem('access_token', data.token);
-                window.location.href = 'admin.html';
+              const data = await response.json();
+              localStorage.setItem('access_token', data.token);
+              window.location.href = '/admin';
             } else {
                 alert('Login failed. Please check your credentials.');
             }

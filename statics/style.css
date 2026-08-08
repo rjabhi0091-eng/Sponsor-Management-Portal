@@ -649,8 +649,13 @@ section {
   position: absolute;
   inset: 0;
   /* Add a darker overlay so heading text remains readable over bright images */
-  background: linear-gradient(rgba(2,6,23,0.65), rgba(2,6,23,0.75));
+  background: linear-gradient(rgba(2,6,23,0.88), rgba(2,6,23,0.92));
   pointer-events: none;
+}
+
+/* Dim the about/profile image so overlaid text is clearer */
+.about-profile img {
+  filter: brightness(0.72);
 }
 
 .site-header>* {
