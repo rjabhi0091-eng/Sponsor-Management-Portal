@@ -351,15 +351,14 @@
                         localStorage.setItem('access_token', data.token);
                         localStorage.setItem('user_type', data.user_type || currentType);
                         window.location.href = 'admin.html';
-                    } else {
-                        // Store the user object exactly as app.js expects it
-                        const currentUser = {
-                            role: data.role,
-                            name: data.name,
-                            token: data.token
-                        };
+                    } else if (currentType === 'client') {
+                        const currentUser = { role: 'client', name: data.name || 'Client', token: data.token };
                         localStorage.setItem('sponsorPortalCurrentUser', JSON.stringify(currentUser));
-                        window.location.href = 'index.html';
+                        window.location.href = 'client-dashboard.html';
+                    } else {
+                        const currentUser = { role: 'sponsor', name: data.name || 'Sponsor', token: data.token };
+                        localStorage.setItem('sponsorPortalCurrentUser', JSON.stringify(currentUser));
+                        window.location.href = 'sponsor-dashboard.html';
                     }
                 } else {
                     const errorData = await response.json().catch(() => ({}));

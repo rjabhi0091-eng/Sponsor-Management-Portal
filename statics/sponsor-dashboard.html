@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#8b5cf6" />
+    <title>Sponsor Portal & Deal Explorer - R-Abhi Tech Solution</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin-styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        .client-deck-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 22px;
+            margin-top: 20px;
+        }
+
+        .deck-card {
+            background: var(--admin-gradient-card);
+            border: 1px solid var(--admin-card-border);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .deck-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--admin-accent-primary);
+            box-shadow: var(--admin-glow-purple);
+        }
+
+        .deck-banner {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .deck-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .deck-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .deck-client {
+            font-size: 13px;
+            color: var(--admin-accent-cyan);
+            font-weight: 600;
+        }
+
+        .deck-stats {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .deck-price {
+            color: #34d399;
+            font-weight: 800;
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sponsor Sidebar Navigation -->
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar-brand">
+            <ion-icon name="business-outline" style="color: var(--admin-accent-primary);"></ion-icon>
+            <h2>Sponsor Hub</h2>
+        </div>
+
+        <div class="sidebar-section-title">Sponsor Workspace</div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="sidebar-link">
+                <ion-icon name="home-outline"></ion-icon>
+                <span>Front Page</span>
+            </a>
+            <a href="#" class="sidebar-link active" onclick="switchTab('dashboard', this)">
+                <ion-icon name="grid-outline"></ion-icon>
+                <span>Dashboard Overview</span>
+            </a>
+            <a href="#" class="sidebar-link" onclick="switchTab('sponsor-profile', this)">
+                <ion-icon name="business-outline"></ion-icon>
+                <span>Sponsor Profile</span>
+            </a>
+            <a href="#" class="sidebar-link" onclick="switchTab('discover-portfolios', this)">
+                <ion-icon name="compass-outline"></ion-icon>
+                <span>Discover Client Portfolios</span>
+                <span class="sidebar-badge" id="client-portfolios-count">3</span>
+            </a>
+            <a href="#" class="sidebar-link" onclick="switchTab('proposal-reviews', this)">
+                <ion-icon name="document-text-outline"></ion-icon>
+                <span>Deals & Proposals</span>
+                <span class="sidebar-badge" style="background: rgba(245,158,11,0.2); color: #fbbf24;" id="pending-proposals-count">2</span>
+            </a>
+            <a href="#" class="sidebar-link" onclick="switchTab('campaign-roi', this)">
+                <ion-icon name="pie-chart-outline"></ion-icon>
+                <span>Campaign Analytics & ROI</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-section-title" style="margin-top: 15px;">Main Website</div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="sidebar-link">
+                <ion-icon name="globe-outline" style="color: var(--admin-accent-primary);"></ion-icon>
+                <span>Return to Main Website</span>
+            </a>
+            <a href="login.html" class="sidebar-link" style="color: var(--admin-accent-danger);">
+                <ion-icon name="log-out-outline"></ion-icon>
+                <span>Logout</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="admin-user-pill">
+                <div class="admin-avatar">S</div>
+                <div class="admin-user-info">
+                    <span class="admin-user-name" id="sponsor-nav-name">Aura Tech Global</span>
+                    <span class="admin-user-role">Sponsor Enterprise</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <main class="admin-main">
+        <!-- Sticky Top Bar -->
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <h1 class="topbar-title" id="current-tab-title">Sponsor Dashboard Overview</h1>
+                <div class="mode-tag">
+                    <span class="mode-pulse"></span>
+                    <span>Sponsor Direct Access</span>
+                </div>
+            </div>
+
+            <div class="topbar-actions">
+                <button class="action-btn btn-primary" onclick="switchTab('discover-portfolios')">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <span>Browse Portfolios</span>
+                </button>
+                <a href="index.html" class="action-btn btn-secondary">
+                    <ion-icon name="open-outline"></ion-icon>
+                    <span>View Main Site</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Body Content Tabs -->
+        <div class="admin-body-content">
+
+            <!-- 1. Dashboard Overview Tab -->
+            <div id="dashboard" class="tab-content active">
+                <div class="hero-dashboard-grid">
+                    <article class="hero-dashboard-card">
+                        <div class="card-header-flex">
+                            <span>Sponsorship Budget</span>
+                            <div class="card-icon-wrapper icon-purple">
+                                <ion-icon name="wallet-outline"></ion-icon>
+                            </div>
+                        </div>
+                        <strong>$150,000</strong>
+                        <div class="card-trend trend-up">
+                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                            <span>$45,000 Allocated to Deals</span>
+                        </div>
+                    </article>
+
+                    <article class="hero-dashboard-card">
+                        <div class="card-header-flex">
+                            <span>Active Client Deals</span>
+                            <div class="card-icon-wrapper icon-green">
+                                <ion-icon name="handshake-outline"></ion-icon>
+                            </div>
+                        </div>
+                        <strong style="color: #34d399;">4</strong>
+                        <div class="card-trend trend-up">
+                            <ion-icon name="trending-up-outline"></ion-icon>
+                            <span>Live Campaign Deliverables</span>
+                        </div>
+                    </article>
+
+                    <article class="hero-dashboard-card">
+                        <div class="card-header-flex">
+                            <span>Pending Client Proposals</span>
+                            <div class="card-icon-wrapper icon-rose">
+                                <ion-icon name="time-outline"></ion-icon>
+                            </div>
+                        </div>
+                        <strong style="color: #fb7185;">3</strong>
+                        <div class="card-trend trend-down">
+                            <ion-icon name="alert-circle-outline"></ion-icon>
+                            <span>Requires Sponsor Approval</span>
+                        </div>
+                    </article>
+
+                    <article class="hero-dashboard-card">
+                        <div class="card-header-flex">
+                            <span>Average Campaign ROI</span>
+                            <div class="card-icon-wrapper icon-blue">
+                                <ion-icon name="stats-chart-outline"></ion-icon>
+                            </div>
+                        </div>
+                        <strong style="color: #60a5fa;">3.8x</strong>
+                        <div class="card-trend trend-up">
+                            <ion-icon name="trending-up-outline"></ion-icon>
+                            <span>High Audience Conversion</span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Featured Client Portfolios Feed -->
+                <div class="glass-panel" style="margin-bottom: 28px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 18px;">
+                        <div>
+                            <h3 style="margin: 0; color: #fff; font-size: 18px; display: flex; align-items: center; gap: 8px;">
+                                <ion-icon name="star-outline" style="color: #fbbf24;"></ion-icon>
+                                Top Recommended Client Portfolios for Sponsorship
+                            </h3>
+                            <span style="font-size: 13px; color: var(--admin-text-secondary);">Review verified client pitch decks ready for partnership funding</span>
+                        </div>
+                        <button class="action-btn btn-secondary" onclick="switchTab('discover-portfolios')">
+                            <ion-icon name="arrow-forward-outline"></ion-icon> View All Portfolios
+                        </button>
+                    </div>
+
+                    <!-- Client Decks Container -->
+                    <div class="client-deck-grid" id="sponsor-featured-decks">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Active Partnerships Table -->
+                <div class="glass-panel">
+                    <h3 style="color: #fff; margin-top: 0; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
+                        <ion-icon name="ribbon-outline" style="color: var(--admin-accent-primary);"></ion-icon>
+                        Active Sponsor Deals & Deliverables
+                    </h3>
+                    <div class="admin-table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Client / Creator</th>
+                                    <th>Campaign Package</th>
+                                    <th>Agreed Budget</th>
+                                    <th>Delivered Impressions</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong style="color: #fff;">Starlight Digital Studios</strong></td>
+                                    <td>Social Media Brand Campaign 2026</td>
+                                    <td><strong style="color: #34d399;">$7,500</strong></td>
+                                    <td><strong style="color: #60a5fa;">250,000+</strong></td>
+                                    <td><span class="badge-status badge-active">Campaign Live</span></td>
+                                    <td><button class="action-btn btn-primary" onclick="alert('Opening campaign analytics report...')">View Analytics</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color: #fff;">Nexus Software Labs</strong></td>
+                                    <td>Tech Summit Keynote Sponsorship</td>
+                                    <td><strong style="color: #34d399;">$11,000</strong></td>
+                                    <td><strong style="color: #60a5fa;">45,000+</strong></td>
+                                    <td><span class="badge-status badge-pending">Deliverables Pending</span></td>
+                                    <td><button class="action-btn btn-secondary" onclick="alert('Checking milestone delivery dates...')">Check Status</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Sponsor Profile Tab -->
+            <div id="sponsor-profile" class="tab-content">
+                <div class="glass-panel" style="max-width: 720px;">
+                    <h2 style="color: #fff; margin-top: 0; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <ion-icon name="business-outline" style="color: var(--admin-accent-primary);"></ion-icon>
+                        Manage Sponsor Organization & Preferences
+                    </h2>
+                    <form id="sponsor-profile-form" onsubmit="saveSponsorProfile(event)">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div class="form-group">
+                                <label class="form-label">Sponsor Company Name</label>
+                                <input type="text" id="sp-company" class="form-control" value="Aura Tech Global" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Industry Sector</label>
+                                <select id="sp-industry" class="form-control">
+                                    <option value="Enterprise Tech & SaaS">Enterprise Tech & SaaS</option>
+                                    <option value="Finance & Venture Capital">Finance & Venture Capital</option>
+                                    <option value="Consumer Electronics & Hardware">Consumer Electronics & Hardware</option>
+                                    <option value="Media & Entertainment">Media & Entertainment</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div class="form-group">
+                                <label class="form-label">Annual Sponsorship Budget ($)</label>
+                                <input type="number" id="sp-budget" class="form-control" value="150000" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Contact Email</label>
+                                <input type="email" id="sp-email" class="form-control" value="partnerships@auratech.io" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Preferred Sponsorship Deliverables</label>
+                            <input type="text" id="sp-preferred" class="form-control" value="Video integrations, Live Event Keynotes, Newsletter Spotlights">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Sponsorship Criteria & Partner Requirements</label>
+                            <textarea id="sp-desc" rows="4" class="form-control">We invest in high-growth creators, tech summit organizers, and digital media startups with verified audience engagement in B2B and tech verticals.</textarea>
+                        </div>
+
+                        <button type="submit" class="action-btn btn-primary" style="width: 100%; justify-content: center; padding: 12px;">
+                            <ion-icon name="save-outline"></ion-icon> Save Sponsor Profile & Criteria
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 3. Discover Client Portfolios Tab -->
+            <div id="discover-portfolios" class="tab-content">
+                <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
+                        <div>
+                            <h3 style="color: #fff; margin: 0; display: flex; align-items: center; gap: 10px;">
+                                <ion-icon name="compass-outline" style="color: var(--admin-accent-cyan);"></ion-icon>
+                                Discover Client Portfolios & Pitch Decks
+                            </h3>
+                            <span style="font-size: 13px; color: var(--admin-text-secondary);">Explore creative portfolios, media kits, and sponsorship proposals</span>
+                        </div>
+                        <div style="display: flex; gap: 12px;">
+                            <input type="text" id="deckSearch" onkeyup="filterDeckCards()" placeholder="Search portfolio or category..." class="form-control" style="width: 260px; padding: 8px 14px;">
+                        </div>
+                    </div>
+
+                    <div class="client-deck-grid" id="all-client-decks">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Deals & Proposals Tab -->
+            <div id="proposal-reviews" class="tab-content">
+                <div class="glass-panel">
+                    <h3 style="color: #fff; margin-top: 0; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <ion-icon name="document-text-outline" style="color: #fbbf24;"></ion-icon>
+                        Incoming Client Proposals & Funding Requests
+                    </h3>
+                    <div class="admin-table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Proposal ID</th>
+                                    <th>Client / Creator</th>
+                                    <th>Proposed Campaign</th>
+                                    <th>Requested Funding</th>
+                                    <th>Status</th>
+                                    <th>Sponsor Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="proposals-review-table">
+                                <tr>
+                                    <td><strong>#PROP-301</strong></td>
+                                    <td>Starlight Digital Studios</td>
+                                    <td>Social Media Brand Campaign 2026</td>
+                                    <td><strong style="color: #34d399;">$7,500</strong></td>
+                                    <td><span class="badge-status badge-pending">Under Review</span></td>
+                                    <td>
+                                        <button class="action-btn btn-success" style="font-size: 12px; padding: 6px 12px;" onclick="approveProposal(this, 'Starlight Digital Studios', 7500)">
+                                            <ion-icon name="checkmark-circle-outline"></ion-icon> Approve Deal
+                                        </button>
+                                        <button class="action-btn btn-danger" style="font-size: 12px; padding: 6px 12px;" onclick="declineProposal(this)">Decline</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#PROP-302</strong></td>
+                                    <td>Apex Tech Media</td>
+                                    <td>Tech Podcast Video Integration</td>
+                                    <td><strong style="color: #34d399;">$5,000</strong></td>
+                                    <td><span class="badge-status badge-pending">Under Review</span></td>
+                                    <td>
+                                        <button class="action-btn btn-success" style="font-size: 12px; padding: 6px 12px;" onclick="approveProposal(this, 'Apex Tech Media', 5000)">
+                                            <ion-icon name="checkmark-circle-outline"></ion-icon> Approve Deal
+                                        </button>
+                                        <button class="action-btn btn-danger" style="font-size: 12px; padding: 6px 12px;" onclick="declineProposal(this)">Decline</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Campaign Analytics & ROI Tab -->
+            <div id="campaign-roi" class="tab-content">
+                <div class="glass-panel">
+                    <h2 style="color: #fff; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+                        <ion-icon name="pie-chart-outline" style="color: var(--admin-accent-primary);"></ion-icon>
+                        Campaign ROI & Reach Breakdown
+                    </h2>
+                    <p style="color: var(--admin-text-secondary); margin-bottom: 25px;">Track impression conversion, audience growth, and brand ROI across funded client campaigns.</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+                        <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);">
+                            <h4 style="color: #c4b5fd; margin-top: 0;">Impression Growth Across Client Decks</h4>
+                            <img src="dashboard-bg.png" alt="Impressions Graph" style="width: 100%; border-radius: 10px; height: 220px; object-fit: cover;">
+                        </div>
+                        <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);">
+                            <h4 style="color: #93c5fd; margin-top: 0;">Sponsorship ROI Multipliers</h4>
+                            <img src="Social_media_marketing.png" alt="ROI Graph" style="width: 100%; border-radius: 10px; height: 220px; object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Sponsor Portal Script -->
+    <script>
+        const clientPortfoliosFeed = [
+            {
+                id: 1,
+                clientName: "Starlight Digital Studios",
+                title: "Social Media Brand Campaign 2026",
+                category: "Video & Digital Media",
+                price: 7500,
+                reach: "250,000+ Cross-Platform",
+                image: "Social_media_marketing.png",
+                desc: "Full video sponsorship, social post coverage, and brand links."
+            },
+            {
+                id: 2,
+                clientName: "Nexus Software Labs",
+                title: "Tech Summit Keynote Sponsorship",
+                category: "Event Keynote",
+                price: 11000,
+                reach: "5,000+ Tech Leaders",
+                image: "types-of-social-media-marketing.png",
+                desc: "Title sponsor logo placement + 15 min keynote presentation."
+            },
+            {
+                id: 3,
+                clientName: "Apex Digital Media",
+                title: "Digital Brand Showcase Deck",
+                category: "Media Kit & Display",
+                price: 5000,
+                reach: "100,000+ Monthly Visitors",
+                image: "dashboard-bg.png",
+                desc: "Exclusive sponsor spotlight across mobile portal."
+            }
+        ];
+
+        function switchTab(tabId, linkElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) targetTab.classList.add('active');
+            if (linkElement) linkElement.classList.add('active');
+
+            const titles = {
+                'dashboard': 'Sponsor Dashboard Overview',
+                'sponsor-profile': 'Sponsor Profile & Criteria',
+                'discover-portfolios': 'Discover Client Portfolios',
+                'proposal-reviews': 'Deals & Proposals',
+                'campaign-roi': 'Campaign Analytics & ROI'
+            };
+            const titleEl = document.getElementById('current-tab-title');
+            if (titleEl && titles[tabId]) {
+                titleEl.innerText = titles[tabId];
+            }
+        }
+
+        function renderClientDecks() {
+            const featuredGrid = document.getElementById('sponsor-featured-decks');
+            const allGrid = document.getElementById('all-client-decks');
+
+            const html = clientPortfoliosFeed.map(d => `
+                <div class="deck-card">
+                    <img src="${d.image}" class="deck-banner" alt="${d.title}" onerror="this.src='portal-illustration.svg'">
+                    <div class="deck-body">
+                        <span class="deck-client">${d.clientName}</span>
+                        <h4 class="deck-title">${d.title}</h4>
+                        <div class="deck-stats">
+                            <span>${d.category}</span>
+                            <span class="deck-price">$${d.price.toLocaleString()}</span>
+                        </div>
+                        <p style="font-size: 13px; color: var(--admin-text-secondary); margin: 6px 0; flex: 1;">${d.desc}</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06);">
+                            <small style="color: var(--admin-text-muted);">Reach: ${d.reach}</small>
+                            <button class="action-btn btn-primary" style="font-size: 12px; padding: 6px 12px;" onclick="offerSponsorship('${d.clientName}', ${d.price})">Fund Deal</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            if (featuredGrid) featuredGrid.innerHTML = html;
+            if (allGrid) allGrid.innerHTML = html;
+
+            const countEl = document.getElementById('client-portfolios-count');
+            if (countEl) countEl.innerText = clientPortfoliosFeed.length;
+        }
+
+        function saveSponsorProfile(e) {
+            e.preventDefault();
+            const name = document.getElementById('sp-company').value;
+            const navName = document.getElementById('sponsor-nav-name');
+            if (navName) navName.innerText = name;
+            alert('Sponsor Profile updated successfully!');
+        }
+
+        function offerSponsorship(clientName, amount) {
+            alert(`Sponsorship offer of $${amount.toLocaleString()} sent to "${clientName}"! Contract proposal generated.`);
+        }
+
+        function approveProposal(btn, clientName, amount) {
+            alert(`Sponsorship deal with "${clientName}" for $${amount.toLocaleString()} APPROVED!`);
+            const tr = btn.closest('tr');
+            if (tr) {
+                const statusTd = tr.children[4];
+                if (statusTd) statusTd.innerHTML = '<span class="badge-status badge-active">Deal Approved</span>';
+                btn.parentElement.innerHTML = '<span style="color: #34d399; font-weight: bold; font-size: 13px;">✓ Approved & Funded</span>';
+            }
+        }
+
+        function declineProposal(btn) {
+            if (!confirm('Are you sure you want to decline this proposal?')) return;
+            const tr = btn.closest('tr');
+            if (tr) tr.remove();
+        }
+
+        function filterDeckCards() {
+            const filter = document.getElementById('deckSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('#all-client-decks .deck-card');
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(filter) ? '' : 'none';
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderClientDecks();
+        });
+    </script>
+</body>
+
+</html>

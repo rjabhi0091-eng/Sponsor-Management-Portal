@@ -938,16 +938,16 @@ async function fetchSheetAndDisplay() {
         for (let i = 1; i < values.length; i++) if (values[i][clientIdx]) set.add(values[i][clientIdx]);
         clientsCount = set.size;
       }
-      const totalRegs = Math.max(0, values.length - 1);
-      if (!sponsorsCount) sponsorsCount = totalRegs;
+      const totalRegistrations = Math.max(0, values.length - 1);
+      if (!sponsorsCount) sponsorsCount = totalRegistrations;
       if (!clientsCount) clientsCount = 0;
 
       if (heroDashboardSponsors) heroDashboardSponsors.textContent = sponsorsCount;
       if (heroDashboardClients) heroDashboardClients.textContent = clientsCount;
-      if (heroRegistrationCount) heroRegistrationCount.textContent = totalRegs;
+      if (heroRegistrationCount) heroRegistrationCount.textContent = totalRegistrations;
       if (footerSponsors) footerSponsors.textContent = sponsorsCount;
       if (footerClients) footerClients.textContent = clientsCount;
-      if (footerRegistrations) footerRegistrations.textContent = totalRegs;
+      if (footerRegistrations) footerRegistrations.textContent = totalRegistrations;
 
       // wire export link
       if (exportSheetLink) {
@@ -1035,7 +1035,7 @@ function setupMarketingWorkflowUI() {
     // ignore
   }
 
-  const recalcCounters = () => {
+  const recalculateCounters = () => {
     const active = campaigns.filter((c) => c.status === "active").length;
     // Simple placeholders: content pieces and influencer actions derived from campaigns count.
     const contentPieces = campaigns.length * 7;
@@ -1090,11 +1090,11 @@ function setupMarketingWorkflowUI() {
     campaignForm.reset();
 
     renderCampaignList();
-    recalcCounters();
+    recalculateCounters();
   });
 
   // Initial counters
-  recalcCounters();
+  recalculateCounters();
   renderCampaignList();
 }
 
@@ -1133,10 +1133,7 @@ window.clearRegisterClientForm = clearRegisterClientForm;
 // Front Page Admin Login Overlay
 function showAdminLogin(event) {
   if (event) event.preventDefault();
-  const overlay = document.getElementById("admin-login-overlay");
-  if (overlay) {
-    overlay.style.display = "flex";
-  }
+  window.location.href = "admin.html";
 }
 
 async function handleAdminLoginFront(event) {

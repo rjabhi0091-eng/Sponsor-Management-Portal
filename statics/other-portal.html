@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f59e0b" />
+    <title>Other Portals Hub - R-Abhi Tech Solution</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin-styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .portal-card {
+            background: var(--admin-gradient-card);
+            border: 1px solid var(--admin-card-border);
+            border-radius: 18px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--admin-accent-warning);
+            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.25);
+        }
+
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #f59e0b, #ec4899);
+        }
+
+        .portal-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .portal-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .portal-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0 0 8px 0;
+        }
+
+        .portal-desc {
+            font-size: 13px;
+            color: var(--admin-text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .portal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 32px 0 18px 0;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar-brand">
+            <ion-icon name="apps"></ion-icon>
+            <h2>Portal Hub</h2>
+        </div>
+
+        <div class="sidebar-section-title">Main Systems</div>
+        <nav class="sidebar-nav">
+            <a href="admin.html" class="sidebar-link">
+                <ion-icon name="shield-checkmark-outline"></ion-icon>
+                <span>Admin Hub</span>
+            </a>
+            <a href="client-dashboard.html" class="sidebar-link">
+                <ion-icon name="person-outline" style="color: var(--admin-accent-secondary);"></ion-icon>
+                <span>Client Portal</span>
+            </a>
+            <a href="sponsor-dashboard.html" class="sidebar-link">
+                <ion-icon name="business-outline" style="color: var(--admin-accent-primary);"></ion-icon>
+                <span>Sponsor Portal</span>
+            </a>
+            <a href="other-portal.html" class="sidebar-link active">
+                <ion-icon name="apps-outline" style="color: var(--admin-accent-warning);"></ion-icon>
+                <span>Other Portals</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-section-title" style="margin-top: 15px;">Site Navigation</div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="sidebar-link">
+                <ion-icon name="home-outline"></ion-icon>
+                <span>Front Page</span>
+            </a>
+            <a href="media.html" class="sidebar-link">
+                <ion-icon name="newspaper-outline"></ion-icon>
+                <span>Media Center</span>
+            </a>
+            <a href="analytics.html" class="sidebar-link">
+                <ion-icon name="stats-chart-outline"></ion-icon>
+                <span>Analytics Board</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="admin-user-pill">
+                <div class="admin-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">O</div>
+                <div class="admin-user-info">
+                    <span class="admin-user-name">Multi-Portal Access</span>
+                    <span class="admin-user-role">Unified Directory</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+        <!-- Top Bar -->
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <h1 class="topbar-title">Other Portals Directory</h1>
+                <div class="mode-tag" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3);">
+                    <span class="mode-pulse" style="background: #f59e0b; box-shadow: 0 0 10px #f59e0b;"></span>
+                    <span style="color: #fcd34d;">Multi-Portal Mode</span>
+                </div>
+            </div>
+
+            <div class="topbar-actions">
+                <a href="admin.html" class="action-btn btn-secondary">
+                    <ion-icon name="arrow-back-outline"></ion-icon>
+                    <span>Back to Admin Hub</span>
+                </a>
+                <a href="index.html" class="action-btn btn-primary">
+                    <ion-icon name="open-outline"></ion-icon>
+                    <span>View Main Site</span>
+                </a>
+            </div>
+        </header>
+
+        <div class="admin-body-content">
+
+            <!-- Hero Section -->
+            <div class="glass-panel" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(139, 92, 246, 0.12)); border: 1px solid rgba(245, 158, 11, 0.25);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                    <div>
+                        <h2 style="color: #ffffff; margin: 0 0 8px 0; font-size: 24px;">Welcome to Other Portals Central</h2>
+                        <p style="color: var(--admin-text-secondary); margin: 0; max-width: 680px; font-size: 14px;">
+                            Access all auxiliary enterprise portals, vendor management systems, staff operations, external dashboards, and custom integrations from a single centralized hub.
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <a href="admin.html#other-portal" class="action-btn btn-primary" style="padding: 10px 18px;">
+                            <ion-icon name="settings-outline"></ion-icon> Manage Links in Admin Hub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Primary Internal Portals -->
+            <div class="section-header">
+                <div class="section-title">
+                    <ion-icon name="cube-outline" style="color: var(--admin-accent-warning);"></ion-icon>
+                    Enterprise Auxiliary Portals
+                </div>
+            </div>
+
+            <div class="portal-grid">
+                <!-- Partner Portal -->
+                <div class="portal-card" id="vendor">
+                    <div>
+                        <div class="portal-card-header">
+                            <div class="portal-icon">
+                                <ion-icon name="hand-shake-outline"></ion-icon>
+                            </div>
+                            <span class="sidebar-badge" style="background: rgba(245, 158, 11, 0.2); color: #fcd34d;">Partner</span>
+                        </div>
+                        <h3 class="portal-title">Vendor & Partner Hub</h3>
+                        <p class="portal-desc">Collaborate with strategic partners, review sponsorship agreements, submit invoices, and monitor contract SLAs.</p>
+                    </div>
+                    <div class="portal-actions">
+                        <button class="action-btn btn-primary" style="flex: 1; justify-content: center;" onclick="alert('Redirecting to Vendor & Partner Portal...')">
+                            <ion-icon name="log-in-outline"></ion-icon> Access Portal
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Staff Operations Hub -->
+                <div class="portal-card" id="staff">
+                    <div>
+                        <div class="portal-card-header">
+                            <div class="portal-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+                                <ion-icon name="people-circle-outline"></ion-icon>
+                            </div>
+                            <span class="sidebar-badge" style="background: rgba(59, 130, 246, 0.2); color: #93c5fd;">Internal</span>
+                        </div>
+                        <h3 class="portal-title">Staff Operations Portal</h3>
+                        <p class="portal-desc">Internal team task assignments, event shift management, operational workflows, and access controls.</p>
+                    </div>
+                    <div class="portal-actions">
+                        <button class="action-btn btn-secondary" style="flex: 1; justify-content: center; background: rgba(59, 130, 246, 0.2); color: #93c5fd; border-color: rgba(59, 130, 246, 0.3);" onclick="alert('Accessing Staff Operations Portal...')">
+                            <ion-icon name="key-outline"></ion-icon> Launch Hub
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Media & Press Hub -->
+                <div class="portal-card">
+                    <div>
+                        <div class="portal-card-header">
+                            <div class="portal-icon" style="background: rgba(236, 72, 153, 0.15); color: #ec4899;">
+                                <ion-icon name="newspaper-outline"></ion-icon>
+                            </div>
+                            <span class="sidebar-badge" style="background: rgba(236, 72, 153, 0.2); color: #fbcfe8;">PR & Media</span>
+                        </div>
+                        <h3 class="portal-title">Media & Press Portal</h3>
+                        <p class="portal-desc">Distribute high-resolution brand assets, release press announcements, and coordinate media coverage.</p>
+                    </div>
+                    <div class="portal-actions">
+                        <a href="media.html" class="action-btn btn-secondary" style="flex: 1; justify-content: center;">
+                            <ion-icon name="open-outline"></ion-icon> Open Media Page
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Client Portal Launcher -->
+                <div class="portal-card">
+                    <div>
+                        <div class="portal-card-header">
+                            <div class="portal-icon" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">
+                                <ion-icon name="person-outline"></ion-icon>
+                            </div>
+                            <span class="sidebar-badge" style="background: rgba(59, 130, 246, 0.2); color: #93c5fd;">Core Portal</span>
+                        </div>
+                        <h3 class="portal-title">Client Dashboard</h3>
+                        <p class="portal-desc">Manage client profiles, sponsorship proposals, portfolio items, and direct client communications.</p>
+                    </div>
+                    <div class="portal-actions">
+                        <a href="client-dashboard.html" class="action-btn btn-secondary" style="flex: 1; justify-content: center;">
+                            <ion-icon name="arrow-forward-outline"></ion-icon> Go to Client Portal
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sponsor Portal Launcher -->
+                <div class="portal-card">
+                    <div>
+                        <div class="portal-card-header">
+                            <div class="portal-icon" style="background: rgba(139, 92, 246, 0.15); color: #c4b5fd;">
+                                <ion-icon name="business-outline"></ion-icon>
+                            </div>
+                            <span class="sidebar-badge" style="background: rgba(139, 92, 246, 0.2); color: #ddd6fe;">Core Portal</span>
+                        </div>
+                        <h3 class="portal-title">Sponsor Explorer</h3>
+                        <p class="portal-desc">Explore sponsorship deals, manage partner packages, view active sponsor leads, and ROI reports.</p>
+                    </div>
+                    <div class="portal-actions">
+                        <a href="sponsor-dashboard.html" class="action-btn btn-secondary" style="flex: 1; justify-content: center;">
+                            <ion-icon name="arrow-forward-outline"></ion-icon> Go to Sponsor Portal
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Analytics Portal -->
+                <div class="portal-card">
+                    <div>
+                        <div class="portal-card-header">
+                            <div class="portal-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                                <ion-icon name="bar-chart-outline"></ion-icon>
+                            </div>
+                            <span class="sidebar-badge" style="background: rgba(16, 185, 129, 0.2); color: #a7f3d0;">Telemetry</span>
+                        </div>
+                        <h3 class="portal-title">Analytics & Growth Board</h3>
+                        <p class="portal-desc">Track audience growth, social media metrics, engagement channels, and platform analytics in real-time.</p>
+                    </div>
+                    <div class="portal-actions">
+                        <a href="analytics.html" class="action-btn btn-secondary" style="flex: 1; justify-content: center;">
+                            <ion-icon name="stats-chart-outline"></ion-icon> View Analytics
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- External Integrations Section -->
+            <div class="section-header">
+                <div class="section-title">
+                    <ion-icon name="globe-outline" style="color: var(--admin-accent-secondary);"></ion-icon>
+                    Registered External Tool Directory
+                </div>
+            </div>
+
+            <div class="glass-panel">
+                <div class="admin-table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Tool / Portal Name</th>
+                                <th>Category</th>
+                                <th>Target URL</th>
+                                <th>Type</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="standalone-portals-list">
+                            <!-- Rendered dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const defaultPortals = [
+            { name: 'Vendor & Partner Hub', category: 'Partner Management', url: '#vendor', type: 'Auxiliary Portal' },
+            { name: 'Staff Operations Portal', category: 'Internal Operations', url: '#staff', type: 'Auxiliary Portal' },
+            { name: 'Media & Press Hub', category: 'Marketing', url: 'media.html', type: 'Internal Page' },
+            { name: 'Google Workspace Central', category: 'External Tool', url: 'https://workspace.google.com', type: 'External Link' },
+            { name: 'Notion Team Knowledgebase', category: 'Documentation', url: 'https://notion.so', type: 'External Link' }
+        ];
+
+        function loadPortals() {
+            const saved = JSON.parse(localStorage.getItem('admin_custom_portals')) || defaultPortals;
+            const tbody = document.getElementById('standalone-portals-list');
+            if (!tbody) return;
+
+            tbody.innerHTML = saved.map(p => `
+                <tr>
+                    <td><strong style="color: #fff;">${p.name}</strong></td>
+                    <td><span class="sidebar-badge" style="background: rgba(255,255,255,0.1); color: #cbd5e1;">${p.category || 'General'}</span></td>
+                    <td style="font-family: monospace; font-size: 12px; color: #94a3b8;">${p.url}</td>
+                    <td><span class="badge badge-sponsor">${p.type || p.status || 'Portal Link'}</span></td>
+                    <td>
+                        <a href="${p.url}" ${p.url.startsWith('http') ? 'target="_blank"' : ''} class="action-btn btn-primary" style="padding: 4px 12px; font-size: 12px;">
+                            <ion-icon name="open-outline"></ion-icon> Launch
+                        </a>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadPortals);
+    </script>
+</body>
+
+</html>

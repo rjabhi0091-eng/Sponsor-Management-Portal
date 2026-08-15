@@ -660,7 +660,8 @@ section {
 
 .site-header>* {
   position: relative;
-  z-index: 1;
+  /* raise content above the overlay */
+  z-index: 2;
 }
 
 .hero-copy {
@@ -684,6 +685,21 @@ section {
   margin: 0;
   font-size: clamp(2rem, 2.8vw, 2.8rem);
   line-height: 1.08;
+}
+
+/* Improve contrast for overview/hero text */
+.site-header h1 {
+  color: #ffffff;
+  text-shadow: 0 6px 18px rgba(2,6,23,0.6);
+}
+
+.site-header p {
+  color: #dbeafe;
+  text-shadow: 0 4px 12px rgba(2,6,23,0.45);
+}
+
+.hero-copy .eyebrow {
+  color: #a5d8ff;
 }
 
 .site-header p {

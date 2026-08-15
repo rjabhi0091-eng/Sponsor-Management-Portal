@@ -274,6 +274,12 @@ def admin_page():
     return FileResponse(os.path.join(BASE_DIR, "admin.html"))
 
 
+@app.get("/other-portal", response_class=FileResponse, tags=["ui"])
+@app.get("/other-portal.html", response_class=FileResponse, tags=["ui"])
+def other_portal_page():
+    return FileResponse(os.path.join(BASE_DIR, "other-portal.html"))
+
+
 @app.get("/analytics", response_class=FileResponse, tags=["ui"])
 @app.get("/analytics.html", response_class=FileResponse, tags=["ui"])
 def analytics_page():

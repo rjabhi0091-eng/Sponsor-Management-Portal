@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ERP Portal — Dashboard</title>
+    <meta name="description" content="ERP dashboard with real-time stats for sponsors and clients." />
+    <link rel="stylesheet" href="css/erp-style.css" />
+</head>
+<body>
+
+    <!-- ── Navigation ── -->
+    <header class="top-nav">
+        <nav class="nav-bar">
+            <div class="nav-brand"><span>⚡ ERP</span> Portal</div>
+            <ul class="nav-list">
+                <li><a href="ERP PORTL.html" class="nav-link">🏠 Home</a></li>
+                <li><a href="erp.html" class="nav-link active">📊 Dashboard</a></li>
+                <li><a href="incident-report.html" class="nav-link">🚨 Incidents</a></li>
+                <li><a href="root-cause.html" class="nav-link">🔍 Root Cause</a></li>
+                <li><a href="index.html" class="nav-link">🌐 Main Site</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">🌙</button>
+        </nav>
+    </header>
+
+    <!-- ── Content ── -->
+    <main class="container">
+        <div class="page-header fade-in">
+            <h1>📊 Dashboard Overview</h1>
+            <p>Real-time snapshot of your sponsors and clients.</p>
+        </div>
+
+        <!-- ── Stat Cards ── -->
+        <section class="section">
+            <div class="dashboard-grid">
+                <div class="card stat-card fade-in">
+                    <div class="stat-icon blue">👥</div>
+                    <div class="stat-value" id="total-sponsors">24</div>
+                    <div class="stat-label">Total Sponsors</div>
+                </div>
+                <div class="card stat-card fade-in">
+                    <div class="stat-icon purple">🏢</div>
+                    <div class="stat-value" id="total-clients">58</div>
+                    <div class="stat-label">Total Clients</div>
+                </div>
+                <div class="card stat-card fade-in">
+                    <div class="stat-icon green">✅</div>
+                    <div class="stat-value" id="active-sponsors">18</div>
+                    <div class="stat-label">Active Sponsors</div>
+                </div>
+                <div class="card stat-card fade-in">
+                    <div class="stat-icon amber">⚡</div>
+                    <div class="stat-value" id="active-clients">42</div>
+                    <div class="stat-label">Active Clients</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Quick Navigation ── -->
+        <section class="section">
+            <h2 class="section-title">🔗 Quick Links</h2>
+            <div class="links-grid">
+                <a href="incident-report.html" class="card link-card fade-in">
+                    <div class="link-icon amber">🚨</div>
+                    <div class="link-info">
+                        <h4>Incident Report</h4>
+                        <p>View all reported incidents</p>
+                    </div>
+                </a>
+                <a href="root-cause.html" class="card link-card fade-in">
+                    <div class="link-icon purple">🔍</div>
+                    <div class="link-info">
+                        <h4>Root Cause Analysis</h4>
+                        <p>Deep-dive investigations</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="contact-section">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <p>Email: <a href="mailto:rjabhi0091@gmail.com">rjabhi0091@gmail.com</a> &nbsp;|&nbsp; Phone: +91 93350-49370</p>
+        </div>
+    </footer>
+
+    <!-- ── Dark Mode Script ── -->
+    <script>
+        const toggle = document.getElementById('theme-toggle');
+        const saved = localStorage.getItem('erp-theme');
+        if (saved === 'dark') { document.body.classList.add('dark'); toggle.textContent = '☀️'; }
+        toggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            toggle.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('erp-theme', isDark ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>

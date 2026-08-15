@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ERP Portal — Home</title>
+    <meta name="description" content="ERP Portal home page with dashboard and email sender." />
+    <link rel="stylesheet" href="css/erp-style.css" />
+</head>
+<body>
+
+    <!-- ── Navigation ── -->
+    <header class="top-nav">
+        <nav class="nav-bar">
+            <div class="nav-brand"><span>⚡ ERP</span> Portal</div>
+            <ul class="nav-list">
+                <li><a href="#home" class="nav-link active">🏠 Home</a></li>
+                <li><a href="#dashboard" class="nav-link">📊 Dashboard</a></li>
+                <li><a href="#contact" class="nav-link">✉️ Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">🌙</button>
+        </nav>
+    </header>
+
+    <!-- ── Hero ── -->
+    <main class="container" id="home">
+        <div class="page-header fade-in">
+            <h1>Welcome to ERP Portal</h1>
+            <p>Centralized management overview and communication.</p>
+        </div>
+
+        <!-- ── Dashboard ── -->
+        <section class="section" id="dashboard">
+            <h2 class="section-title">📊 Dashboard Overview</h2>
+            <div class="dashboard-grid">
+                <div class="card stat-card fade-in">
+                    <div class="stat-icon blue">👥</div>
+                    <div class="stat-value" id="total-sponsors">0</div>
+                    <div class="stat-label">Total Sponsors</div>
+                </div>
+                <div class="card stat-card fade-in">
+                    <div class="stat-icon purple">🏢</div>
+                    <div class="stat-value" id="total-clients">0</div>
+                    <div class="stat-label">Total Clients</div>
+                </div>
+                <div class="card stat-card fade-in">
+                    <div class="stat-icon green">✅</div>
+                    <div class="stat-value" id="active-sponsors">0</div>
+                    <div class="stat-label">Active Sponsors</div>
+                </div>
+                <div class="card stat-card fade-in">
+                    <div class="stat-icon amber">⚡</div>
+                    <div class="stat-value" id="active-clients">0</div>
+                    <div class="stat-label">Active Clients</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Email Sender ── -->
+        <section class="section fade-in" id="contact">
+            <h2 class="section-title">✉️ Contact Us</h2>
+            <div class="card analysis-card">
+                <form id="email-form" class="email-form" action="mailto:rjabhi0091@gmail.com" method="post" enctype="text/plain">
+                    <input type="text" name="name" placeholder="Your Name" required />
+                    <input type="email" name="email" placeholder="Your Email" required />
+                    <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+                    <button type="submit" class="btn">Send Email</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="contact-section">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <p>Email: <a href="mailto:rjabhi0091@gmail.com">rjabhi0091@gmail.com</a> &nbsp;|&nbsp; Phone: +91 93350-49370</p>
+        </div>
+    </footer>
+
+    <!-- ── Dark Mode Script ── -->
+    <script>
+        const toggle = document.getElementById('theme-toggle');
+        const saved = localStorage.getItem('erp-theme');
+        if (saved === 'dark') { document.body.classList.add('dark'); toggle.textContent = '☀️'; }
+        toggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            toggle.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('erp-theme', isDark ? 'dark' : 'light');
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Update active link
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+
+                const targetId = this.getAttribute('href');
+                if(targetId !== '#') {
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
