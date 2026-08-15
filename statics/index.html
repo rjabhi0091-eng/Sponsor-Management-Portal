@@ -13,25 +13,12 @@
   <link rel="stylesheet" href="style.css" />
 <link rel="stylesheet" href="css/erp-style.css" />
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
 <body>
-  <!-- Admin Login Overlay -->
-  <div id="admin-login-overlay">
-    <div class="admin-login-box">
-      <span class="close-btn"
-        onclick="document.getElementById('admin-login-overlay').style.display = 'none'">&times;</span>
-      <h2 style="color: #fff; margin-bottom: 20px;"><ion-icon name="shield-checkmark-outline"></ion-icon> Admin Access
-      </h2>
-      <form id="admin-login-form" onsubmit="handleAdminLoginFront(event)">
-        <input type="text" id="admin-email" placeholder="Admin ID or Email" required>
-        <input type="password" id="admin-password" placeholder="Password" required>
-        <button type="submit">Login to Dashboard</button>
-      </form>
-    </div>
-  </div>
+
   <header class="topbar">
     <div class="topbar-brand">
       <img src="logo2.png" alt="R-Abhi Tech Solution" class="site-logo" />
@@ -42,26 +29,12 @@
       </div>
     </div>
 
-    <div class="header-main-actions">
-      <a href="client-dashboard.html" class="secondary"
-        style="background: rgba(59, 130, 246, 0.25); border: 1px solid rgba(59, 130, 246, 0.4); color: #fff;"><i
-          class="ph ph-user-circle" style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Client
-        Portal</a>
-      <a href="sponsor-dashboard.html" class="secondary"
-        style="background: rgba(139, 92, 246, 0.25); border: 1px solid rgba(139, 92, 246, 0.4); color: #fff;"><i
-          class="ph ph-briefcase" style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Sponsor
-        Portal</a>
-      <a href="login.html" class="primary"><i class="ph ph-lock-key"
-          style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Login Portal</a>
-      <a href="admin.html" class="primary" style="background: #ef4444;"><i class="ph ph-shield-check"
-          style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Admin Panel</a>
-    </div>
+
 
     <div class="header-nav-actions">
       <a href="#overview" class="nav-link"><i class="ph ph-house"
           style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Overview</a>
-      <a href="login.html" class="nav-link"><i class="ph ph-sign-in"
-          style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Login Portals</a>
+
       <a href="#sponsor-registration" class="nav-link"><i class="ph ph-handshake"
           style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Sponsors</a>
       <a href="#client-registration" class="nav-link"><i class="ph ph-users"
@@ -112,19 +85,7 @@
           portal and social media marketing hub for business use — ready to launch, manage relationships, and drive
           campaigns.</p>
 
-        <div class="hero-portal-buttons"
-          style="margin-top: 25px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-          <a href="client-dashboard.html"
-            style="padding: 14px 24px; font-size: 1rem; border-radius: 12px; background: linear-gradient(135deg, #3b82f6, #10b981); color: #fff; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4); transition: transform 0.2s;">
-            <ion-icon name="person-circle-outline" style="font-size: 1.3em;"></ion-icon>
-            Client Portal Dashboard
-          </a>
-          <a href="sponsor-dashboard.html"
-            style="padding: 14px 24px; font-size: 1rem; border-radius: 12px; background: linear-gradient(135deg, #8b5cf6, #3b82f6); color: #fff; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4); transition: transform 0.2s;">
-            <ion-icon name="business-outline" style="font-size: 1.3em;"></ion-icon>
-            Sponsor Portal Dashboard
-          </a>
-        </div>
+
 
         <div class="hero-social" style="margin-top: 30px; display: flex; gap: 15px; justify-content: center;">
           <a href="#contact" class="social-link"
@@ -809,30 +770,7 @@ Growth Scaling</pre>
     </footer>
   </div>
 
-  <div class="modal-backdrop hidden" id="login-modal">
-    <div class="modal-card">
-      <button id="close-login" class="modal-close" data-icon="✖️"></button>
-      <h2 id="login-title">Account Login</h2>
-      <p id="login-description">Sign in as a sponsor or client to access personalized portal features.</p>
-      <form id="login-form" class="record-form">
-        <label class="hidden-role">Login role
-          <select id="login-role">
-            <option value="sponsor">Sponsor</option>
-            <option value="client">Client</option>
-          </select>
-        </label>
-        <label>Email<input type="email" id="login-email" required /></label>
-        <label>Password<input type="password" id="login-password" required /></label>
-        <div class="button-row">
-          <button type="submit"><i class="ph ph-key"
-              style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Login</button>
-          <button type="button" id="close-login-secondary" class="secondary"><i class="ph ph-x"
-              style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Cancel</button>
-        </div>
-      </form>
-      <div id="login-status" class="status-message"></div>
-    </div>
-  </div>
+
 
   <script>
     if ('serviceWorker' in navigator) {
